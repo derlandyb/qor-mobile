@@ -47,7 +47,7 @@ android-e2e-tests:
 	./gradlew :androidApp:connectedDebugAndroidTest
 
 ios-e2e-tests: ios-generate
-	cd iosApp && xcodebuild test -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+	cd iosApp && xcodebuild test -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 17'
 
 ui-e2e-tests: android-e2e-tests ios-e2e-tests
 
@@ -55,7 +55,7 @@ android-build:
 	./gradlew :androidApp:assembleDebug
 
 ios-build: ios-generate
-	cd iosApp && xcodebuild build -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+	cd iosApp && xcodebuild build -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 17'
 
 build: android-build ios-build
 
