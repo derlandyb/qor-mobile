@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Qual o Rock?</string>
+    <string name="feed_empty_title">Nenhum show por aqui ainda</string>
+    <string name="feed_error_title">Não foi possível carregar os shows</string>
+    <string name="feed_retry">Tentar novamente</string>
+    <string name="feed_end_reached">Você já viu todos os shows por aqui</string>
+    <string name="feed_cancelled">Cancelado</string>
+</resources>

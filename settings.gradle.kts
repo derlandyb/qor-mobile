@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "qor-mobile"
 
 include(":shared")
+include(":androidApp")
