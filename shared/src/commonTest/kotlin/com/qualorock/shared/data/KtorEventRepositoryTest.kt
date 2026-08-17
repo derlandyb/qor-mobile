@@ -71,4 +71,50 @@ class KtorEventRepositoryTest {
 
             assertFalse(result.isSuccess)
         }
+
+    @Test
+    fun `given a successful API response when getEventDetail is called then it returns the parsed event`() =
+        runTest {
+            val client =
+                clientReturning(
+                    HttpStatusCode.OK,
+                    """{"data":{"id":"16","title":"Jean Felipe","startDateTime":"2026-08-17T19:30:00-03:00",""" +
+                        """"venue":{"id":"5","name":"Matrix","city":"Vitória","verificationStatus":"verified"},""" +
+                        """"city":"Vitória","genres":[],"status":"published"}}""",
+                )
+            val repository = KtorEventRepository(baseUrl = "https://example.test", httpClient = client)
+
+            val result = repository.getEventDetail("16")
+
+            assertTrue(result.isSuccess)
+            assertEquals("16", result.getOrThrow().id)
+        }
+
+    @Test
+    fun `given a 404 response when getEventDetail is called then it fails with EventNotFoundException`() =
+        runTest {
+            val client = clientReturning(HttpStatusCode.NotFound, """{"message":"Evento não encontrado."}""")
+            val repository = KtorEventRepository(baseUrl = "https://example.test", httpClient = client)
+
+            val result = repository.getEventDetail("missing")
+
+            assertFalse(result.isSuccess)
+            assertTrue(result.exceptionOrNull() is EventNotFoundException)
+            assertEquals("missing", (result.exceptionOrNull() as EventNotFoundException).eventId)
+        }
+
+    @Test
+    fun `given a network failure when getEventDetail is called then it returns a failed Result`() =
+        runTest {
+            val engine = MockEngine { throw IllegalStateException("connection reset") }
+            val client =
+                HttpClient(engine) {
+                    install(ContentNegotiation) { json() }
+                }
+            val repository = KtorEventRepository(baseUrl = "https://example.test", httpClient = client)
+
+            val result = repository.getEventDetail("16")
+
+            assertFalse(result.isSuccess)
+        }
 }

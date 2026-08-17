@@ -8,16 +8,23 @@ final class EventFeedTests: XCTestCase {
         Event(
             id: id,
             title: "Show \(id)",
+            description: nil,
             coverImageUrl: nil,
             startDateTime: startDateTime,
+            endDateTime: nil,
             venue: Venue(
                 id: "venue-\(id)",
                 name: "Venue \(id)",
                 imageUrl: nil,
+                description: nil,
                 city: "Vitória",
                 address: nil,
                 latitude: nil,
                 longitude: nil,
+                staticMapUrl: nil,
+                contactPhone: nil,
+                contactEmail: nil,
+                socialLinks: nil,
                 verificationStatus: VerificationStatus.verified
             ),
             city: "Vitória",
@@ -26,6 +33,8 @@ final class EventFeedTests: XCTestCase {
             genres: [],
             ticketUrl: nil,
             status: status,
+            bannerStatus: nil,
+            promoter: nil,
             isFavorited: nil
         )
     }
