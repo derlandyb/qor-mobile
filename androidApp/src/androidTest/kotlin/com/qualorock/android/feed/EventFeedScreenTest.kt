@@ -28,7 +28,7 @@ class EventFeedScreenTest {
         )
 
     @Test
-    fun `given an anonymous visitor when the feed loads then upcoming events are grouped by date`() {
+    fun `given_an_anonymous_visitor_when_the_feed_loads_then_upcoming_events_are_grouped_by_date`() {
         val state =
             EventFeedUiState(
                 groupedEvents = listOf(DateGroup(label = "Hoje", events = listOf(event("1")))),
@@ -51,7 +51,7 @@ class EventFeedScreenTest {
     }
 
     @Test
-    fun `given zero events when the feed loads then the empty state is reachable`() {
+    fun `given_zero_events_when_the_feed_loads_then_the_empty_state_is_reachable`() {
         composeTestRule.setContent {
             EventFeedScreen(
                 state = EventFeedUiState(),
@@ -67,7 +67,7 @@ class EventFeedScreenTest {
     }
 
     @Test
-    fun `given an initial load failure when the feed loads then the retry state is reachable`() {
+    fun `given_an_initial_load_failure_when_the_feed_loads_then_the_retry_state_is_reachable`() {
         var retried = false
 
         composeTestRule.setContent {
