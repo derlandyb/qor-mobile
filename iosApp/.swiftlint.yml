@@ -1,0 +1,10 @@
+excluded:
+  - iosApp.xcodeproj
+
+line_length:
+  warning: 140
+  error: 200
+
+type_name:
+  excluded:
+    - iosAppApp

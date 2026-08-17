@@ -32,8 +32,10 @@ final class EventFeedTests: XCTestCase {
 
     func testGivenAnonymousVisitorWhenTheFeedLoadsThenUpcomingEventsAreGroupedByDate() {
         let utc = Kotlinx_datetimeTimeZone.Companion.shared.UTC
-        let today = utc.toInstant(Kotlinx_datetimeLocalDateTime(year: 2026, monthNumber: 8, dayOfMonth: 16, hour: 10, minute: 0, second: 0, nanosecond: 0))
-        let tomorrow = utc.toInstant(Kotlinx_datetimeLocalDateTime(year: 2026, monthNumber: 8, dayOfMonth: 17, hour: 20, minute: 0, second: 0, nanosecond: 0))
+        let todayDateTime = Kotlinx_datetimeLocalDateTime(year: 2026, monthNumber: 8, dayOfMonth: 16, hour: 10, minute: 0, second: 0, nanosecond: 0)
+        let tomorrowDateTime = Kotlinx_datetimeLocalDateTime(year: 2026, monthNumber: 8, dayOfMonth: 17, hour: 20, minute: 0, second: 0, nanosecond: 0)
+        let today = utc.toInstant(todayDateTime)
+        let tomorrow = utc.toInstant(tomorrowDateTime)
 
         let grouped = DateGrouper.shared.group(
             events: [makeEvent(id: "1", startDateTime: today), makeEvent(id: "2", startDateTime: tomorrow)],

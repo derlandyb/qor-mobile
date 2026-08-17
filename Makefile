@@ -35,12 +35,12 @@ ios-generate:
 ui-e2e-tests:
 	./gradlew :androidApp:connectedDebugAndroidTest
 	$(MAKE) ios-generate
-	cd iosApp && xcodebuild test -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16'
+	cd iosApp && xcodebuild test -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
 
 build:
 	./gradlew :androidApp:assembleDebug
 	$(MAKE) ios-generate
-	cd iosApp && xcodebuild build -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16'
+	cd iosApp && xcodebuild build -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
 
 coverage:
 	./gradlew :shared:koverVerifyDebug :shared:koverXmlReportDebug
