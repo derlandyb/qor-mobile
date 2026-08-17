@@ -38,6 +38,11 @@ class MainActivity : ComponentActivity() {
                     composable(FEED_ROUTE) {
                         val holder: EventFeedViewModelHolder = viewModel()
                         val state by holder.eventFeedViewModel.state.collectAsState()
+                        val query by holder.searchViewModel.query.collectAsState()
+                        val filterState by holder.filterViewModel.state.collectAsState()
+                        val genreOptions by holder.filterViewModel.genreOptions.collectAsState()
+                        val artistOptions by holder.filterViewModel.artistOptions.collectAsState()
+                        val resultsState by holder.feedQueryViewModel.resultsState.collectAsState()
 
                         EventFeedScreen(
                             state = state,
@@ -47,6 +52,23 @@ class MainActivity : ComponentActivity() {
                             onFavoriteClick = { /* favorites is a separate feature; no-op placeholder */ },
                             onShareClick = { /* sharing is a separate feature; no-op placeholder */ },
                             modifier = Modifier.statusBarsPadding(),
+                            query = query,
+                            onQueryChange = { holder.searchViewModel.query.value = it },
+                            onClearQuery = { holder.searchViewModel.query.value = "" },
+                            filterState = filterState,
+                            genreOptions = genreOptions,
+                            artistOptions = artistOptions,
+                            onDateSelect = holder.filterViewModel::selectDateBucket,
+                            onCitySelect = holder.filterViewModel::selectCity,
+                            onToggleGenre = holder.filterViewModel::toggleGenre,
+                            onSelectArtist = holder.filterViewModel::selectArtist,
+                            onRemoveChip = holder.filterViewModel::removeChip,
+                            onClearAllFilters = {
+                                holder.filterViewModel.clearAll()
+                                holder.searchViewModel.query.value = ""
+                            },
+                            resultsState = resultsState,
+                            onRetryResults = holder.feedQueryViewModel::retry,
                         )
                     }
                     composable(

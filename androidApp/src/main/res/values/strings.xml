@@ -18,4 +18,19 @@
     <string name="detail_about_title">Sobre o Evento</string>
     <string name="detail_location_title">Local</string>
     <string name="detail_back">Voltar</string>
+    <string name="search_placeholder">O que você quer ouvir?</string>
+    <string name="search_clear">Limpar busca</string>
+    <string name="search_no_results_title">Nenhum resultado encontrado</string>
+    <string name="filters_button">Filtros</string>
+    <string name="filters_advanced_title">Filtros Avançados</string>
+    <string name="filters_when_title">Quando</string>
+    <string name="filters_where_title">Onde</string>
+    <string name="filters_genre_title">Gênero</string>
+    <string name="filters_artist_title">Artista</string>
+    <string name="filters_city_all">Todas</string>
+    <string name="filters_clear_all">Limpar filtros</string>
+    <string name="filters_no_options">Nada para filtrar ainda</string>
+    <string name="filters_options_error">Não foi possível carregar as opções</string>
+    <string name="filters_no_results_title">Nenhum evento encontrado com esses filtros</string>
+    <string name="filters_results_error_title">Não foi possível carregar os resultados</string>
 </resources>
