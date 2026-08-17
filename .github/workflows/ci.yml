@@ -17,30 +17,60 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps: [{uses: actions/checkout@v4}, {run: make lint}]
-  static-analysis:
-    name: static-analysis
+  static-analysis-jvm:
+    name: static-analysis-jvm
+    runs-on: ubuntu-latest
+    steps: [{uses: actions/checkout@v4}, {run: make static-analysis-jvm}]
+  static-analysis-ios:
+    name: static-analysis-ios
     runs-on: macos-latest
-    steps: [{uses: actions/checkout@v4}, {run: make static-analysis}]
+    steps: [{uses: actions/checkout@v4}, {run: make static-analysis-ios}]
   unit-tests:
     name: unit-tests
     runs-on: ubuntu-latest
     steps: [{uses: actions/checkout@v4}, {run: make unit-tests}]
-  ui-e2e-tests:
-    name: ui-e2e-tests
+  android-e2e-tests:
+    name: android-e2e-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          script: make android-e2e-tests
+  ios-e2e-tests:
+    name: ios-e2e-tests
     runs-on: macos-latest
-    steps: [{uses: actions/checkout@v4}, {run: make ui-e2e-tests}]
-  build:
-    name: build
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: make ios-e2e-tests
+  android-build:
+    name: android-build
+    runs-on: ubuntu-latest
+    steps: [{uses: actions/checkout@v4}, {run: make android-build}]
+  ios-build:
+    name: ios-build
     runs-on: macos-latest
-    steps: [{uses: actions/checkout@v4}, {run: make build}]
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: make ios-build
   coverage:
     name: coverage
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps: [{uses: actions/checkout@v4}, {run: make coverage}]
   quality-gate:
     name: quality-gate
     if: always()
-    needs: [format, lint, static-analysis, unit-tests, ui-e2e-tests, build, coverage]
+    needs: [format, lint, static-analysis-jvm, static-analysis-ios, unit-tests, android-e2e-tests, ios-e2e-tests, android-build, ios-build, coverage]
     runs-on: ubuntu-latest
     steps:
-      - run: test "${{ needs.format.result }}" = success && test "${{ needs.lint.result }}" = success && test "${{ needs.static-analysis.result }}" = success && test "${{ needs.unit-tests.result }}" = success && test "${{ needs.ui-e2e-tests.result }}" = success && test "${{ needs.build.result }}" = success && test "${{ needs.coverage.result }}" = success
+      - run: test "${{ needs.format.result }}" = success && test "${{ needs.lint.result }}" = success && test "${{ needs.static-analysis-jvm.result }}" = success && test "${{ needs.static-analysis-ios.result }}" = success && test "${{ needs.unit-tests.result }}" = success && test "${{ needs.android-e2e-tests.result }}" = success && test "${{ needs.ios-e2e-tests.result }}" = success && test "${{ needs.android-build.result }}" = success && test "${{ needs.ios-build.result }}" = success && test "${{ needs.coverage.result }}" = success
