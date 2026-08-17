@@ -5,13 +5,14 @@ import com.qualorock.shared.domain.Event
 import com.qualorock.shared.search.SearchViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 
 sealed interface FeedResultsUiState {
     data object Inactive : FeedResultsUiState
@@ -37,9 +38,17 @@ class FeedQueryViewModel(
     filterViewModel: FilterViewModel,
     scope: CoroutineScope,
 ) {
+    private val retryTrigger = MutableStateFlow(0)
+
     val resultsState: StateFlow<FeedResultsUiState> =
-        combine(searchViewModel.debouncedQuery, filterViewModel.state) { q, filters -> (q ?: "") to filters }
-            .distinctUntilChanged()
+        combine(
+            searchViewModel.debouncedQuery,
+            filterViewModel.state,
+            retryTrigger,
+        ) { q, filters, _ -> (q ?: "") to filters }
+            // Intentionally no distinctUntilChanged() here — retry() bumps retryTrigger with (q, filters)
+            // otherwise unchanged, and combine's own StateFlow-conflation already prevents redundant
+            // no-op emissions from a genuinely unchanged search/filter combination.
             .flatMapLatest { (q, filters) ->
                 flow {
                     if (q.isBlank() && filters.isEmpty) {
@@ -70,4 +79,7 @@ class FeedQueryViewModel(
                 }
             }
             .stateIn(scope, SharingStarted.WhileSubscribed(5_000), FeedResultsUiState.Inactive)
+
+    /** Re-issues the fetch for the current query/filters — for [FeedResultsUiState.Error]'s retry action. */
+    fun retry() = retryTrigger.update { it + 1 }
 }

@@ -26,6 +26,8 @@ class IosFeedQueryViewModel(baseUrl: String) {
         searchViewModel.query.value = query
     }
 
+    fun retryResults() = feedQueryViewModel.retry()
+
     fun selectDateBucket(bucket: DateBucket?) = filterViewModel.selectDateBucket(bucket)
 
     fun selectCity(city: String?) = filterViewModel.selectCity(city)

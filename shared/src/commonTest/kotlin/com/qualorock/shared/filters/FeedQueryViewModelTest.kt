@@ -48,6 +48,25 @@ private class RecordingEventRepository(private val page: EventPage) : EventRepos
     override suspend fun getEventDetail(id: String): Result<Event> = Result.failure(UnsupportedOperationException())
 }
 
+private class FailThenSucceedEventRepository(private val page: EventPage) : EventRepository {
+    private var attempt = 0
+
+    override suspend fun getEventFeed(
+        cursor: String?,
+        limit: Int,
+        q: String?,
+        dateBucket: DateBucket?,
+        city: String?,
+        genres: List<String>,
+        artistId: String?,
+    ): Result<EventPage> {
+        attempt++
+        return if (attempt == 1) Result.failure(RuntimeException("network unavailable")) else Result.success(page)
+    }
+
+    override suspend fun getEventDetail(id: String): Result<Event> = Result.failure(UnsupportedOperationException())
+}
+
 private class EmptyFilterOptionsRepository : FilterOptionsRepository {
     override suspend fun getGenreOptions(): Result<List<String>> = Result.success(emptyList())
 
@@ -138,5 +157,27 @@ class FeedQueryViewModelTest {
             val lastCall = repository.calls.last()
             assertEquals("forro", lastCall.q)
             assertEquals("Vila Velha", lastCall.city)
+        }
+
+    @Test
+    fun `given a failed fetch when retry is called then the same query and filters are re-fetched`() =
+        runTest {
+            val dispatcher = StandardTestDispatcher(testScheduler)
+            val scope = CoroutineScope(dispatcher)
+            val repository = FailThenSucceedEventRepository(EventPage(listOf(event("1")), null))
+            val searchViewModel = SearchViewModel(scope, minQueryLength = 2, debounceMs = 300)
+            val filterViewModel = FilterViewModel(EmptyFilterOptionsRepository(), scope)
+            val feedQueryViewModel = FeedQueryViewModel(repository, searchViewModel, filterViewModel, scope)
+            feedQueryViewModel.resultsState.onEach { }.launchIn(scope)
+
+            searchViewModel.query.value = "forro"
+            advanceTimeBy(400)
+            advanceUntilIdle()
+            assertIs<FeedResultsUiState.Error>(feedQueryViewModel.resultsState.value)
+
+            feedQueryViewModel.retry()
+            advanceUntilIdle()
+
+            assertIs<FeedResultsUiState.Results>(feedQueryViewModel.resultsState.value)
         }
 }
