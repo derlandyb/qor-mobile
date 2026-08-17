@@ -20,6 +20,8 @@ private class FakeEventRepository(private val page: EventPage) : EventRepository
         cursor: String?,
         limit: Int,
     ): Result<EventPage> = Result.success(page)
+
+    override suspend fun getEventDetail(id: String): Result<Event> = Result.failure(UnsupportedOperationException())
 }
 
 private class FailingEventRepository : EventRepository {
@@ -27,6 +29,8 @@ private class FailingEventRepository : EventRepository {
         cursor: String?,
         limit: Int,
     ): Result<EventPage> = Result.failure(RuntimeException("network unavailable"))
+
+    override suspend fun getEventDetail(id: String): Result<Event> = Result.failure(UnsupportedOperationException())
 }
 
 private fun event(
