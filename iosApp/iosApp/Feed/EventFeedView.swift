@@ -24,13 +24,15 @@ struct EventFeedView: View {
             ForEach(viewModel.state.groupedEvents, id: \.label) { group in
                 Section(header: Text(group.label)) {
                     ForEach(group.events, id: \.id) { event in
-                        EventCardView(event: event)
-                            .onAppear {
-                                if event.id == group.events.last?.id,
-                                   group.label == viewModel.state.groupedEvents.last?.label {
-                                    viewModel.loadNextPage()
-                                }
+                        NavigationLink(value: event.id) {
+                            EventCardView(event: event)
+                        }
+                        .onAppear {
+                            if event.id == group.events.last?.id,
+                               group.label == viewModel.state.groupedEvents.last?.label {
+                                viewModel.loadNextPage()
                             }
+                        }
                     }
                 }
             }
