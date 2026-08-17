@@ -32,4 +32,6 @@ class IosEventFeedViewModel(baseUrl: String) {
     fun loadNextPage() = viewModel.loadNextPage()
 
     fun retry() = viewModel.retry()
+
+    fun close() = lifecycleJob.cancel()
 }

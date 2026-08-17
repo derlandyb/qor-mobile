@@ -25,6 +25,7 @@ final class EventFeedViewModelWrapper: ObservableObject {
 
     deinit {
         watchHandle?.close()
+        iosViewModel.close()
     }
 
     func loadNextPage() {
