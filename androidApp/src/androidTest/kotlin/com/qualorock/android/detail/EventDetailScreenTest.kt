@@ -55,7 +55,7 @@ class EventDetailScreenTest {
     )
 
     @Test
-    fun `given a cancelled event when the detail screen renders then the cancelled banner shows and the ticket link is absent`() {
+    fun given_a_cancelled_event_when_the_detail_screen_renders_then_the_cancelled_banner_shows_and_the_ticket_link_is_absent() {
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.Loaded(event(bannerStatus = BannerStatus.CANCELLED)), onRetry = {}, onBack = {})
         }
@@ -65,7 +65,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a finished event when the detail screen renders then the finished banner shows and the ticket link is absent`() {
+    fun given_a_finished_event_when_the_detail_screen_renders_then_the_finished_banner_shows_and_the_ticket_link_is_absent() {
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.Loaded(event(bannerStatus = BannerStatus.FINISHED)), onRetry = {}, onBack = {})
         }
@@ -75,7 +75,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a normal published event when the detail screen renders then no banner shows and the ticket link is present`() {
+    fun given_a_normal_published_event_when_the_detail_screen_renders_then_no_banner_shows_and_the_ticket_link_is_present() {
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.Loaded(event()), onRetry = {}, onBack = {})
         }
@@ -88,7 +88,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a venue with coordinates when the detail screen renders then the static map image is shown`() {
+    fun given_a_venue_with_coordinates_when_the_detail_screen_renders_then_the_static_map_image_is_shown() {
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.Loaded(event()), onRetry = {}, onBack = {})
         }
@@ -97,7 +97,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a venue with only an address when the detail screen renders then only address text is shown`() {
+    fun given_a_venue_with_only_an_address_when_the_detail_screen_renders_then_only_address_text_is_shown() {
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.Loaded(event(staticMapUrl = null)), onRetry = {}, onBack = {})
         }
@@ -107,7 +107,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a venue with no coordinates and no address when the detail screen renders then the location section is omitted`() {
+    fun given_a_venue_with_no_coordinates_and_no_address_when_the_detail_screen_renders_then_the_location_section_is_omitted() {
         composeTestRule.setContent {
             EventDetailScreen(
                 state = EventDetailUiState.Loaded(event(staticMapUrl = null, address = null)),
@@ -120,7 +120,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a long description when the detail screen renders then the full text is shown untruncated`() {
+    fun given_a_long_description_when_the_detail_screen_renders_then_the_full_text_is_shown_untruncated() {
         val longDescription = "Parágrafo longo. ".repeat(50)
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.Loaded(event(description = longDescription)), onRetry = {}, onBack = {})
@@ -130,7 +130,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a not found state when the detail screen renders then the not found message is shown`() {
+    fun given_a_not_found_state_when_the_detail_screen_renders_then_the_not_found_message_is_shown() {
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.NotFound, onRetry = {}, onBack = {})
         }
@@ -139,7 +139,7 @@ class EventDetailScreenTest {
     }
 
     @Test
-    fun `given a load error state when retry is tapped then onRetry is invoked`() {
+    fun given_a_load_error_state_when_retry_is_tapped_then_onRetry_is_invoked() {
         var retried = false
         composeTestRule.setContent {
             EventDetailScreen(state = EventDetailUiState.LoadError("network"), onRetry = { retried = true }, onBack = {})
