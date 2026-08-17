@@ -19,13 +19,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.qualorock.android.R
 import com.qualorock.shared.domain.Event
 import com.qualorock.shared.domain.EventStatus
+import com.qualorock.shared.domain.Price
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun EventCard(
@@ -44,13 +49,26 @@ fun EventCard(
         shape = RoundedCornerShape(16.dp),
     ) {
         Box {
-            Box(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f)
-                        .background(if (event.coverImageUrl != null) Color.Transparent else MaterialTheme.colorScheme.secondary),
-            )
+            if (event.coverImageUrl != null) {
+                AsyncImage(
+                    model = event.coverImageUrl,
+                    contentDescription = event.title,
+                    contentScale = ContentScale.Crop,
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f)
+                            .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+                )
+            } else {
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16f / 9f)
+                            .background(MaterialTheme.colorScheme.secondary),
+                )
+            }
 
             Box(modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)) {
                 Column {
@@ -85,13 +103,20 @@ fun EventCard(
         Column(modifier = Modifier.padding(12.dp)) {
             Text(text = event.title, style = MaterialTheme.typography.titleMedium)
             Text(text = event.venue.name, style = MaterialTheme.typography.bodyMedium)
-            event.price?.let { price ->
-                val label = if (price.isFree) "Grátis" else "A partir de ${price.min ?: 0.0}"
+            priceLabel(event.price)?.let { label ->
                 Text(text = label, style = MaterialTheme.typography.bodySmall)
             }
         }
     }
 }
+
+private fun priceLabel(price: Price?): String? =
+    when {
+        price == null -> null
+        price.isFree -> "Grátis"
+        price.min == null -> null
+        else -> "A partir de ${NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(price.min)}"
+    }
 
 @Composable
 private fun stringResourceCancelled(): String = androidx.compose.ui.res.stringResource(id = R.string.feed_cancelled)
