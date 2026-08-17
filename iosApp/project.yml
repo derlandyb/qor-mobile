@@ -1,0 +1,66 @@
+name: iosApp
+options:
+  bundleIdPrefix: com.qualorock
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: iosApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.qualorock.iosApp
+        INFOPLIST_KEY_CFBundleDisplayName: "Qual o Rock?"
+        ENABLE_PREVIEWS: YES
+    info:
+      path: iosApp/Info.plist
+      properties:
+        UILaunchScreen: {}
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+    preBuildScripts:
+      - name: Build KMP Shared Framework
+        script: |
+          cd "$SRCROOT/.."
+          ./gradlew :shared:embedAndSignAppleFrameworkForXcode
+        inputFiles: []
+        outputFiles: []
+        basedOnDependencyAnalysis: false
+    dependencies: []
+
+  iosAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: iosAppTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.qualorock.iosAppTests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/iosApp.app/iosApp"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+    dependencies:
+      - target: iosApp
+
+schemes:
+  iosApp:
+    build:
+      targets:
+        iosApp: all
+        iosAppTests: [test]
+    test:
+      targets:
+        - iosAppTests
+    run:
+      config: Debug
