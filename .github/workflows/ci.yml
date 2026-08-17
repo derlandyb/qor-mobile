@@ -43,7 +43,10 @@ jobs:
   ios-e2e-tests:
     name: ios-e2e-tests
     runs-on: macos-latest
-    steps: [{uses: actions/checkout@v4}, {run: make ios-e2e-tests}]
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: make ios-e2e-tests
   android-build:
     name: android-build
     runs-on: ubuntu-latest
@@ -51,7 +54,10 @@ jobs:
   ios-build:
     name: ios-build
     runs-on: macos-latest
-    steps: [{uses: actions/checkout@v4}, {run: make ios-build}]
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: make ios-build
   coverage:
     name: coverage
     runs-on: ubuntu-latest
