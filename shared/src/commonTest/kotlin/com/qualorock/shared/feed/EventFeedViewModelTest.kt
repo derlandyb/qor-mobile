@@ -6,6 +6,7 @@ import com.qualorock.shared.domain.Event
 import com.qualorock.shared.domain.EventStatus
 import com.qualorock.shared.domain.Venue
 import com.qualorock.shared.domain.VerificationStatus
+import com.qualorock.shared.filters.DateBucket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -19,6 +20,11 @@ private class FakeEventRepository(private val page: EventPage) : EventRepository
     override suspend fun getEventFeed(
         cursor: String?,
         limit: Int,
+        q: String?,
+        dateBucket: DateBucket?,
+        city: String?,
+        genres: List<String>,
+        artistId: String?,
     ): Result<EventPage> = Result.success(page)
 
     override suspend fun getEventDetail(id: String): Result<Event> = Result.failure(UnsupportedOperationException())
@@ -28,6 +34,11 @@ private class FailingEventRepository : EventRepository {
     override suspend fun getEventFeed(
         cursor: String?,
         limit: Int,
+        q: String?,
+        dateBucket: DateBucket?,
+        city: String?,
+        genres: List<String>,
+        artistId: String?,
     ): Result<EventPage> = Result.failure(RuntimeException("network unavailable"))
 
     override suspend fun getEventDetail(id: String): Result<Event> = Result.failure(UnsupportedOperationException())
