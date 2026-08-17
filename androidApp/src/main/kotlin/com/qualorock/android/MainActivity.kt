@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -45,6 +46,7 @@ class MainActivity : ComponentActivity() {
                             onEventClick = { event -> navController.navigate("detail/${event.id}") },
                             onFavoriteClick = { /* favorites is a separate feature; no-op placeholder */ },
                             onShareClick = { /* sharing is a separate feature; no-op placeholder */ },
+                            modifier = Modifier.statusBarsPadding(),
                         )
                     }
                     composable(

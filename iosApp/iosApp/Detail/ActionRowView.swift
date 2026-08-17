@@ -1,6 +1,9 @@
 import Shared
 import SwiftUI
 
+/// Save/Share only — DETAIL-002/DETAIL-005's two equal-weight primary actions. The ticket link
+/// renders in `EventDetailView`'s hero, next to the date/price row, per event-details/design.md's
+/// Gap 1 correction.
 struct ActionRowView: View {
     let event: Event
     let baseUrl: String
@@ -27,11 +30,6 @@ struct ActionRowView: View {
                     .padding(16)
                     .background(Circle().fill(Color.accentColor))
                     .foregroundColor(.white)
-            }
-
-            if let ticketUrlString = event.ticketUrl, let ticketUrl = URL(string: ticketUrlString) {
-                Link("Comprar Ingresso", destination: ticketUrl)
-                    .font(.footnote)
             }
 
             Spacer()

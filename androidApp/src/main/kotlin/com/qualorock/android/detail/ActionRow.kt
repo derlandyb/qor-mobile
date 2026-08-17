@@ -1,7 +1,5 @@
 package com.qualorock.android.detail
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,9 +10,6 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -31,6 +25,10 @@ import com.qualorock.android.AppConfig
 import com.qualorock.android.R
 import com.qualorock.shared.domain.Event
 
+/**
+ * Save/Share only — DETAIL-002/DETAIL-005's two equal-weight primary actions. The ticket link
+ * renders in [EventHero], next to the date/price row, per event-details/design.md's Gap 1 correction.
+ */
 @Composable
 fun ActionRow(
     event: Event,
@@ -58,18 +56,6 @@ fun ActionRow(
             modifier = Modifier.testTag("action_share"),
         ) {
             Icon(imageVector = Icons.Filled.Share, contentDescription = stringResource(id = R.string.detail_share))
-        }
-
-        if (event.ticketUrl != null) {
-            val context = LocalContext.current
-            TextButton(
-                onClick = {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(event.ticketUrl)))
-                },
-                modifier = Modifier.testTag("ticket_link"),
-            ) {
-                Text(text = stringResource(id = R.string.detail_ticket_cta), style = MaterialTheme.typography.labelMedium)
-            }
         }
     }
 }

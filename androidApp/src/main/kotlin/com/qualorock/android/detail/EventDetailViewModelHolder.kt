@@ -12,12 +12,18 @@ import com.qualorock.shared.detail.EventDetailViewModel
 
 /** Thin androidx ViewModel wrapper so the KMP [EventDetailViewModel] survives Android configuration changes. */
 class EventDetailViewModelHolder(savedStateHandle: SavedStateHandle) : ViewModel() {
+    private val repository = KtorEventRepository(baseUrl = AppConfig.API_BASE_URL)
+
     val eventDetailViewModel =
         EventDetailViewModel(
-            repository = KtorEventRepository(baseUrl = AppConfig.API_BASE_URL),
+            repository = repository,
             eventId = checkNotNull(savedStateHandle["eventId"]),
             coroutineScope = viewModelScope,
         ).also { it.load() }
+
+    override fun onCleared() {
+        repository.close()
+    }
 
     companion object {
         val Factory =

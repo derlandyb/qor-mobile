@@ -31,4 +31,7 @@ class KtorEventRepository(
             if (response.status == HttpStatusCode.NotFound) throw EventNotFoundException(id)
             response.body<EventDetailEnvelope>().data
         }
+
+    /** Releases the underlying [HttpClient]'s connection resources — call when this repository's owner is discarded. */
+    fun close() = httpClient.close()
 }

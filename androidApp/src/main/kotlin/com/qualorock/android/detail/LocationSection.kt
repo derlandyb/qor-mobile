@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.qualorock.android.R
+import com.qualorock.shared.detail.LocationSectionVariant
 import com.qualorock.shared.domain.Venue
 
 @Composable
@@ -27,32 +28,38 @@ fun LocationSection(
     venue: Venue,
     modifier: Modifier = Modifier,
 ) {
-    if (venue.staticMapUrl == null && venue.address == null) return
+    val variant = LocationSectionVariant.from(venue)
+    if (variant is LocationSectionVariant.Omitted) return
 
     val context = LocalContext.current
 
     Column(modifier = modifier.padding(16.dp).testTag("location_section")) {
         Text(text = stringResource(id = R.string.detail_location_title), style = MaterialTheme.typography.titleMedium)
 
-        if (venue.staticMapUrl != null) {
-            AsyncImage(
-                model = venue.staticMapUrl,
-                contentDescription = stringResource(id = R.string.detail_location_title),
-                contentScale = ContentScale.Crop,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 7f)
-                        .clip(RoundedCornerShape(16.dp))
-                        .padding(top = 8.dp)
-                        .testTag("location_map"),
-            )
-        }
+        val addressText =
+            when (variant) {
+                is LocationSectionVariant.Map -> {
+                    AsyncImage(
+                        model = variant.url,
+                        contentDescription = stringResource(id = R.string.detail_location_title),
+                        contentScale = ContentScale.Crop,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 7f)
+                                .clip(RoundedCornerShape(16.dp))
+                                .padding(top = 8.dp)
+                                .testTag("location_map"),
+                    )
+                    variant.address
+                }
+                is LocationSectionVariant.AddressOnly -> variant.address
+                LocationSectionVariant.Omitted -> null
+            }
 
-        val address = venue.address
-        if (address != null) {
+        if (addressText != null) {
             Text(
-                text = address,
+                text = addressText,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 8.dp).testTag("location_address"),
             )

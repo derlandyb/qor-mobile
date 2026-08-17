@@ -53,6 +53,11 @@ struct EventDetailView: View {
                         .foregroundColor(.secondary)
                     Text(PriceLineFormatter.shared.format(price: event.price))
                         .font(.footnote)
+
+                    if let ticketUrlString = event.ticketUrl, let ticketUrl = URL(string: ticketUrlString) {
+                        Link("Comprar Ingresso", destination: ticketUrl)
+                            .font(.footnote)
+                    }
                 }
                 .padding()
 

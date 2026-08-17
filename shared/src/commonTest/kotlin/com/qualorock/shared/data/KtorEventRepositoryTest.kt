@@ -117,4 +117,16 @@ class KtorEventRepositoryTest {
 
             assertFalse(result.isSuccess)
         }
+
+    @Test
+    fun `given a closed repository when getEventDetail is called then it fails instead of leaking a request`() =
+        runTest {
+            val client = clientReturning(HttpStatusCode.OK, """{"data":{}}""")
+            val repository = KtorEventRepository(baseUrl = "https://example.test", httpClient = client)
+
+            repository.close()
+            val result = repository.getEventDetail("16")
+
+            assertFalse(result.isSuccess)
+        }
 }
