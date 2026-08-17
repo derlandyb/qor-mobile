@@ -5,4 +5,17 @@
     <string name="feed_retry">Tentar novamente</string>
     <string name="feed_end_reached">Você já viu todos os shows por aqui</string>
     <string name="feed_cancelled">Cancelado</string>
+    <string name="detail_retry">Tentar novamente</string>
+    <string name="detail_not_found">Evento não encontrado</string>
+    <string name="detail_error_title">Não foi possível carregar o evento</string>
+    <string name="detail_save">Favoritar</string>
+    <string name="detail_share">Compartilhar</string>
+    <string name="detail_share_copied">Link copiado!</string>
+    <string name="detail_ticket_cta">Comprar Ingresso</string>
+    <string name="detail_view_on_map">Ver no mapa</string>
+    <string name="detail_cancelled_banner">Evento cancelado</string>
+    <string name="detail_finished_banner">Este evento já aconteceu</string>
+    <string name="detail_about_title">Sobre o Evento</string>
+    <string name="detail_location_title">Local</string>
+    <string name="detail_back">Voltar</string>
 </resources>
