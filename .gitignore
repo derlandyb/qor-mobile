@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+*/build/
+local.properties
+
+# Kotlin/Native
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Xcode
+iosApp/*.xcodeproj/
+iosApp/DerivedData/
+iosApp/**/xcuserdata/
+iosApp/Pods/
+*.xcuserstate
+
+# macOS
+.DS_Store
