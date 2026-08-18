@@ -33,4 +33,6 @@
     <string name="filters_options_error">Não foi possível carregar as opções</string>
     <string name="filters_no_results_title">Nenhum evento encontrado com esses filtros</string>
     <string name="filters_results_error_title">Não foi possível carregar os resultados</string>
+    <string name="tab_feed">Início</string>
+    <string name="tab_map">Mapa</string>
 </resources>

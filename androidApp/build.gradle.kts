@@ -1,10 +1,20 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
 }
+
+// Google Maps requires an API key at manifest-merge time. Kept out of version control in
+// local.properties (MAPS_API_KEY=...) — see README for how to obtain one; an empty value lets
+// the app build and unit-test, but the Map tab won't render tiles without a real key.
+val mapsApiKey: String =
+    Properties()
+        .apply {
+            rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+        }.getProperty("MAPS_API_KEY", "")
 
 kotlin {
     compilerOptions {
@@ -24,6 +34,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["mapsApiKey"] = mapsApiKey
     }
 
     buildTypes {
@@ -65,6 +77,9 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.coil.compose)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.play.services.maps)
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.junit)
