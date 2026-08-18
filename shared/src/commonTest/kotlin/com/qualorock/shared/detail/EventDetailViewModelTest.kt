@@ -35,6 +35,11 @@ private class FakeEventRepository(
     override suspend fun getEventFeed(
         cursor: String?,
         limit: Int,
+        q: String?,
+        dateBucket: com.qualorock.shared.filters.DateBucket?,
+        city: String?,
+        genres: List<String>,
+        artistId: String?,
     ): Result<EventPage> = Result.success(EventPage(events = emptyList(), nextCursor = null))
 
     override suspend fun getEventDetail(id: String): Result<Event> {

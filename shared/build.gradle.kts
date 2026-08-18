@@ -71,6 +71,8 @@ kover {
         filters {
             includes {
                 classes("com.qualorock.shared.feed.*")
+                classes("com.qualorock.shared.search.*")
+                classes("com.qualorock.shared.filters.*")
             }
         }
         verify {

@@ -6,7 +6,8 @@ struct iosAppApp: App {
         WindowGroup {
             NavigationStack {
                 EventFeedView(
-                    viewModel: EventFeedViewModelWrapper(baseUrl: AppConfig.apiBaseUrl)
+                    viewModel: EventFeedViewModelWrapper(baseUrl: AppConfig.apiBaseUrl),
+                    queryViewModel: FeedQueryViewModelWrapper(baseUrl: AppConfig.apiBaseUrl)
                 )
                 .navigationDestination(for: String.self) { eventId in
                     EventDetailView(
