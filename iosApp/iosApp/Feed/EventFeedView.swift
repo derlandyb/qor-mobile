@@ -3,19 +3,74 @@ import SwiftUI
 
 struct EventFeedView: View {
     @ObservedObject var viewModel: EventFeedViewModelWrapper
+    @ObservedObject var queryViewModel: FeedQueryViewModelWrapper
+    @State private var isPanelOpen = false
 
     var body: some View {
-        Group {
-            if viewModel.state.isLoadingInitial {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if viewModel.state.error == FeedError.initialLoad {
-                InitialErrorStateView { viewModel.retry() }
-            } else if viewModel.state.isEmpty {
-                EmptyStateView()
-            } else {
-                feedList
+        VStack(spacing: 0) {
+            SearchBarView(
+                query: queryViewModel.query,
+                onQueryChange: { queryViewModel.setQuery($0) },
+                onClear: { queryViewModel.clearQuery() }
+            )
+            FilterBarView(
+                state: queryViewModel.filterState,
+                onDateSelect: { queryViewModel.selectDateBucket($0) },
+                onCitySelect: { queryViewModel.selectCity(city: $0) },
+                onOpenPanel: { isPanelOpen.toggle() }
+            )
+            if isPanelOpen {
+                GenreArtistPanelView(
+                    genreOptions: queryViewModel.genreOptions,
+                    artistOptions: queryViewModel.artistOptions,
+                    selectedGenres: queryViewModel.filterState.genres,
+                    selectedArtist: queryViewModel.filterState.artist,
+                    onToggleGenre: { queryViewModel.toggleGenre(genre: $0) },
+                    onSelectArtist: { queryViewModel.selectArtist($0) }
+                )
             }
+            ActiveFilterChipsView(
+                chips: queryViewModel.filterState.asChips(),
+                onRemove: { queryViewModel.removeChip($0) },
+                onClearAll: {
+                    queryViewModel.clearAll()
+                    queryViewModel.clearQuery()
+                }
+            )
+
+            resultsRegion
+        }
+    }
+
+    @ViewBuilder
+    private var resultsRegion: some View {
+        switch queryViewModel.resultsState {
+        case is FeedResultsUiStateInactive:
+            unfilteredFeed
+        case is FeedResultsUiStateLoading:
+            ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
+        case let results as FeedResultsUiStateResults:
+            resultsList(events: results.events)
+        case is FeedResultsUiStateNoResults:
+            NoResultsStateView { queryViewModel.clearAll(); queryViewModel.clearQuery() }
+        case is FeedResultsUiStateError:
+            ResultsErrorStateView { queryViewModel.retryResults() }
+        default:
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private var unfilteredFeed: some View {
+        if viewModel.state.isLoadingInitial {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if viewModel.state.error == FeedError.initialLoad {
+            InitialErrorStateView { viewModel.retry() }
+        } else if viewModel.state.isEmpty {
+            EmptyStateView()
+        } else {
+            feedList
         }
     }
 
@@ -55,6 +110,15 @@ struct EventFeedView: View {
         }
         .listStyle(.plain)
     }
+
+    private func resultsList(events: [Event]) -> some View {
+        List(events, id: \.id) { event in
+            NavigationLink(value: event.id) {
+                EventCardView(event: event)
+            }
+        }
+        .listStyle(.plain)
+    }
 }
 
 private struct InitialErrorStateView: View {
@@ -75,5 +139,31 @@ private struct EmptyStateView: View {
         Text("Nenhum show por aqui ainda")
             .font(.headline)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+private struct NoResultsStateView: View {
+    let onClearAllFilters: () -> Void
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Nenhum evento encontrado com esses filtros")
+                .font(.headline)
+            Button("Limpar filtros", action: onClearAllFilters)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+private struct ResultsErrorStateView: View {
+    let onRetry: () -> Void
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Não foi possível carregar os resultados")
+                .font(.headline)
+            Button("Tentar novamente", action: onRetry)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
