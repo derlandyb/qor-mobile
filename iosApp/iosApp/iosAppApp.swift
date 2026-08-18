@@ -2,19 +2,16 @@ import SwiftUI
 
 @main
 struct iosAppApp: App {
+    private let filterOwner = SharedFilterOwner(baseUrl: AppConfig.apiBaseUrl)
+
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                EventFeedView(
-                    viewModel: EventFeedViewModelWrapper(baseUrl: AppConfig.apiBaseUrl),
-                    queryViewModel: FeedQueryViewModelWrapper(baseUrl: AppConfig.apiBaseUrl)
-                )
-                .navigationDestination(for: String.self) { eventId in
-                    EventDetailView(
-                        viewModel: EventDetailViewModelWrapper(eventId: eventId, baseUrl: AppConfig.apiBaseUrl),
-                        baseUrl: AppConfig.apiBaseUrl
-                    )
-                }
+            TabView {
+                FeedTabView(filterViewModel: filterOwner.filterViewModel)
+                    .tabItem { Label("Início", systemImage: "house") }
+
+                MapTabView(filterViewModel: filterOwner.filterViewModel)
+                    .tabItem { Label("Mapa", systemImage: "map") }
             }
         }
     }

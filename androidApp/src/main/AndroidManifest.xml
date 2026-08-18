@@ -8,6 +8,11 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.QualORock">
 
+        <!-- MAP-005: never requests location; only used to render Grande Vitória tiles/markers. -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApiKey}" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
