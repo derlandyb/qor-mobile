@@ -159,6 +159,8 @@ private fun MapRoute(
         onOpenEventDetails = { eventId -> navController.navigate("detail/$eventId") },
         onRetry = holder.mapQueryViewModel::retry,
         onClearFilters = filterViewModel::clearAll,
+        onFavoriteClick = { /* favorites is a separate feature; no-op placeholder */ },
+        onShareClick = { /* sharing is a separate feature; no-op placeholder */ },
     )
 }
 

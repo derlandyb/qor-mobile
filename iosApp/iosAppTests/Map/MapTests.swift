@@ -50,7 +50,7 @@ final class MapTests: XCTestCase {
             onSelectCluster: { _ in }
         )
         let mapView = MKMapView()
-        let annotation = EventAnnotation(event: event(id: "1"))
+        let annotation = EventAnnotation(event: event(id: "1"))!
 
         coordinator.mapView(mapView, didSelect: annotation)
 
@@ -65,8 +65,8 @@ final class MapTests: XCTestCase {
         )
         let mapView = MKMapView()
         let cluster = MKClusterAnnotation(memberAnnotations: [
-            EventAnnotation(event: event(id: "1")),
-            EventAnnotation(event: event(id: "2"))
+            EventAnnotation(event: event(id: "1"))!,
+            EventAnnotation(event: event(id: "2"))!
         ])
 
         coordinator.mapView(mapView, didSelect: cluster)
@@ -75,10 +75,47 @@ final class MapTests: XCTestCase {
     }
 
     func testGivenAnEventWithCoordinatesWhenWrappedThenTheAnnotationCoordinateMatchesTheVenue() {
-        let annotation = EventAnnotation(event: event(id: "1"))
+        let annotation = EventAnnotation(event: event(id: "1"))!
 
         XCTAssertEqual(annotation.coordinate.latitude, -20.31, accuracy: 0.0001)
         XCTAssertEqual(annotation.coordinate.longitude, -40.31, accuracy: 0.0001)
+    }
+
+    func testGivenAnEventWithoutCoordinatesWhenWrappedThenNoAnnotationIsCreated() {
+        let eventWithoutCoordinates = Event(
+            id: "no-coords",
+            title: "Show no-coords",
+            description: nil,
+            coverImageUrl: nil,
+            startDateTime: event(id: "1").startDateTime,
+            endDateTime: nil,
+            venue: Venue(
+                id: "v-no-coords",
+                name: "Venue no-coords",
+                imageUrl: nil,
+                description: nil,
+                city: "Vitória",
+                address: nil,
+                latitude: nil,
+                longitude: nil,
+                staticMapUrl: nil,
+                contactPhone: nil,
+                contactEmail: nil,
+                socialLinks: nil,
+                verificationStatus: VerificationStatus.verified
+            ),
+            city: "Vitória",
+            price: nil,
+            ageRating: nil,
+            genres: [],
+            ticketUrl: nil,
+            status: EventStatus.published,
+            bannerStatus: nil,
+            promoter: nil,
+            isFavorited: nil
+        )
+
+        XCTAssertNil(EventAnnotation(event: eventWithoutCoordinates))
     }
 
     @MainActor

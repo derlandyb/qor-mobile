@@ -17,12 +17,28 @@ fun MapSheetsHost(
     onOpenDetail: (Event) -> Unit,
     onDismissList: () -> Unit,
     onSelectFromList: (Event) -> Unit,
+    onFavoriteClick: (Event) -> Unit,
+    onShareClick: (Event) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (previewEvent != null) {
-        MarkerPreviewSheet(event = previewEvent, onDismiss = onDismissPreview, onOpenDetail = onOpenDetail, modifier = modifier)
+        MarkerPreviewSheet(
+            event = previewEvent,
+            onDismiss = onDismissPreview,
+            onOpenDetail = onOpenDetail,
+            onFavoriteClick = onFavoriteClick,
+            onShareClick = onShareClick,
+            modifier = modifier,
+        )
     }
     if (clusterEvents != null) {
-        MultiEventListSheet(events = clusterEvents, onDismiss = onDismissList, onSelect = onSelectFromList, modifier = modifier)
+        MultiEventListSheet(
+            events = clusterEvents,
+            onDismiss = onDismissList,
+            onSelect = onSelectFromList,
+            onFavoriteClick = onFavoriteClick,
+            onShareClick = onShareClick,
+            modifier = modifier,
+        )
     }
 }

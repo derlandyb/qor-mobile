@@ -21,12 +21,14 @@ fun MultiEventListSheet(
     events: List<Event>,
     onDismiss: () -> Unit,
     onSelect: (Event) -> Unit,
+    onFavoriteClick: (Event) -> Unit,
+    onShareClick: (Event) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss, modifier = modifier.testTag("multi_event_list_sheet")) {
         LazyColumn {
             items(events, key = { it.id }) { event ->
-                EventCard(event = event, onClick = onSelect, onFavoriteClick = {}, onShareClick = {})
+                EventCard(event = event, onClick = onSelect, onFavoriteClick = onFavoriteClick, onShareClick = onShareClick)
             }
         }
     }

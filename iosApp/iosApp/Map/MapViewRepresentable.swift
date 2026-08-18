@@ -24,12 +24,13 @@ struct MapViewRepresentable: UIViewRepresentable {
     }
 
     func updateUIView(_ mapView: MKMapView, context: Context) {
+        let annotations = events.compactMap { EventAnnotation(event: $0) }
         let existing = mapView.annotations.compactMap { $0 as? EventAnnotation }
         let existingIds = Set(existing.map(\.event.id))
-        let newIds = Set(events.map(\.id))
+        let newIds = Set(annotations.map(\.event.id))
         guard existingIds != newIds else { return }
         mapView.removeAnnotations(existing)
-        mapView.addAnnotations(events.map { EventAnnotation(event: $0) })
+        mapView.addAnnotations(annotations)
     }
 
     func makeCoordinator() -> Coordinator {

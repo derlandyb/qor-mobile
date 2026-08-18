@@ -24,11 +24,13 @@ fun MarkerPreviewSheet(
     event: Event,
     onDismiss: () -> Unit,
     onOpenDetail: (Event) -> Unit,
+    onFavoriteClick: (Event) -> Unit,
+    onShareClick: (Event) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss, modifier = modifier.testTag("marker_preview_sheet")) {
         Column {
-            EventCard(event = event, onClick = onOpenDetail, onFavoriteClick = {}, onShareClick = {})
+            EventCard(event = event, onClick = onOpenDetail, onFavoriteClick = onFavoriteClick, onShareClick = onShareClick)
             Button(
                 onClick = { onOpenDetail(event) },
                 modifier = Modifier.padding(horizontal = 16.dp).testTag("open_detail_button"),

@@ -47,6 +47,8 @@ class MapScreenTest {
                 onOpenDetail = { opened = it },
                 onDismissList = {},
                 onSelectFromList = {},
+                onFavoriteClick = {},
+                onShareClick = {},
             )
         }
 
@@ -66,6 +68,8 @@ class MapScreenTest {
                 onOpenDetail = {},
                 onDismissList = {},
                 onSelectFromList = {},
+                onFavoriteClick = {},
+                onShareClick = {},
             )
         }
 
@@ -85,6 +89,8 @@ class MapScreenTest {
                 onOpenDetail = {},
                 onDismissList = {},
                 onSelectFromList = { selected = it },
+                onFavoriteClick = {},
+                onShareClick = {},
             )
         }
 

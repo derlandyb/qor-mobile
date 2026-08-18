@@ -33,6 +33,8 @@ fun MapScreen(
     onOpenEventDetails: (String) -> Unit,
     onRetry: () -> Unit,
     onClearFilters: () -> Unit,
+    onFavoriteClick: (Event) -> Unit,
+    onShareClick: (Event) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var previewEvent by remember { mutableStateOf<Event?>(null) }
@@ -93,6 +95,8 @@ fun MapScreen(
                     clusterEvents = null
                     previewEvent = event
                 },
+                onFavoriteClick = onFavoriteClick,
+                onShareClick = onShareClick,
             )
         }
     }
