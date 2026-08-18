@@ -73,6 +73,7 @@ kover {
                 classes("com.qualorock.shared.feed.*")
                 classes("com.qualorock.shared.search.*")
                 classes("com.qualorock.shared.filters.*")
+                classes("com.qualorock.shared.map.*")
             }
         }
         verify {
