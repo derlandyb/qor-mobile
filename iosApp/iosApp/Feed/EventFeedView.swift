@@ -51,8 +51,11 @@ struct EventFeedView: View {
             ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity)
         case let results as FeedResultsUiStateResults:
             resultsList(events: results.events)
-        case is FeedResultsUiStateNoResults:
-            NoResultsStateView { queryViewModel.clearAll(); queryViewModel.clearQuery() }
+        case let noResults as FeedResultsUiStateNoResults:
+            NoResultsStateView(filters: noResults.activeFilters, query: noResults.q) {
+                queryViewModel.clearAll()
+                queryViewModel.clearQuery()
+            }
         case is FeedResultsUiStateError:
             ResultsErrorStateView { queryViewModel.retryResults() }
         default:
@@ -142,13 +145,31 @@ private struct EmptyStateView: View {
     }
 }
 
+/// FILTER-006 AC2: the zero-result empty state must name the applied filters/query.
+func describeActiveQuery(filters: FilterState, query: String) -> String? {
+    var parts: [String] = []
+    if !query.isEmpty { parts.append("\"\(query)\"") }
+    if let bucket = filters.dateBucket { parts.append(bucket.label) }
+    if let city = filters.city { parts.append(city) }
+    if !filters.genres.isEmpty { parts.append(filters.genres.joined(separator: ", ")) }
+    if let artist = filters.artist { parts.append(artist.name) }
+    return parts.isEmpty ? nil : parts.joined(separator: " · ")
+}
+
 private struct NoResultsStateView: View {
+    let filters: FilterState
+    let query: String
     let onClearAllFilters: () -> Void
 
     var body: some View {
         VStack(spacing: 16) {
             Text("Nenhum evento encontrado com esses filtros")
                 .font(.headline)
+            if let summary = describeActiveQuery(filters: filters, query: query) {
+                Text(summary)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
             Button("Limpar filtros", action: onClearAllFilters)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

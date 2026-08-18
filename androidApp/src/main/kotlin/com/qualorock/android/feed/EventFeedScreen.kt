@@ -94,7 +94,8 @@ fun EventFeedScreen(
             is FeedResultsUiState.Loading -> ResultsLoadingState()
             is FeedResultsUiState.Results ->
                 ResultsList(resultsState.events, onEventClick, onFavoriteClick, onShareClick)
-            is FeedResultsUiState.NoResults -> NoResultsState(onClearAllFilters)
+            is FeedResultsUiState.NoResults ->
+                NoResultsState(resultsState.activeFilters, resultsState.q, onClearAllFilters)
             is FeedResultsUiState.Error -> ResultsErrorState(onRetryResults)
         }
     }
@@ -213,17 +214,44 @@ private fun ColumnScope.ResultsLoadingState() {
 }
 
 @Composable
-private fun ColumnScope.NoResultsState(onClearAllFilters: () -> Unit) {
+private fun ColumnScope.NoResultsState(
+    activeFilters: FilterState,
+    q: String,
+    onClearAllFilters: () -> Unit,
+) {
     Column(
         modifier = Modifier.weight(1f).fillMaxWidth().padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Text(text = stringResource(id = R.string.filters_no_results_title), style = MaterialTheme.typography.titleMedium)
+        describeActiveQuery(activeFilters, q)?.let { summary ->
+            Text(
+                text = summary,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+        }
         Button(onClick = onClearAllFilters, modifier = Modifier.padding(top = 16.dp)) {
             Text(text = stringResource(id = R.string.filters_clear_all))
         }
     }
+}
+
+/** FILTER-006 AC2: the zero-result empty state must name the applied filters/query. */
+private fun describeActiveQuery(
+    filters: FilterState,
+    q: String,
+): String? {
+    val parts =
+        buildList {
+            if (q.isNotBlank()) add("\"$q\"")
+            filters.dateBucket?.let { add(it.label) }
+            filters.city?.let { add(it) }
+            if (filters.genres.isNotEmpty()) add(filters.genres.joinToString(", "))
+            filters.artist?.let { add(it.name) }
+        }
+    return parts.takeIf { it.isNotEmpty() }?.joinToString(" · ")
 }
 
 @Composable

@@ -49,4 +49,20 @@ final class SearchFilterTests: XCTestCase {
 
         XCTAssertTrue(wrapper.filterState.isEmpty)
     }
+
+    func testGivenAnActiveQueryAndFilterWhenDescribeActiveQueryIsCalledThenBothAreNamed() {
+        let filters = FilterState(dateBucket: nil, city: "Vila Velha", genres: [], artist: nil)
+
+        let summary = describeActiveQuery(filters: filters, query: "forro")
+
+        XCTAssertEqual(summary, "\"forro\" · Vila Velha")
+    }
+
+    func testGivenNoActiveQueryOrFiltersWhenDescribeActiveQueryIsCalledThenNilIsReturned() {
+        let filters = FilterState(dateBucket: nil, city: nil, genres: [], artist: nil)
+
+        let summary = describeActiveQuery(filters: filters, query: "")
+
+        XCTAssertNil(summary)
+    }
 }

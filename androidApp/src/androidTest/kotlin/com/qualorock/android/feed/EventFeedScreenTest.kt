@@ -114,7 +114,11 @@ class EventFeedScreenTest {
     @Test
     fun given_a_no_results_state_when_the_feed_renders_then_the_no_results_message_and_clear_filters_action_are_shown() {
         var cleared = false
-        val resultsState = FeedResultsUiState.NoResults(activeFilters = FilterState(), q = "forro")
+        val resultsState =
+            FeedResultsUiState.NoResults(
+                activeFilters = FilterState(city = "Vila Velha"),
+                q = "forro",
+            )
 
         composeTestRule.setContent {
             EventFeedScreen(
@@ -130,6 +134,7 @@ class EventFeedScreenTest {
         }
 
         composeTestRule.onNodeWithText("Nenhum evento encontrado com esses filtros").assertExists()
+        composeTestRule.onNodeWithText("\"forro\" · Vila Velha").assertExists()
         composeTestRule.onNodeWithText("Limpar filtros").performClick()
         assert(cleared)
     }
