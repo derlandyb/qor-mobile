@@ -11,8 +11,14 @@ final class SearchFilterTests: XCTestCase {
     }
 
     @MainActor
+    private func makeWrapper() -> FeedQueryViewModelWrapper {
+        let filterOwner = IosSharedFilterViewModel(baseUrl: "http://127.0.0.1:1")
+        return FeedQueryViewModelWrapper(baseUrl: "http://127.0.0.1:1", filterViewModel: filterOwner.filterViewModel)
+    }
+
+    @MainActor
     func testGivenAWrapperWhenSetQueryIsCalledThenTheQueryIsPublished() {
-        let wrapper = FeedQueryViewModelWrapper(baseUrl: "http://127.0.0.1:1")
+        let wrapper = makeWrapper()
 
         wrapper.setQuery("forro")
 
@@ -21,14 +27,14 @@ final class SearchFilterTests: XCTestCase {
 
     @MainActor
     func testGivenAWrapperWhenNoQueryOrFiltersAreActiveThenResultsStateIsInactive() {
-        let wrapper = FeedQueryViewModelWrapper(baseUrl: "http://127.0.0.1:1")
+        let wrapper = makeWrapper()
 
         XCTAssertTrue(wrapper.resultsState is FeedResultsUiStateInactive)
     }
 
     @MainActor
     func testGivenAWrapperWhenSelectCityIsCalledThenFilterStateReflectsIt() {
-        let wrapper = FeedQueryViewModelWrapper(baseUrl: "http://127.0.0.1:1")
+        let wrapper = makeWrapper()
 
         wrapper.selectCity(city: "Vila Velha")
         pumpRunLoop()
@@ -38,7 +44,7 @@ final class SearchFilterTests: XCTestCase {
 
     @MainActor
     func testGivenActiveFiltersWhenClearAllIsCalledThenFilterStateResetsToEmpty() {
-        let wrapper = FeedQueryViewModelWrapper(baseUrl: "http://127.0.0.1:1")
+        let wrapper = makeWrapper()
         wrapper.selectCity(city: "Vila Velha")
         wrapper.toggleGenre(genre: "Rock")
         pumpRunLoop()

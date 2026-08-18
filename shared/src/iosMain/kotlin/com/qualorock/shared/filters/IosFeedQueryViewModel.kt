@@ -11,16 +11,18 @@ import kotlinx.coroutines.flow.onEach
 
 /**
  * Swift-friendly facade combining [SearchViewModel], [FilterViewModel] and [FeedQueryViewModel] —
- * Kotlin's [kotlinx.coroutines.flow.StateFlow] isn't directly consumable from Swift.
+ * Kotlin's [kotlinx.coroutines.flow.StateFlow] isn't directly consumable from Swift. [filterViewModel] is
+ * shared with the Map tab (see [com.qualorock.shared.map.IosMapQueryViewModel] and
+ * [IosSharedFilterViewModel]) — constructed once by the caller (`iosAppApp.swift`) so active filters
+ * survive switching tabs (MAP-003 AC2), not owned here.
  */
-class IosFeedQueryViewModel(baseUrl: String) {
+class IosFeedQueryViewModel(baseUrl: String, val filterViewModel: FilterViewModel) {
     private val lifecycleJob = Job()
     private val scope = CoroutineScope(Dispatchers.Main + lifecycleJob)
 
     private val searchViewModel = SearchViewModel(scope)
 
     /** Swift calls filter-selection methods (`selectCity`, `toggleGenre`, ...) directly on this. */
-    val filterViewModel = FilterViewModel(KtorFilterOptionsRepository(baseUrl), scope)
     private val feedQueryViewModel =
         FeedQueryViewModel(KtorEventRepository(baseUrl), searchViewModel, filterViewModel, scope)
 

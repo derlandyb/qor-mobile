@@ -20,8 +20,8 @@ final class FeedQueryViewModelWrapper: ObservableObject {
     private var genreOptionsHandle: Closeable?
     private var artistOptionsHandle: Closeable?
 
-    init(baseUrl: String) {
-        iosViewModel = IosFeedQueryViewModel(baseUrl: baseUrl)
+    init(baseUrl: String, filterViewModel: FilterViewModel) {
+        iosViewModel = IosFeedQueryViewModel(baseUrl: baseUrl, filterViewModel: filterViewModel)
 
         resultsHandle = iosViewModel.watchResults { [weak self] newState in
             DispatchQueue.main.async { self?.resultsState = newState }
