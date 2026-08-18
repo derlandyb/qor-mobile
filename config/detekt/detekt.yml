@@ -10,6 +10,7 @@ style:
 complexity:
   LongParameterList:
     functionThreshold: 8
+    ignoreAnnotated: ['Composable']
   LongMethod:
     ignoreAnnotated: ['Composable']
   CyclomaticComplexMethod:

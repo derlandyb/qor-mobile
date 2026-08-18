@@ -18,7 +18,9 @@ class IosFeedQueryViewModel(baseUrl: String) {
     private val scope = CoroutineScope(Dispatchers.Main + lifecycleJob)
 
     private val searchViewModel = SearchViewModel(scope)
-    private val filterViewModel = FilterViewModel(KtorFilterOptionsRepository(baseUrl), scope)
+
+    /** Swift calls filter-selection methods (`selectCity`, `toggleGenre`, ...) directly on this. */
+    val filterViewModel = FilterViewModel(KtorFilterOptionsRepository(baseUrl), scope)
     private val feedQueryViewModel =
         FeedQueryViewModel(KtorEventRepository(baseUrl), searchViewModel, filterViewModel, scope)
 
@@ -27,18 +29,6 @@ class IosFeedQueryViewModel(baseUrl: String) {
     }
 
     fun retryResults() = feedQueryViewModel.retry()
-
-    fun selectDateBucket(bucket: DateBucket?) = filterViewModel.selectDateBucket(bucket)
-
-    fun selectCity(city: String?) = filterViewModel.selectCity(city)
-
-    fun toggleGenre(genre: String) = filterViewModel.toggleGenre(genre)
-
-    fun selectArtist(artist: ArtistOption?) = filterViewModel.selectArtist(artist)
-
-    fun removeChip(chip: FilterChip) = filterViewModel.removeChip(chip)
-
-    fun clearAll() = filterViewModel.clearAll()
 
     fun watchResults(onState: (FeedResultsUiState) -> Unit): Closeable = watch(feedQueryViewModel.resultsState, onState)
 

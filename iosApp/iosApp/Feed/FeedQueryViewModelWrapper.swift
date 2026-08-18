@@ -55,27 +55,27 @@ final class FeedQueryViewModelWrapper: ObservableObject {
     }
 
     func selectDateBucket(_ bucket: DateBucket?) {
-        iosViewModel.selectDateBucket(bucket: bucket)
+        iosViewModel.filterViewModel.selectDateBucket(bucket: bucket)
     }
 
     func selectCity(city: String?) {
-        iosViewModel.selectCity(city: city)
+        iosViewModel.filterViewModel.selectCity(city: city)
     }
 
     func toggleGenre(genre: String) {
-        iosViewModel.toggleGenre(genre: genre)
+        iosViewModel.filterViewModel.toggleGenre(genre: genre)
     }
 
     func selectArtist(_ artist: ArtistOption?) {
-        iosViewModel.selectArtist(artist: artist)
+        iosViewModel.filterViewModel.selectArtist(artist: artist)
     }
 
     func removeChip(_ chip: FilterChip) {
-        iosViewModel.removeChip(chip: chip)
+        iosViewModel.filterViewModel.removeChip(chip: chip)
     }
 
     func clearAll() {
-        iosViewModel.clearAll()
+        iosViewModel.filterViewModel.clearAll()
     }
 
     func retryResults() {
