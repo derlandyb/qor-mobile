@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
 import design.NightlifeGvTokens
-
-const val ConsentCheckboxTestTag = "consentCheckbox"
 
 /**
  * A5 — required, non-pre-checked consent acceptance (AUTH-02/AUTH-03), shared shape reused
@@ -30,10 +30,10 @@ fun ConsentCapture(accepted: Boolean, onAcceptedChange: (Boolean) -> Unit, modif
             checked = accepted,
             onCheckedChange = onAcceptedChange,
             colors = CheckboxDefaults.colors(checkedColor = Color(NightlifeGvTokens.AccentPink)),
-            modifier = Modifier.testTag(ConsentCheckboxTestTag),
+            modifier = Modifier.testTag(stringResource(R.string.test_tag_consent_checkbox)),
         )
         Text(
-            text = "Li e aceito os Termos de Uso e a Política de Privacidade.",
+            text = stringResource(R.string.consent_terms_text),
             color = Color(NightlifeGvTokens.ColorTextSecondary),
             fontSize = NightlifeGvTokens.TextBody.SizeSp.sp,
         )

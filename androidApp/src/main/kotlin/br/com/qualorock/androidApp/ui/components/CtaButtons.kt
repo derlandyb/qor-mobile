@@ -19,13 +19,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
 import design.NightlifeGvTokens
-
-/** Test hook for locating this CTA when it's a sibling of other clickable regions (e.g. `EventCard`'s own card-tap area). */
-const val MapaCtaTestTag = "mapaCta"
 
 /**
  * design-system.md §4.4's two CTA treatments, as pure functions of press state so the target
@@ -61,14 +60,14 @@ fun MapaCta(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = modifier
-            .testTag(MapaCtaTestTag)
+            .testTag(stringResource(R.string.test_tag_mapa_cta))
             .clip(RoundedCornerShape(NightlifeGvTokens.RadiusMdDp.dp))
             .background(backgroundColor)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
             .padding(horizontal = NightlifeGvTokens.Space3Dp.dp, vertical = NightlifeGvTokens.Space2Dp.dp),
     ) {
         androidx.compose.material3.Text(
-            text = "Ver no Mapa",
+            text = stringResource(R.string.cta_ver_no_mapa),
             color = contentColor,
             fontWeight = FontWeight.SemiBold,
             fontSize = NightlifeGvTokens.TextButton.SizeSp.sp,
@@ -104,7 +103,7 @@ fun InstagramCta(onClick: () -> Unit, modifier: Modifier = Modifier) {
             .padding(horizontal = NightlifeGvTokens.Space3Dp.dp, vertical = NightlifeGvTokens.Space2Dp.dp),
     ) {
         androidx.compose.material3.Text(
-            text = "Ver Instagram",
+            text = stringResource(R.string.cta_ver_instagram),
             color = Color.White,
             fontWeight = FontWeight.SemiBold,
             fontSize = NightlifeGvTokens.TextButton.SizeSp.sp,

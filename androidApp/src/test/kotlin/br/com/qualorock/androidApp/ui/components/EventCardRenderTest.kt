@@ -5,6 +5,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.test.core.app.ApplicationProvider
+import br.com.qualorock.androidApp.R
 import domain.enum.City
 import domain.event.Event
 import org.junit.Rule
@@ -19,6 +21,8 @@ class EventCardRenderTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
+
+    private val context = ApplicationProvider.getApplicationContext<Application>()
 
     private val event = Event(
         id = "1",
@@ -66,7 +70,7 @@ class EventCardRenderTest {
             EventCard(event = event, onClick = { cardClicked = true }, onMapClick = { mapClicked = true })
         }
 
-        composeTestRule.onNodeWithTag(MapaCtaTestTag).performClick()
+        composeTestRule.onNodeWithTag(context.getString(R.string.test_tag_mapa_cta)).performClick()
 
         assert(mapClicked)
         assert(!cardClicked)
