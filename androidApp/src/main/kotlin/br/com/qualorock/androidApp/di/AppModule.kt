@@ -1,6 +1,7 @@
 package br.com.qualorock.androidApp.di
 
 import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
+import br.com.qualorock.androidApp.ui.viewmodel.SignupViewModel
 import data.EventRepositoryImpl
 import data.SessionStore
 import data.UserRepositoryImpl
@@ -49,4 +50,5 @@ val appModule = module {
     single { ExerciseDataRight(get()) }
 
     viewModel { LoginViewModel(get()) }
+    viewModel { SignupViewModel(get()) }
 }

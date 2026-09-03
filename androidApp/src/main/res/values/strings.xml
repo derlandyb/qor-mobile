@@ -50,4 +50,18 @@
     <string name="cta_entrar_com_google">Entrar com Google</string>
     <string name="login_link_password_recovery">Esqueci minha senha</string>
     <string name="login_link_signup">Ainda não tem conta? Cadastre-se</string>
+
+    <!-- SignupScreen (A8) -->
+    <string name="signup_title">Crie sua conta</string>
+    <string name="field_label_name">Nome completo</string>
+    <string name="field_label_birthdate">Data de nascimento</string>
+    <string name="signup_error_name_required">Informe seu nome.</string>
+    <string name="signup_error_email_required">Informe seu e-mail.</string>
+    <string name="signup_error_email_invalid">E-mail inválido.</string>
+    <string name="signup_error_password_required">Informe uma senha.</string>
+    <string name="signup_error_birthdate_required">Informe sua data de nascimento.</string>
+    <string name="signup_error_consent_required">É necessário aceitar os Termos de Uso e a Política de Privacidade.</string>
+    <string name="cta_cadastrar">Cadastrar</string>
+    <string name="cta_cadastrar_com_google">Cadastrar com Google</string>
+    <string name="signup_link_login">Já tem conta? Entrar</string>
 </resources>
