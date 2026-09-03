@@ -98,4 +98,30 @@
     <!-- ExploreScreen (A12) -->
     <string name="explore_empty_state_no_matches">Nenhum evento encontrado para estes filtros.</string>
     <string name="explore_cta_limpar_filtros">Limpar filtros</string>
+
+    <!-- EventDetailScreen (A13) -->
+    <string name="event_detail_error_message">Não foi possível carregar o evento. Tente novamente.</string>
+    <string name="event_detail_cta_tentar_novamente">Tentar novamente</string>
+    <string name="event_detail_status_cancelled">Evento cancelado</string>
+    <string name="event_detail_status_ended">Este evento já aconteceu</string>
+    <string name="event_detail_label_free">Gratuito</string>
+    <string name="event_detail_label_paid">Pago</string>
+    <string name="cta_comprar_ingresso">Comprar ingresso</string>
+    <string name="event_detail_ticket_link_error">Não foi possível abrir o link do ingresso.</string>
+    <string name="cta_abrir_no_mapa">Abrir no mapa</string>
+    <string name="event_detail_contacts_title">Contato dos promotores</string>
+    <string name="cta_ligar">Ligar</string>
+    <string name="cta_enviar_email">Enviar e-mail</string>
+    <string name="cta_tiktok">TikTok</string>
+    <string name="cta_compartilhar">Compartilhar</string>
+    <string name="event_detail_share_text">Confira %1$s! %2$s</string>
+
+    <!-- ProfileScreen (A13) -->
+    <string name="profile_title">Meu perfil</string>
+    <string name="field_label_phone">Telefone</string>
+    <string name="cta_salvar">Salvar</string>
+    <string name="cta_alterar_foto">Alterar foto</string>
+    <string name="profile_picture_change_unavailable">Ainda não é possível alterar a foto do perfil por aqui.</string>
+    <string name="profile_save_error">Não foi possível salvar. Tente novamente.</string>
+    <string name="profile_email_change_pending">Confirme seu novo e-mail para concluir a alteração.</string>
 </resources>

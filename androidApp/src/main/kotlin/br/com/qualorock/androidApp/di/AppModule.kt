@@ -1,10 +1,12 @@
 package br.com.qualorock.androidApp.di
 
 import br.com.qualorock.androidApp.ui.viewmodel.EmailVerificationViewModel
+import br.com.qualorock.androidApp.ui.viewmodel.EventDetailViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.ExploreViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.HomeFeedViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.PasswordRecoveryViewModel
+import br.com.qualorock.androidApp.ui.viewmodel.ProfileViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.SignupViewModel
 import data.EventRepositoryImpl
 import data.SessionStore
@@ -66,4 +68,6 @@ val appModule = module {
     viewModel { PasswordRecoveryViewModel(get()) }
     viewModel { HomeFeedViewModel(get(), get()) }
     viewModel { ExploreViewModel(get(), get()) }
+    viewModel { EventDetailViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
 }
