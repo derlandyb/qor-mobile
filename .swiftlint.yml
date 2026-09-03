@@ -1,0 +1,14 @@
+included:
+  - iosApp/iosApp
+  - iosApp/iosAppTests
+
+excluded:
+  - iosApp/iosApp.xcodeproj
+
+opt_in_rules:
+  - empty_count
+  - closure_spacing
+
+line_length:
+  warning: 140
+  error: 200
