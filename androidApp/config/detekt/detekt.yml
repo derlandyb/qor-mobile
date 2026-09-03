@@ -18,7 +18,7 @@ naming:
   TopLevelPropertyNaming:
     active: true
     # This module's design-token/motion constants (e.g. `EventCardMotion`'s `PressedScale`,
-    # `NightlifeGvTokens`'s own member constants in `shared`) consistently use PascalCase
+    # `QualORockThemeTokens`'s own member constants in `shared`) consistently use PascalCase
     # rather than SCREAMING_SNAKE_CASE — an intentional, consistently-applied house style for
     # named token/spec values, not an oversight.
     constantPattern: '[A-Z][a-zA-Z0-9]*'

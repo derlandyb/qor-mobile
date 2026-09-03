@@ -1,0 +1,4 @@
+<resources>
+    <string name="test_tag_mapa_cta" translatable="false">mapaCta</string>
+    <string name="test_tag_consent_checkbox" translatable="false">consentCheckbox</string>
+</resources>

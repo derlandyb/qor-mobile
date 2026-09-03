@@ -1,0 +1,41 @@
+package br.com.qualorock.androidApp.ui.components
+
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
+import design.QualORockThemeTokens
+
+/**
+ * A5 — required, non-pre-checked consent acceptance (AUTH-02/AUTH-03), shared shape reused
+ * across signup screens. `accepted` is hoisted — the caller owns whether it's persisted/reset.
+ */
+@Composable
+fun ConsentCapture(accepted: Boolean, onAcceptedChange: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.padding(vertical = QualORockThemeTokens.Space2Dp.dp),
+    ) {
+        Checkbox(
+            checked = accepted,
+            onCheckedChange = onAcceptedChange,
+            colors = CheckboxDefaults.colors(checkedColor = Color(QualORockThemeTokens.AccentPink)),
+            modifier = Modifier.testTag(stringResource(R.string.test_tag_consent_checkbox)),
+        )
+        Text(
+            text = stringResource(R.string.consent_terms_text),
+            color = Color(QualORockThemeTokens.ColorTextSecondary),
+            fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
+        )
+    }
+}

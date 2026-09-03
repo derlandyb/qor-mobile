@@ -63,7 +63,7 @@ kotlin {
 }
 
 android {
-    namespace = "br.com.qor.shared"
+    namespace = "br.com.qualorock.shared"
     compileSdk = 36
 
     defaultConfig {

@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Qual o Rock?</string>
+
+    <!-- BottomNav (A3) -->
+    <string name="nav_inicio">Início</string>
+    <string name="nav_explorar">Explorar</string>
+    <string name="nav_favoritos">Favoritos</string>
+    <string name="nav_perfil">Perfil</string>
+
+    <!-- CityFilterBar (A2) -->
+    <string name="city_vitoria">Vitória</string>
+    <string name="city_vila_velha">Vila Velha</string>
+    <string name="city_serra">Serra</string>
+    <string name="city_cariacica">Cariacica</string>
+
+    <!-- ConsentCapture (A5) -->
+    <string name="consent_terms_text">Li e aceito os Termos de Uso e a Política de Privacidade.</string>
+
+    <!-- CtaButtons (A2) -->
+    <string name="cta_ver_no_mapa">Ver no Mapa</string>
+    <string name="cta_ver_instagram">Ver Instagram</string>
+
+    <!-- EmptyState (A4) -->
+    <string name="empty_state_no_events">Nenhum evento encontrado</string>
+
+    <!-- GenreTagSet (A2) -->
+    <string name="content_description_genre">Gênero: %1$s</string>
+
+    <!-- LivePulseBadge (A2) -->
+    <string name="live_pulse_label">Ao vivo</string>
+    <string name="content_description_live_now">Ao vivo agora</string>
+
+    <!-- PlaceholderImage (A4) -->
+    <string name="content_description_no_flyer">Sem imagem de divulgação</string>
+
+    <!-- FormFields (A6) -->
+    <string name="field_label_email">E-mail</string>
+    <string name="field_label_password">Senha</string>
+    <string name="password_toggle_show">Mostrar senha</string>
+    <string name="password_toggle_hide">Ocultar senha</string>
+</resources>

@@ -30,7 +30,7 @@ import platform.Security.kSecReturnData
 import platform.Security.kSecValueData
 import platform.posix.memcpy
 
-private const val KeychainService = "br.com.qor.mobile.auth"
+private const val KeychainService = "br.com.qualorock.mobile.auth"
 private const val KeychainAccount = "qor_bearer_token"
 
 /**
