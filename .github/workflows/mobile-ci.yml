@@ -62,6 +62,7 @@ jobs:
       - name: Resolve an available iOS Simulator
         id: simulator
         run: |
+          set -euo pipefail
           DEVICE_NAME=$(xcrun simctl list devices available iOS -j \
             | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; names=[dev['name'] for devs in d.values() for dev in devs]; print(names[0] if names else '')")
           if [ -z "$DEVICE_NAME" ]; then
@@ -74,9 +75,12 @@ jobs:
 
       - name: xcodebuild test
         working-directory: iosApp
+        env:
+          DEVICE_NAME: ${{ steps.simulator.outputs.name }}
         run: |
+          set -euo pipefail
           xcodebuild test \
             -project iosApp.xcodeproj \
             -scheme iosApp \
-            -destination "platform=iOS Simulator,name=${{ steps.simulator.outputs.name }}" \
+            -destination "platform=iOS Simulator,name=$DEVICE_NAME" \
             CODE_SIGNING_ALLOWED=NO
