@@ -59,11 +59,24 @@ jobs:
         working-directory: iosApp
         run: swiftlint lint --strict
 
+      - name: Resolve an available iOS Simulator
+        id: simulator
+        run: |
+          DEVICE_NAME=$(xcrun simctl list devices available iOS -j \
+            | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; names=[dev['name'] for devs in d.values() for dev in devs]; print(names[0] if names else '')")
+          if [ -z "$DEVICE_NAME" ]; then
+            echo "::error::No available iOS Simulator found on this runner"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Using simulator: $DEVICE_NAME"
+          echo "name=$DEVICE_NAME" >> "$GITHUB_OUTPUT"
+
       - name: xcodebuild test
         working-directory: iosApp
         run: |
           xcodebuild test \
             -project iosApp.xcodeproj \
             -scheme iosApp \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -destination "platform=iOS Simulator,name=${{ steps.simulator.outputs.name }}" \
             CODE_SIGNING_ALLOWED=NO
