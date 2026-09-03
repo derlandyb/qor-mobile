@@ -40,6 +40,12 @@ android {
     }
 }
 
+// `ui-test-manifest` (needed by every Robolectric Compose UI test to launch a host activity) is
+// `debugImplementation`-only, per AGP convention — it must never ship in a release build. The
+// `release` unit-test variant can't run these tests as a result, so it's disabled outright
+// rather than left to fail; `debug` is this app's only unit-tested variant either way.
+tasks.matching { it.name == "testReleaseUnitTest" }.configureEach { enabled = false }
+
 dependencies {
     implementation(project(":shared"))
     implementation(platform(libs.compose.bom))
@@ -68,7 +74,11 @@ dependencies {
  * A1 — closes `mobile`'s pre-existing gap: `kover` was applied to `shared` (S1 scaffolding) but
  * never configured with a coverage threshold, and CI never ran a coverage-gated task at all
  * (ARCHITECTURE §8.3 mandates a minimum-80%-coverage CI gate per repo). This rule makes
- * `./gradlew koverVerify` fail the build below 80% line coverage on `androidApp`'s own sources.
+ * `./gradlew koverVerifyDebug` fail the build below 80% line coverage on `androidApp`'s own
+ * sources. Scoped to the `debug` variant only (not `total`/`release`) — `ui-test-manifest`
+ * (Compose's empty host-activity manifest fragment, needed by every Robolectric Compose UI
+ * test) is `debugImplementation`-only, the correct AGP convention since it must never ship in a
+ * release build; the `release` unit-test variant can't run these tests at all as a result.
  */
 kover {
     reports {
@@ -85,9 +95,11 @@ kover {
                 )
             }
         }
-        verify {
-            rule {
-                minBound(80)
+        variant("debug") {
+            verify {
+                rule {
+                    minBound(80)
+                }
             }
         }
     }

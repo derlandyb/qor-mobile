@@ -30,7 +30,7 @@ jobs:
         run: ./gradlew test
 
       - name: Coverage gate (minimum 80%, ARCHITECTURE §8.3)
-        run: ./gradlew koverVerify
+        run: ./gradlew koverVerify :androidApp:koverVerifyDebug
 
       - name: Static analysis (detekt, incl. S4's domain framework-boundary rule)
         run: ./gradlew detekt
