@@ -1,5 +1,7 @@
 package br.com.qor.androidApp.ui.components
 
+private const val TimeLabelLength = 5
+
 private val PtBrMonthAbbreviations = listOf(
     "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ",
 )
@@ -21,5 +23,5 @@ fun formatDateBadge(isoStartsAt: String): DateBadgeLabel {
 /** The `{time}` portion of design-system.md §4.1's venue/time row — `HH:mm`, 24h, no timezone conversion. */
 fun formatEventTime(isoStartsAt: String): String {
     val timePart = isoStartsAt.substringAfter('T').substringBefore('Z')
-    return timePart.take(5)
+    return timePart.take(TimeLabelLength)
 }

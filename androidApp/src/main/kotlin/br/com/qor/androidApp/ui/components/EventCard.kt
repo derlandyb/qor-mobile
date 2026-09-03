@@ -33,6 +33,10 @@ import domain.event.Event
 
 /** design-system.md §3's card-hover spec (`hover:scale-[1.03] hover:-translate-y-1`), as pure functions of press state. */
 object EventCardMotion {
+    // design-system.md §4.1's cover-image aspect ratio (4:5, portrait poster crop).
+    const val ImageAspectRatioWidth = 4f
+    const val ImageAspectRatioHeight = 5f
+
     private const val RestingScale = 1f
     private const val PressedScale = 1.03f
     private const val PressedRiseDp = -4f
@@ -87,7 +91,7 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(4f / 5f)
+                    .aspectRatio(EventCardMotion.ImageAspectRatioWidth / EventCardMotion.ImageAspectRatioHeight)
                     .background(Color(NightlifeGvTokens.ColorBgBase)),
             ) {
                 Box(

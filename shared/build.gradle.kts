@@ -125,7 +125,7 @@ val detektDomainBoundary = tasks.register("detektDomainBoundary", Detekt::class)
     description = "Fails if shared's domain package imports Android/iOS/native framework code."
     group = "verification"
     setSource(files("src/commonMain/kotlin/domain"))
-    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    config.setFrom(files("$rootDir/config/detekt/domain-boundary.yml"))
     buildUponDefaultConfig = false
     include("**/*.kt")
 }

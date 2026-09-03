@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kover)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -45,6 +46,16 @@ android {
 // `release` unit-test variant can't run these tests as a result, so it's disabled outright
 // rather than left to fail; `debug` is this app's only unit-tested variant either way.
 tasks.matching { it.name == "testReleaseUnitTest" }.configureEach { enabled = false }
+
+// ARCHITECTURE §8.4 — "Android Lint/detekt (Android + shared)" applies to this module too;
+// it was only wired into `shared` at S1/S4 scaffolding time, leaving every A2+ Compose
+// component/screen added here unchecked by static analysis. Uses the same default ruleset
+// as `shared`'s module-wide `detekt` task (S4's `detektDomainBoundary` is a `shared`-only
+// concern and does not apply here).
+detekt {
+    buildUponDefaultConfig = true
+    config.setFrom(files("$projectDir/config/detekt/detekt.yml"))
+}
 
 dependencies {
     implementation(project(":shared"))
