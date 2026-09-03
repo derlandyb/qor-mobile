@@ -8,15 +8,18 @@ import domain.user.ProfileUpdateFields
 import domain.user.RegisterResult
 import domain.user.User
 import domain.user.UserRepository
+import domain.user.VerifyEmailResult
 
 class FakeUserRepository(
     private val loginResult: LoginResult = LoginResult.InvalidCredentials("nao configurado"),
     private val registerResult: RegisterResult = RegisterResult.Failure("nao configurado"),
     private val confirmResetResult: ConfirmResetResult = ConfirmResetResult.Failure("nao configurado"),
+    private val verifyEmailResult: VerifyEmailResult = VerifyEmailResult.Failure("nao configurado"),
     private val updateProfileResult: User? = null,
     private val dataRightResult: DataRightResult = DataRightResult.AccessGranted("resumo"),
 ) : UserRepository {
     var requestedResetEmail: String? = null
+    var resendVerificationEmail: String? = null
     var updatedFields: ProfileUpdateFields? = null
     var revokedConsentType: ConsentType? = null
 
@@ -39,6 +42,12 @@ class FakeUserRepository(
     }
 
     override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult = confirmResetResult
+
+    override suspend fun resendVerification(email: String) {
+        resendVerificationEmail = email
+    }
+
+    override suspend fun verifyEmailCode(email: String, code: String): VerifyEmailResult = verifyEmailResult
 
     override suspend fun getProfile(): User = error("not configured")
 

@@ -17,6 +17,7 @@ import domain.user.usecase.RegisterFan
 import domain.user.usecase.ResetPassword
 import domain.user.usecase.SessionWriter
 import domain.user.usecase.UpdateProfile
+import domain.user.usecase.VerifyEmail
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -41,6 +42,7 @@ val appModule = module {
     single { AuthenticateFan(get(), get()) }
     single { RegisterFan(get()) }
     single { ResetPassword(get()) }
+    single { VerifyEmail(get()) }
     single { UpdateProfile(get()) }
     single { ExerciseDataRight(get()) }
 }
