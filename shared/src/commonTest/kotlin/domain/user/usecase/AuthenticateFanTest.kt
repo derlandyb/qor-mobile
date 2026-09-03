@@ -11,7 +11,7 @@ private class FakeSessionWriter : SessionWriter {
     var authenticatedUser: User? = null
     var authenticatedToken: String? = null
 
-    override fun onAuthenticated(user: User, token: String) {
+    override suspend fun onAuthenticated(user: User, token: String) {
         authenticatedUser = user
         authenticatedToken = token
     }

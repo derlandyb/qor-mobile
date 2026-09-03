@@ -37,11 +37,7 @@ class SessionStore(
         _currentUser.value = null
     }
 
-    override fun onAuthenticated(user: User, token: String) {
-        _currentUser.value = user
-        // Token persistence for onAuthenticated (a synchronous SessionWriter callback) is
-        // fire-and-forget here; AuthenticateFan's caller should also call set(...)/await
-        // persistence explicitly where a suspend context is available. This callback exists so
-        // in-memory UI state updates immediately, without waiting on disk I/O.
+    override suspend fun onAuthenticated(user: User, token: String) {
+        set(user, token)
     }
 }

@@ -83,4 +83,15 @@ class SessionStoreTest {
         assertNull(store.currentUser.value)
         assertNull(tokenStorage.read())
     }
+
+    @Test
+    fun `GIVEN a successful login WHEN onAuthenticated is called THEN the token is persisted to secure storage`() = runTest {
+        val tokenStorage = FakeSecureTokenStorage()
+        val store = SessionStore(FakeUserRepository(sampleUser()), tokenStorage)
+
+        store.onAuthenticated(sampleUser(), "tok-4")
+
+        assertEquals(sampleUser(), store.currentUser.value)
+        assertEquals("tok-4", tokenStorage.read())
+    }
 }

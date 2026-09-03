@@ -24,7 +24,7 @@ class AuthenticateFan(
         return result
     }
 
-    private fun notifyIfSuccess(result: LoginResult) {
+    private suspend fun notifyIfSuccess(result: LoginResult) {
         if (result is LoginResult.Success) {
             sessionWriter.onAuthenticated(result.user, result.token)
         }

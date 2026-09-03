@@ -7,5 +7,5 @@ import domain.user.User
  * `SessionStore` — kept here (not a forward dependency on S10) so S9 has no dependency on S10.
  */
 interface SessionWriter {
-    fun onAuthenticated(user: User, token: String)
+    suspend fun onAuthenticated(user: User, token: String)
 }
