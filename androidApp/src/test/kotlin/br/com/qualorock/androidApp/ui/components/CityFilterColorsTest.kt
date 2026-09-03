@@ -1,6 +1,7 @@
 package br.com.qualorock.androidApp.ui.components
 
 import androidx.compose.ui.graphics.Color
+import br.com.qualorock.androidApp.R
 import design.NightlifeGvTokens
 import domain.enum.City
 import org.junit.Test
@@ -9,10 +10,10 @@ import kotlin.test.assertEquals
 class CityFilterColorsTest {
 
     @Test
-    fun `GIVEN Vitoria WHEN styleFor is called THEN it uses accent-pink and the pt-BR label`() {
+    fun `GIVEN Vitoria WHEN styleFor is called THEN it uses accent-pink and the pt-BR label resource`() {
         val style = CityFilterColors.styleFor(City.Vitoria)
         assertEquals(Color(NightlifeGvTokens.AccentPink), style.activeColor)
-        assertEquals("Vitória", style.label)
+        assertEquals(R.string.city_vitoria, style.labelRes)
     }
 
     @Test

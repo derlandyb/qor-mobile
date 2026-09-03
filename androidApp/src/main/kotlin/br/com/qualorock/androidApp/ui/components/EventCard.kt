@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -140,7 +141,7 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
                         Text(timeLabel, color = Color(NightlifeGvTokens.ColorTextSecondary), fontSize = 13.sp)
                     }
                     Text(
-                        text = cityStyle.label.uppercase(),
+                        text = stringResource(cityStyle.labelRes).uppercase(),
                         color = cityStyle.activeColor,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = NightlifeGvTokens.TextBadge.SizeSp.sp,

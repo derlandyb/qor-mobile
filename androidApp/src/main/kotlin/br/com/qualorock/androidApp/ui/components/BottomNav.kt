@@ -10,15 +10,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Text
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
 import design.NightlifeGvTokens
 
 /**
@@ -26,11 +29,11 @@ import design.NightlifeGvTokens
  * mobile.md's A3 scope note: the favoriting action itself is Milestone 2 (Social &
  * Notifications, A20) — the tab exists here only for nav-shell completeness.
  */
-enum class BottomNavDestination(val label: String, val enabled: Boolean) {
-    Inicio("Início", enabled = true),
-    Explorar("Explorar", enabled = true),
-    Favoritos("Favoritos", enabled = false),
-    Perfil("Perfil", enabled = true),
+enum class BottomNavDestination(@param:StringRes val labelRes: Int, val enabled: Boolean) {
+    Inicio(R.string.nav_inicio, enabled = true),
+    Explorar(R.string.nav_explorar, enabled = true),
+    Favoritos(R.string.nav_favoritos, enabled = false),
+    Perfil(R.string.nav_perfil, enabled = true),
 }
 
 private const val UnderlineHeightDp = 2
@@ -76,7 +79,7 @@ private fun RowScope.BottomNavItem(destination: BottomNavDestination, isSelected
             .semantics { if (!destination.enabled) disabled() },
     ) {
         Text(
-            text = destination.label,
+            text = stringResource(destination.labelRes),
             color = textColor,
             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
             fontSize = NightlifeGvTokens.TextMetadata.SizeSp.sp,

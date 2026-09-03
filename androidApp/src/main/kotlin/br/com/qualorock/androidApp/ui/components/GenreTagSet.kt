@@ -9,11 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
 import design.NightlifeGvTokens
 
 /** design-system.md §4.3 tint/text color for one genre chip; `solidBackground` = Sertanejo's solid treatment. */
@@ -55,6 +57,7 @@ object GenreTagColors {
 @Composable
 fun GenreTag(genre: String, modifier: Modifier = Modifier) {
     val style = GenreTagColors.styleFor(genre)
+    val description = stringResource(R.string.content_description_genre, genre)
     Text(
         text = genre.uppercase(),
         color = style.textColor,
@@ -65,6 +68,6 @@ fun GenreTag(genre: String, modifier: Modifier = Modifier) {
             .clip(RoundedCornerShape(NightlifeGvTokens.RadiusSmDp.dp))
             .background(style.backgroundColor)
             .padding(horizontal = NightlifeGvTokens.Space2Dp.dp, vertical = NightlifeGvTokens.Space1Dp.dp)
-            .semantics { contentDescription = "Gênero: $genre" },
+            .semantics { contentDescription = description },
     )
 }

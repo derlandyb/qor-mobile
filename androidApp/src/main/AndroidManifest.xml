@@ -2,7 +2,7 @@
 
     <application
         android:name=".QorApplication"
-        android:label="QOR"
+        android:label="@string/app_name"
         android:allowBackup="false"
         android:theme="@android:style/Theme.Material.NoActionBar">
         <activity

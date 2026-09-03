@@ -14,10 +14,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
 import design.NightlifeGvTokens
 
 /**
@@ -66,7 +68,7 @@ fun EmailField(value: String, onValueChange: (String) -> Unit, errorMessage: Str
     QorTextField(
         value = value,
         onValueChange = onValueChange,
-        label = "E-mail",
+        label = stringResource(R.string.field_label_email),
         errorMessage = errorMessage,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         modifier = modifier,
@@ -81,13 +83,13 @@ fun PasswordField(value: String, onValueChange: (String) -> Unit, errorMessage: 
     QorTextField(
         value = value,
         onValueChange = onValueChange,
-        label = "Senha",
+        label = stringResource(R.string.field_label_password),
         errorMessage = errorMessage,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (revealed) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
             Text(
-                text = if (revealed) "Ocultar senha" else "Mostrar senha",
+                text = stringResource(if (revealed) R.string.password_toggle_hide else R.string.password_toggle_show),
                 color = Color(NightlifeGvTokens.AccentBlue),
                 fontSize = NightlifeGvTokens.TextMetadata.SizeSp.sp,
                 modifier = Modifier.clickable { revealed = !revealed },
