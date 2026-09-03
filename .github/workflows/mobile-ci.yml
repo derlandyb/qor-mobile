@@ -1,0 +1,66 @@
+name: mobile-ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  android:
+    name: Android + shared (Kotlin)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Unit tests (shared commonTest on jvm(), androidApp)
+        run: ./gradlew test
+
+      - name: Static analysis (detekt, incl. S4's domain framework-boundary rule)
+        run: ./gradlew detekt
+
+  ios:
+    name: iOS (SwiftUI)
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate iosApp.xcodeproj from project.yml
+        working-directory: iosApp
+        run: xcodegen generate
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: SwiftLint
+        working-directory: iosApp
+        run: swiftlint lint --strict
+
+      - name: xcodebuild test
+        working-directory: iosApp
+        run: |
+          xcodebuild test \
+            -project iosApp.xcodeproj \
+            -scheme iosApp \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            CODE_SIGNING_ALLOWED=NO
