@@ -1,6 +1,6 @@
 name: iosApp
 options:
-  bundleIdPrefix: br.com.qor
+  bundleIdPrefix: br.com.qualorock
   deploymentTarget:
     iOS: "16.0"
 settings:
@@ -14,7 +14,7 @@ targets:
       - path: iosApp
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: br.com.qor.iosApp
+        PRODUCT_BUNDLE_IDENTIFIER: br.com.qualorock.iosApp
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGN_STYLE: Automatic
@@ -23,7 +23,7 @@ targets:
       path: iosApp/Info.plist
       properties:
         UILaunchScreen: {}
-        CFBundleDisplayName: QOR
+        CFBundleDisplayName: Qual o Rock?
     postCompileScripts:
       - name: Compile Kotlin Framework (shared)
         script: |
