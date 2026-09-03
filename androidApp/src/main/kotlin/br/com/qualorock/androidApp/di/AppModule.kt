@@ -1,5 +1,6 @@
 package br.com.qualorock.androidApp.di
 
+import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import data.EventRepositoryImpl
 import data.SessionStore
 import data.UserRepositoryImpl
@@ -18,13 +19,14 @@ import domain.user.usecase.ResetPassword
 import domain.user.usecase.SessionWriter
 import domain.user.usecase.UpdateProfile
 import domain.user.usecase.VerifyEmail
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 /**
  * A1 — wires `shared`'s repositories/use cases into Koin so Android UI code (screens/ViewModels
  * built in later A-tasks) can `get()`/`koinInject()` them instead of constructing this graph by
- * hand per screen. No ViewModels are registered here yet since no screen consumes them.
+ * hand per screen. A7 adds the first ViewModel registration (`LoginViewModel`).
  */
 val appModule = module {
     single { createSecureTokenStorage() }
@@ -45,4 +47,6 @@ val appModule = module {
     single { VerifyEmail(get()) }
     single { UpdateProfile(get()) }
     single { ExerciseDataRight(get()) }
+
+    viewModel { LoginViewModel(get()) }
 }

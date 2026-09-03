@@ -38,4 +38,16 @@
     <string name="field_label_password">Senha</string>
     <string name="password_toggle_show">Mostrar senha</string>
     <string name="password_toggle_hide">Ocultar senha</string>
+
+    <!-- LoginScreen (A7) -->
+    <string name="login_title">Bem-vindo de volta</string>
+    <string name="login_error_email_required">Informe seu e-mail.</string>
+    <string name="login_error_email_invalid">E-mail inválido.</string>
+    <string name="login_error_password_required">Informe sua senha.</string>
+    <string name="login_error_invalid_credentials">Credenciais inválidas</string>
+    <string name="login_error_unverified_account">Confirme seu e-mail para continuar</string>
+    <string name="cta_entrar">Entrar</string>
+    <string name="cta_entrar_com_google">Entrar com Google</string>
+    <string name="login_link_password_recovery">Esqueci minha senha</string>
+    <string name="login_link_signup">Ainda não tem conta? Cadastre-se</string>
 </resources>
