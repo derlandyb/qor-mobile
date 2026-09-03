@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kover)
 }
 
 android {
@@ -24,6 +25,19 @@ android {
     buildFeatures {
         compose = true
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
@@ -33,4 +47,48 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    // `shared` declares this as `implementation`, not `api` — needed here directly since
+    // AppModule.kt (Koin) references `HttpClient` when wiring EventRepositoryImpl/UserRepositoryImpl.
+    implementation(libs.ktor.client.core)
+
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+/**
+ * A1 — closes `mobile`'s pre-existing gap: `kover` was applied to `shared` (S1 scaffolding) but
+ * never configured with a coverage threshold, and CI never ran a coverage-gated task at all
+ * (ARCHITECTURE §8.3 mandates a minimum-80%-coverage CI gate per repo). This rule makes
+ * `./gradlew koverVerify` fail the build below 80% line coverage on `androidApp`'s own sources.
+ */
+kover {
+    reports {
+        // A1's own classes are framework bootstrap/declarative DI wiring, not business logic —
+        // mobile.md itself scopes A1 to `Tests: none` / `Gate: build`, unlike every A2+ task
+        // (`Tests: unit`, `Gate: quick`), so they're excluded from the 80% denominator rather
+        // than padded with tests that would just assert Koin/Compose framework wiring.
+        filters {
+            excludes {
+                classes(
+                    "br.com.qor.androidApp.QorApplication*",
+                    "br.com.qor.androidApp.*MainActivity*",
+                    "br.com.qor.androidApp.di.*",
+                )
+            }
+        }
+        verify {
+            rule {
+                minBound(80)
+            }
+        }
+    }
 }

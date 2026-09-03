@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".QorApplication"
         android:label="QOR"
         android:allowBackup="false"
         android:theme="@android:style/Theme.Material.NoActionBar">
