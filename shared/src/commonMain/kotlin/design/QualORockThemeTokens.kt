@@ -8,11 +8,11 @@ package design
  * `androidx.compose.ui.graphics.Color`), so this file has zero Android/iOS dependency and can
  * live in `shared`'s domain-adjacent `design` package per Clean Architecture's
  * zero-framework-dependency rule (ARCHITECTURE §8.5). Android UI converts these to
- * `androidx.compose.ui.graphics.Color(NightlifeGvTokens.ColorBgDeep)`; iOS UI converts them to
+ * `androidx.compose.ui.graphics.Color(QualORockThemeTokens.ColorBgDeep)`; iOS UI converts them to
  * `Color(hex:)`/`UIColor` equivalents. Both conversions happen in platform UI code, not here.
  */
 @Suppress("MagicNumber")
-object NightlifeGvTokens {
+object QualORockThemeTokens {
 
     // region 2.1 Global Color Palette — base neutrals (ARGB Long, alpha = 0xFF)
 
