@@ -1,6 +1,7 @@
 package br.com.qualorock.androidApp.di
 
 import br.com.qualorock.androidApp.ui.viewmodel.EmailVerificationViewModel
+import br.com.qualorock.androidApp.ui.viewmodel.HomeFeedViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.PasswordRecoveryViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.SignupViewModel
@@ -55,4 +56,5 @@ val appModule = module {
     viewModel { SignupViewModel(get()) }
     viewModel { EmailVerificationViewModel(get()) }
     viewModel { PasswordRecoveryViewModel(get()) }
+    viewModel { HomeFeedViewModel(get(), get()) }
 }

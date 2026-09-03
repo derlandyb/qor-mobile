@@ -90,4 +90,8 @@
     <string name="cta_enviar_link_recuperacao">Enviar link de recuperação</string>
     <string name="cta_redefinir_senha">Redefinir senha</string>
     <string name="password_recovery_link_login">Lembrou da senha? Fazer login</string>
+
+    <!-- HomeFeedScreen (A11) -->
+    <string name="home_feed_error_message">Não foi possível carregar os eventos. Tente novamente.</string>
+    <string name="home_feed_cta_tentar_novamente">Tentar novamente</string>
 </resources>
