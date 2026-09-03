@@ -73,23 +73,34 @@ Per the root repo's git convention, shared/Android/iOS changes are always commit
 <!-- GETTING STARTED -->
 ## Getting Started
 
-**No application code exists in this repo yet** — this README documents the intended setup once scaffolding lands (see [Roadmap](#roadmap)), it does not describe a working app today.
+The Shared module foundation (S1–S11: KMP scaffold, design tokens, domain layer, event/user models, auth, session store, polling) is implemented. Android/iOS product UI (A1–A14, I1–I14) is not yet built — `androidApp`/`iosApp` are bare shells just large enough for the project graph to compile and link.
 
 ### Prerequisites
 
-* JDK (for Gradle / the KMP `shared` + `androidApp` modules)
-* Android Studio
-* Xcode (macOS only, for `iosApp`)
+* JDK 17 (`java -version`)
+* Gradle — this repo uses the Gradle **wrapper**, so a system install isn't required, but one via Homebrew (`brew install gradle`) works too for one-off commands
+* Android SDK with platform 36 + build-tools installed (`sdkmanager`, or install via Android Studio) — `ANDROID_HOME`/`local.properties` must point at it
+* Xcode 16+ (macOS only, for `iosApp`) with command-line tools selected (`xcode-select -p`)
+* [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`) — the iOS project (`iosApp/iosApp.xcodeproj`) is generated from `iosApp/project.yml`, not hand-maintained/committed as raw pbxproj
 
 This is the **one** QOR repo that does *not* run through Docker Compose — Android/iOS toolchains aren't containerized the way the four web/API services are.
+
+**Toolchain note**: AGP 9.x removes the classic `androidTarget()` KMP integration in favor of a new `com.android.kotlin.multiplatform.library` plugin, and is also incompatible with Gradle ≥9.6 for the classic `com.android.library`/`com.android.application` plugins (a Gradle-internal API AGP 8.x depends on was removed in 9.6). Until the KMP/AGP 9.x migration path is adopted, this repo pins **Gradle 9.5.0** (via the wrapper) with **AGP 8.13.2** — the last combination where `androidTarget()` KMP + `com.android.library`/`com.android.application` work together without extra flags.
 
 ### Installation
 
 ```sh
 git clone https://github.com/derlandyb/qor-mobile.git
 cd qor-mobile
+
+# Android + shared (uses the Gradle wrapper — no local Gradle install needed)
 ./gradlew build            # shared + androidApp
-xcodebuild -scheme iosApp build
+./gradlew test              # commonTest, run on the jvm() target — fast, no emulator
+./gradlew detekt
+
+# iOS — regenerate the Xcode project from project.yml, then build
+cd iosApp && xcodegen generate && cd ..
+xcodebuild -scheme iosApp -project iosApp/iosApp.xcodeproj build
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

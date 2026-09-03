@@ -1,0 +1,50 @@
+name: iosApp
+options:
+  bundleIdPrefix: br.com.qor
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: iosApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.com.qor.iosApp
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGNING_ALLOWED: NO
+    info:
+      path: iosApp/Info.plist
+      properties:
+        UILaunchScreen: {}
+        CFBundleDisplayName: QOR
+    postCompileScripts:
+      - name: Compile Kotlin Framework (shared)
+        script: |
+          cd "$SRCROOT/.."
+          ./gradlew :shared:embedAndSignAppleFrameworkForXcode
+        basedOnDependencyAnalysis: false
+  iosAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: iosAppTests
+    dependencies:
+      - target: iosApp
+schemes:
+  iosApp:
+    build:
+      targets:
+        iosApp: all
+        iosAppTests: [test]
+    test:
+      targets:
+        - iosAppTests
+    run:
+      config: Debug
