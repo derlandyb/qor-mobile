@@ -13,8 +13,12 @@ class FakeUserRepository(
     private val loginResult: LoginResult = LoginResult.InvalidCredentials("nao configurado"),
     private val registerResult: RegisterResult = RegisterResult.Failure("nao configurado"),
     private val confirmResetResult: ConfirmResetResult = ConfirmResetResult.Failure("nao configurado"),
+    private val updateProfileResult: User? = null,
+    private val dataRightResult: DataRightResult = DataRightResult.AccessGranted("resumo"),
 ) : UserRepository {
     var requestedResetEmail: String? = null
+    var updatedFields: ProfileUpdateFields? = null
+    var revokedConsentType: ConsentType? = null
 
     override suspend fun register(
         email: String,
@@ -38,10 +42,17 @@ class FakeUserRepository(
 
     override suspend fun getProfile(): User = error("not configured")
 
-    override suspend fun updateProfile(fields: ProfileUpdateFields): User = error("not configured")
+    override suspend fun updateProfile(fields: ProfileUpdateFields): User {
+        updatedFields = fields
+        return updateProfileResult ?: error("not configured")
+    }
 
-    override suspend fun accessData(): DataRightResult = DataRightResult.AccessGranted("resumo")
-    override suspend fun exportData(): DataRightResult = DataRightResult.ExportReady("payload")
-    override suspend fun deleteAccount(): DataRightResult = DataRightResult.DeletionConfirmed
-    override suspend fun revokeConsent(consentType: ConsentType): DataRightResult = DataRightResult.ConsentRevoked
+    override suspend fun accessData(): DataRightResult = dataRightResult
+    override suspend fun exportData(): DataRightResult = dataRightResult
+    override suspend fun deleteAccount(): DataRightResult = dataRightResult
+
+    override suspend fun revokeConsent(consentType: ConsentType): DataRightResult {
+        revokedConsentType = consentType
+        return dataRightResult
+    }
 }

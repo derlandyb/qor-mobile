@@ -81,6 +81,41 @@ detekt {
 }
 
 /**
+ * A1 (mobile.md) — closes a pre-existing gap: this module applied `kover` since S1 scaffolding
+ * but never configured a coverage threshold, so `mobile` had no enforced 80%-coverage CI gate
+ * at all (ARCHITECTURE §8.3). `total` aggregates coverage across every KMP target's tested
+ * sources (commonTest run on jvm()) into the one number `./gradlew koverVerify` checks.
+ *
+ * Excludes are the Android/iOS `actual` platform-secure-storage/HTTP-engine implementations and
+ * the app-context/startup glue around them — S8's own docblocks already scope these as
+ * "Gate: build-verified only... needs an Android runtime", since `commonTest` runs on the jvm()
+ * target and can't instantiate `EncryptedSharedPreferences`/App Startup. `InMemorySecureTokenStorage`
+ * (jvmMain) is the same category — dev/test scaffolding, not exercised via a unit test.
+ */
+kover {
+    reports {
+        filters {
+            excludes {
+                classes(
+                    "data.AndroidAppContext*",
+                    "data.AndroidSecureTokenStorage*",
+                    "data.InMemorySecureTokenStorage",
+                    "data.HttpClientEngineFactory_*Kt",
+                    "data.SecureTokenStorage_*Kt",
+                )
+            }
+        }
+        total {
+            verify {
+                rule {
+                    minBound(80)
+                }
+            }
+        }
+    }
+}
+
+/**
  * S4 - a Clean Architecture boundary check (ARCHITECTURE section 8.5), scoped ONLY to the
  * domain package tree: forbids Android/iOS/native-interop imports leaking into the domain
  * layer. Kept as a separate task (not the module-wide `detekt` task) because `data`,
