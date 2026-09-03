@@ -1,5 +1,6 @@
 package br.com.qualorock.androidApp.di
 
+import br.com.qualorock.androidApp.ui.viewmodel.EmailVerificationViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.SignupViewModel
 import data.EventRepositoryImpl
@@ -51,4 +52,5 @@ val appModule = module {
 
     viewModel { LoginViewModel(get()) }
     viewModel { SignupViewModel(get()) }
+    viewModel { EmailVerificationViewModel(get()) }
 }

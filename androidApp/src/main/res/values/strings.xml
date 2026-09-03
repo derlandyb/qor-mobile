@@ -63,5 +63,17 @@
     <string name="signup_error_consent_required">É necessário aceitar os Termos de Uso e a Política de Privacidade.</string>
     <string name="cta_cadastrar">Cadastrar</string>
     <string name="cta_cadastrar_com_google">Cadastrar com Google</string>
+
+    <!-- EmailVerificationScreen (A9) -->
+    <string name="email_verification_title">Confirme seu e-mail</string>
+    <string name="email_verification_instructions">Enviamos um código de 6 dígitos para %1$s. Insira-o abaixo para confirmar sua conta.</string>
+    <string name="field_label_code">Código de verificação</string>
+    <string name="email_verification_error_code_required">Informe o código recebido.</string>
+    <string name="email_verification_error_code_invalid_length">O código deve ter 6 dígitos.</string>
+    <string name="cta_verificar_codigo">Verificar código</string>
+    <string name="email_verification_resend_prompt">Não recebeu o código?</string>
+    <string name="email_verification_resend_countdown">Reenviar em %1$ds</string>
+    <string name="cta_reenviar">Reenviar</string>
+    <string name="email_verification_resend_confirmation">Código reenviado.</string>
     <string name="signup_link_login">Já tem conta? Entrar</string>
 </resources>
