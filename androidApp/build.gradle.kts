@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "br.com.qor.androidApp"
+    namespace = "br.com.qualorock.androidApp"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "br.com.qor.androidApp"
+        applicationId = "br.com.qualorock.androidApp"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -100,9 +100,9 @@ kover {
         filters {
             excludes {
                 classes(
-                    "br.com.qor.androidApp.QorApplication*",
-                    "br.com.qor.androidApp.*MainActivity*",
-                    "br.com.qor.androidApp.di.*",
+                    "br.com.qualorock.androidApp.QorApplication*",
+                    "br.com.qualorock.androidApp.*MainActivity*",
+                    "br.com.qualorock.androidApp.di.*",
                 )
             }
         }
