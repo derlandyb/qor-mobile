@@ -2,6 +2,7 @@ package br.com.qualorock.androidApp.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import domain.enum.City
 import domain.event.Event
 import domain.event.EventPage
 import domain.event.PollingCoordinator
@@ -88,8 +89,22 @@ sealed class HomeFeedUiState {
  * of quietly dying. [pollingScope] installs one that swallows it, so a background tick failing
  * can never crash the app; the tradeoff already documented above is that such a failure is then
  * invisible (no [HomeFeedUiState.Error]), same as calling [PollingCoordinator.start] always was.
+ *
+ * **`open`, and [currentCity]/[currentGenre]/[applyFilters] are `protected`, for A12's
+ * [br.com.qualorock.androidApp.ui.viewmodel.ExploreViewModel] to subclass.** DISC-14–DISC-18 need
+ * the exact same pagination/polling/empty-state machinery this class already has, just parameterized
+ * by a city/genre pair instead of always `null`/`null` — subclassing (smallest change available,
+ * per A12's brief) reuses every private helper below (`loadInitial`, `onLoadMore`, `applyPage`,
+ * `pollingScope`) unchanged; only [currentCity]/[currentGenre] fields were added plus the
+ * [applyFilters] entry point that reruns [loadInitial] and restarts [pollingCoordinator] with the
+ * new pair. This class's own two-arg constructor, public API, and behavior (both fields default
+ * `null`) are unchanged, so A11's existing tests/callers need no changes.
+ *
+ * See also this class's own [HomeFeedUiState] doc block above; the [uiState] flow it powers is
+ * reused as-is by [br.com.qualorock.androidApp.ui.viewmodel.ExploreViewModel] rather than being
+ * duplicated behind a second, structurally-identical sealed type.
  */
-class HomeFeedViewModel(
+open class HomeFeedViewModel(
     private val listUpcomingEvents: ListUpcomingEvents,
     private val pollingCoordinator: PollingCoordinator,
 ) : ViewModel() {
@@ -98,6 +113,12 @@ class HomeFeedViewModel(
     val uiState: StateFlow<HomeFeedUiState> = _uiState.asStateFlow()
 
     private var nextCursor: String? = null
+
+    /** A12 — current filters; always `null`/`null` for this class's own [HomeFeedScreen] usage. */
+    protected var currentCity: City? = null
+        private set
+    protected var currentGenre: String? = null
+        private set
 
     /** See this class's KDoc — isolates [PollingCoordinator.start]'s uncaught internal failures from crashing [viewModelScope]. */
     private val pollingScope = CoroutineScope(
@@ -112,7 +133,21 @@ class HomeFeedViewModel(
     }
 
     init {
-        pollingCoordinator.start(pollingScope)
+        pollingCoordinator.start(pollingScope, currentCity, currentGenre)
+    }
+
+    /**
+     * A12/DISC-14–DISC-17 — changes the active filters and reruns both the direct page-1 load and
+     * [PollingCoordinator]'s loop against the new pair, same as this class's own cold start. Only
+     * [br.com.qualorock.androidApp.ui.viewmodel.ExploreViewModel] calls this; [HomeFeedScreen]'s
+     * own usage of this class never does, so its behavior is unaffected.
+     */
+    protected fun applyFilters(city: City?, genre: String?) {
+        currentCity = city
+        currentGenre = genre
+        nextCursor = null
+        viewModelScope.launch { loadInitial() }
+        pollingCoordinator.start(pollingScope, city, genre)
     }
 
     /** DISC-02 pagination — call when the list scrolls near its end. No-op with no next page or a fetch already in flight. */
@@ -124,7 +159,7 @@ class HomeFeedViewModel(
         _uiState.value = state.copy(isLoadingMore = true)
         viewModelScope.launch {
             try {
-                val page = listUpcomingEvents.execute(cursor = nextCursor)
+                val page = listUpcomingEvents.execute(city = currentCity, genre = currentGenre, cursor = nextCursor)
                 nextCursor = page.nextCursor
                 val merged = (_uiState.value as? HomeFeedUiState.Content)?.events.orEmpty() + page.events
                 _uiState.value = HomeFeedUiState.Content(events = merged, isLoadingMore = false)
@@ -177,7 +212,7 @@ class HomeFeedViewModel(
     private suspend fun loadInitial() {
         _uiState.value = HomeFeedUiState.Loading
         try {
-            applyPage(listUpcomingEvents.execute())
+            applyPage(listUpcomingEvents.execute(city = currentCity, genre = currentGenre))
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {

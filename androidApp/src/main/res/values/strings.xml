@@ -94,4 +94,8 @@
     <!-- HomeFeedScreen (A11) -->
     <string name="home_feed_error_message">Não foi possível carregar os eventos. Tente novamente.</string>
     <string name="home_feed_cta_tentar_novamente">Tentar novamente</string>
+
+    <!-- ExploreScreen (A12) -->
+    <string name="explore_empty_state_no_matches">Nenhum evento encontrado para estes filtros.</string>
+    <string name="explore_cta_limpar_filtros">Limpar filtros</string>
 </resources>

@@ -1,6 +1,7 @@
 package br.com.qualorock.androidApp.di
 
 import br.com.qualorock.androidApp.ui.viewmodel.EmailVerificationViewModel
+import br.com.qualorock.androidApp.ui.viewmodel.ExploreViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.HomeFeedViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.PasswordRecoveryViewModel
@@ -43,7 +44,14 @@ val appModule = module {
 
     single { ListUpcomingEvents(get()) }
     single { GetEventDetails(get()) }
-    single { PollingCoordinator(get()) }
+
+    // A12 — `factory`, not `single`: `HomeFeedViewModel` and `ExploreViewModel` are separate
+    // BottomNav destinations that can both be alive at once (separate back-stack entries), each
+    // calling `PollingCoordinator.start` with its own city/genre pair. A shared singleton instance
+    // would have the two screens fight over the same `lastCity`/`lastGenre` and cancel each
+    // other's poll loop; a fresh instance per ViewModel construction (still wrapping the shared
+    // `ListUpcomingEvents` singleton) keeps their polling independent.
+    factory { PollingCoordinator(get()) }
 
     single { AuthenticateFan(get(), get()) }
     single { RegisterFan(get()) }
@@ -57,4 +65,5 @@ val appModule = module {
     viewModel { EmailVerificationViewModel(get()) }
     viewModel { PasswordRecoveryViewModel(get()) }
     viewModel { HomeFeedViewModel(get(), get()) }
+    viewModel { ExploreViewModel(get(), get()) }
 }
