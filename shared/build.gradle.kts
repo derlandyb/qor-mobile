@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -75,4 +76,28 @@ android {
 
 detekt {
     buildUponDefaultConfig = true
+}
+
+/**
+ * S4 - a Clean Architecture boundary check (ARCHITECTURE section 8.5), scoped ONLY to the
+ * domain package tree: forbids Android/iOS/native-interop imports leaking into the domain
+ * layer. Kept as a separate task (not the module-wide `detekt` task) because `data`,
+ * `androidMain`, and `iosMain` legitimately import those platform packages.
+ */
+val detektDomainBoundary = tasks.register("detektDomainBoundary", Detekt::class) {
+    description = "Fails if shared's domain package imports Android/iOS/native framework code."
+    group = "verification"
+    setSource(files("src/commonMain/kotlin/domain"))
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    buildUponDefaultConfig = false
+    include("**/*.kt")
+}
+
+tasks.named("check") {
+    dependsOn(detektDomainBoundary)
+}
+
+// Wired into S2's `./gradlew detekt` CI step, per S4's "Done when".
+tasks.matching { it.name == "detekt" }.configureEach {
+    dependsOn(detektDomainBoundary)
 }

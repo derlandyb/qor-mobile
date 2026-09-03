@@ -1,0 +1,26 @@
+build:
+  maxIssues: 0
+
+config:
+  validation: true
+  warningsAsErrors: false
+
+# ARCHITECTURE §8.5 — the `shared` module's domain layer (entities, use cases, repository
+# interfaces) must have zero framework dependency: no Android/iOS/Ktor/kotlinx.cinterop
+# imports. Scoped to `domain/**` only via this file's own `include` glob (see
+# `shared/build.gradle.kts`'s `detektDomainBoundary` task) — NOT a repo-wide rule, since
+# `androidApp`/`iosApp` and `shared`'s own `data/**` package legitimately import
+# `android.*`/`androidx.*`/Ktor platform engines.
+style:
+  active: true
+  ForbiddenImport:
+    active: true
+    imports:
+      - value: 'android.*'
+        reason: 'domain/** must have zero Android framework dependency (ARCHITECTURE §8.5) — this belongs in data/ or a platform source set.'
+      - value: 'androidx.*'
+        reason: 'domain/** must have zero Android framework dependency (ARCHITECTURE §8.5) — this belongs in data/ or a platform source set.'
+      - value: 'platform.*'
+        reason: 'domain/** must have zero iOS/Apple platform dependency (ARCHITECTURE §8.5) — this belongs in data/ or a platform source set.'
+      - value: 'kotlinx.cinterop.*'
+        reason: 'domain/** must have zero native-interop dependency (ARCHITECTURE §8.5) — this belongs in a platform source set.'
