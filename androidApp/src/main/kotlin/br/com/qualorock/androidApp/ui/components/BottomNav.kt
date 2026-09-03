@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.qualorock.androidApp.R
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 
 /**
  * A3 — MVP Core's bottom-nav destinations. `Favoritos` renders as a disabled stub per
@@ -44,7 +44,7 @@ fun BottomNav(current: BottomNavDestination, onSelect: (BottomNavDestination) ->
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color(NightlifeGvTokens.ColorSurfaceCard)),
+            .background(Color(QualORockThemeTokens.ColorSurfaceCard)),
     ) {
         BottomNavDestination.entries.forEach { destination ->
             BottomNavItem(destination = destination, isSelected = destination == current, onSelect = onSelect)
@@ -59,18 +59,18 @@ fun BottomNav(current: BottomNavDestination, onSelect: (BottomNavDestination) ->
  */
 @Composable
 private fun RowScope.BottomNavItem(destination: BottomNavDestination, isSelected: Boolean, onSelect: (BottomNavDestination) -> Unit) {
-    val accent = Color(NightlifeGvTokens.AccentPink)
+    val accent = Color(QualORockThemeTokens.AccentPink)
     val textColor = when {
-        !destination.enabled -> Color(NightlifeGvTokens.ColorTextTertiary)
+        !destination.enabled -> Color(QualORockThemeTokens.ColorTextTertiary)
         isSelected -> accent
-        else -> Color(NightlifeGvTokens.ColorTextSecondary)
+        else -> Color(QualORockThemeTokens.ColorTextSecondary)
     }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .weight(1f)
-            .padding(vertical = NightlifeGvTokens.Space2Dp.dp)
+            .padding(vertical = QualORockThemeTokens.Space2Dp.dp)
             .selectable(
                 selected = isSelected,
                 enabled = destination.enabled,
@@ -82,7 +82,7 @@ private fun RowScope.BottomNavItem(destination: BottomNavDestination, isSelected
             text = stringResource(destination.labelRes),
             color = textColor,
             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
-            fontSize = NightlifeGvTokens.TextMetadata.SizeSp.sp,
+            fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
         )
         Box(
             modifier = Modifier

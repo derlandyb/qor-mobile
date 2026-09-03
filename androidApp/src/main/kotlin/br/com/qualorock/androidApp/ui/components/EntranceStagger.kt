@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,14 +20,14 @@ private const val EntranceStartScale = 0.96f
 private const val EntranceStartOffsetDp = 16f
 
 private val EntranceEasing = CubicBezierEasing(
-    NightlifeGvTokens.EaseBeat.x1,
-    NightlifeGvTokens.EaseBeat.y1,
-    NightlifeGvTokens.EaseBeat.x2,
-    NightlifeGvTokens.EaseBeat.y2,
+    QualORockThemeTokens.EaseBeat.x1,
+    QualORockThemeTokens.EaseBeat.y1,
+    QualORockThemeTokens.EaseBeat.x2,
+    QualORockThemeTokens.EaseBeat.y2,
 )
 
 /** `card-enter`'s (design-system.md §3) per-index stagger delay — pure, so it's unit-testable without Compose. */
-fun entranceStaggerDelayMillis(index: Int): Long = NightlifeGvTokens.DurationStaggerMs.toLong() * index
+fun entranceStaggerDelayMillis(index: Int): Long = QualORockThemeTokens.DurationStaggerMs.toLong() * index
 
 /**
  * A2 — `card-enter`: fade + rise + scale, staggered by [entranceStaggerDelayMillis] per [index].
@@ -42,9 +42,9 @@ fun Modifier.entranceStagger(index: Int): Modifier {
     LaunchedEffect(index) {
         delay(entranceStaggerDelayMillis(index))
         coroutineScope {
-            launch { alpha.animateTo(1f, tween(NightlifeGvTokens.DurationSlowMs, easing = EntranceEasing)) }
-            launch { offsetY.animateTo(0f, tween(NightlifeGvTokens.DurationSlowMs, easing = EntranceEasing)) }
-            launch { scale.animateTo(1f, tween(NightlifeGvTokens.DurationSlowMs, easing = EntranceEasing)) }
+            launch { alpha.animateTo(1f, tween(QualORockThemeTokens.DurationSlowMs, easing = EntranceEasing)) }
+            launch { offsetY.animateTo(0f, tween(QualORockThemeTokens.DurationSlowMs, easing = EntranceEasing)) }
+            launch { scale.animateTo(1f, tween(QualORockThemeTokens.DurationSlowMs, easing = EntranceEasing)) }
         }
     }
 

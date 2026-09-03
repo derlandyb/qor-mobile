@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.qualorock.androidApp.R
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 
 /**
  * A5 — required, non-pre-checked consent acceptance (AUTH-02/AUTH-03), shared shape reused
@@ -24,18 +24,18 @@ import design.NightlifeGvTokens
 fun ConsentCapture(accepted: Boolean, onAcceptedChange: (Boolean) -> Unit, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.padding(vertical = NightlifeGvTokens.Space2Dp.dp),
+        modifier = modifier.padding(vertical = QualORockThemeTokens.Space2Dp.dp),
     ) {
         Checkbox(
             checked = accepted,
             onCheckedChange = onAcceptedChange,
-            colors = CheckboxDefaults.colors(checkedColor = Color(NightlifeGvTokens.AccentPink)),
+            colors = CheckboxDefaults.colors(checkedColor = Color(QualORockThemeTokens.AccentPink)),
             modifier = Modifier.testTag(stringResource(R.string.test_tag_consent_checkbox)),
         )
         Text(
             text = stringResource(R.string.consent_terms_text),
-            color = Color(NightlifeGvTokens.ColorTextSecondary),
-            fontSize = NightlifeGvTokens.TextBody.SizeSp.sp,
+            color = Color(QualORockThemeTokens.ColorTextSecondary),
+            fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
         )
     }
 }

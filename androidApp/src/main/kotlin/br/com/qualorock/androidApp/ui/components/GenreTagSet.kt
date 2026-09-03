@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.qualorock.androidApp.R
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 
 /** design-system.md §4.3 tint/text color for one genre chip; `solidBackground` = Sertanejo's solid treatment. */
 data class GenreTagStyle(
@@ -34,18 +34,18 @@ private const val TintAlpha = 0.15f
  */
 object GenreTagColors {
     fun styleFor(genre: String): GenreTagStyle = when (genre.lowercase()) {
-        "rock" -> tinted(NightlifeGvTokens.AccentOrange)
-        "samba" -> tinted(NightlifeGvTokens.AccentPink)
+        "rock" -> tinted(QualORockThemeTokens.AccentOrange)
+        "samba" -> tinted(QualORockThemeTokens.AccentPink)
         "sertanejo" -> GenreTagStyle(
-            backgroundColor = Color(NightlifeGvTokens.AccentPink),
-            textColor = Color(NightlifeGvTokens.ColorBgBase),
+            backgroundColor = Color(QualORockThemeTokens.AccentPink),
+            textColor = Color(QualORockThemeTokens.ColorBgBase),
             solidBackground = true,
         )
-        "eletrônico", "eletronico" -> tinted(NightlifeGvTokens.AccentPurple)
-        "reggae" -> tinted(NightlifeGvTokens.AccentBlue)
+        "eletrônico", "eletronico" -> tinted(QualORockThemeTokens.AccentPurple)
+        "reggae" -> tinted(QualORockThemeTokens.AccentBlue)
         else -> GenreTagStyle(
-            backgroundColor = Color(NightlifeGvTokens.ColorSurfaceCardHover),
-            textColor = Color(NightlifeGvTokens.ColorTextSecondary),
+            backgroundColor = Color(QualORockThemeTokens.ColorSurfaceCardHover),
+            textColor = Color(QualORockThemeTokens.ColorTextSecondary),
             solidBackground = false,
         )
     }
@@ -63,11 +63,11 @@ fun GenreTag(genre: String, modifier: Modifier = Modifier) {
         color = style.textColor,
         fontFamily = MaterialTheme.typography.labelSmall.fontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = NightlifeGvTokens.TextBadge.SizeSp.sp,
+        fontSize = QualORockThemeTokens.TextBadge.SizeSp.sp,
         modifier = modifier
-            .clip(RoundedCornerShape(NightlifeGvTokens.RadiusSmDp.dp))
+            .clip(RoundedCornerShape(QualORockThemeTokens.RadiusSmDp.dp))
             .background(style.backgroundColor)
-            .padding(horizontal = NightlifeGvTokens.Space2Dp.dp, vertical = NightlifeGvTokens.Space1Dp.dp)
+            .padding(horizontal = QualORockThemeTokens.Space2Dp.dp, vertical = QualORockThemeTokens.Space1Dp.dp)
             .semantics { contentDescription = description },
     )
 }

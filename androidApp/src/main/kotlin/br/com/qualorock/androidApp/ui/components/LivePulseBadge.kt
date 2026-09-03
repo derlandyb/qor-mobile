@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.qualorock.androidApp.R
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 
 private const val PulseDurationMs = 1800
 private const val PulseMinAlpha = 0.4f
@@ -46,15 +46,15 @@ fun LivePulseBadge(modifier: Modifier = Modifier) {
         ),
         label = "livePulseAlpha",
     )
-    val pink = Color(NightlifeGvTokens.AccentPink)
+    val pink = Color(QualORockThemeTokens.AccentPink)
     val description = stringResource(R.string.content_description_live_now)
 
     Row(
-        horizontalArrangement = Arrangement.spacedBy(NightlifeGvTokens.Space1Dp.dp),
+        horizontalArrangement = Arrangement.spacedBy(QualORockThemeTokens.Space1Dp.dp),
         modifier = modifier
-            .clip(RoundedCornerShape(NightlifeGvTokens.RadiusPillDp.dp))
+            .clip(RoundedCornerShape(QualORockThemeTokens.RadiusPillDp.dp))
             .background(pink.copy(alpha = 0.15f))
-            .padding(horizontal = NightlifeGvTokens.Space2Dp.dp, vertical = NightlifeGvTokens.Space1Dp.dp)
+            .padding(horizontal = QualORockThemeTokens.Space2Dp.dp, vertical = QualORockThemeTokens.Space1Dp.dp)
             .semantics { contentDescription = description },
     ) {
         androidx.compose.foundation.layout.Box(
@@ -68,7 +68,7 @@ fun LivePulseBadge(modifier: Modifier = Modifier) {
             text = stringResource(R.string.live_pulse_label),
             color = pink,
             fontWeight = FontWeight.SemiBold,
-            fontSize = NightlifeGvTokens.TextBadge.SizeSp.sp,
+            fontSize = QualORockThemeTokens.TextBadge.SizeSp.sp,
         )
     }
 }

@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.sp
 import br.com.qualorock.androidApp.R
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 
 /**
  * A6 — the design system's text field variant with pt-BR inline validation error display,
@@ -47,16 +47,16 @@ fun QorTextField(
             visualTransformation = visualTransformation,
             trailingIcon = trailingIcon,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(NightlifeGvTokens.AccentBlue),
-                errorBorderColor = Color(NightlifeGvTokens.ColorDanger),
+                focusedBorderColor = Color(QualORockThemeTokens.AccentBlue),
+                errorBorderColor = Color(QualORockThemeTokens.ColorDanger),
             ),
             modifier = Modifier.fillMaxWidth(),
         )
         if (errorMessage != null) {
             Text(
                 text = errorMessage,
-                color = Color(NightlifeGvTokens.ColorDanger),
-                fontSize = NightlifeGvTokens.TextMetadata.SizeSp.sp,
+                color = Color(QualORockThemeTokens.ColorDanger),
+                fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
             )
         }
     }
@@ -90,8 +90,8 @@ fun PasswordField(value: String, onValueChange: (String) -> Unit, errorMessage: 
         trailingIcon = {
             Text(
                 text = stringResource(if (revealed) R.string.password_toggle_hide else R.string.password_toggle_show),
-                color = Color(NightlifeGvTokens.AccentBlue),
-                fontSize = NightlifeGvTokens.TextMetadata.SizeSp.sp,
+                color = Color(QualORockThemeTokens.AccentBlue),
+                fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
                 modifier = Modifier.clickable { revealed = !revealed },
             )
         },

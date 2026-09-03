@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 import domain.event.Event
 
 /** design-system.md §3's card-hover spec (`hover:scale-[1.03] hover:-translate-y-1`), as pure functions of press state. */
@@ -58,12 +58,12 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
     val pressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(
         targetValue = EventCardMotion.pressScale(pressed),
-        animationSpec = tween(NightlifeGvTokens.DurationBaseMs),
+        animationSpec = tween(QualORockThemeTokens.DurationBaseMs),
         label = "eventCardScale",
     )
     val riseDp by animateDpAsState(
         targetValue = EventCardMotion.pressRiseDp(pressed).dp,
-        animationSpec = tween(NightlifeGvTokens.DurationBaseMs),
+        animationSpec = tween(QualORockThemeTokens.DurationBaseMs),
         label = "eventCardRise",
     )
     val dateLabel = formatDateBadge(event.startsAt)
@@ -74,12 +74,12 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
         modifier = modifier
             .scale(scale)
             .offset(y = riseDp)
-            .clip(RoundedCornerShape(NightlifeGvTokens.RadiusLgDp.dp))
-            .background(Color(NightlifeGvTokens.ColorSurfaceCard))
+            .clip(RoundedCornerShape(QualORockThemeTokens.RadiusLgDp.dp))
+            .background(Color(QualORockThemeTokens.ColorSurfaceCard))
             .border(
-                width = NightlifeGvTokens.BorderWidthHairlineDp.dp,
-                color = Color(NightlifeGvTokens.ColorBorderSubtle),
-                shape = RoundedCornerShape(NightlifeGvTokens.RadiusLgDp.dp),
+                width = QualORockThemeTokens.BorderWidthHairlineDp.dp,
+                color = Color(QualORockThemeTokens.ColorBorderSubtle),
+                shape = RoundedCornerShape(QualORockThemeTokens.RadiusLgDp.dp),
             ),
     ) {
         // The card-tap region (image + title/venue block) is a separate clickable from the CTA
@@ -93,37 +93,37 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(EventCardMotion.ImageAspectRatioWidth / EventCardMotion.ImageAspectRatioHeight)
-                    .background(Color(NightlifeGvTokens.ColorBgBase)),
+                    .background(Color(QualORockThemeTokens.ColorBgBase)),
             ) {
                 Box(
                     modifier = Modifier
-                        .padding(NightlifeGvTokens.Space3Dp.dp)
-                        .clip(RoundedCornerShape(NightlifeGvTokens.RadiusSmDp.dp))
-                        .background(Color(NightlifeGvTokens.ColorBgDeep).copy(alpha = 0.8f))
-                        .padding(horizontal = NightlifeGvTokens.Space2Dp.dp, vertical = NightlifeGvTokens.Space1Dp.dp),
+                        .padding(QualORockThemeTokens.Space3Dp.dp)
+                        .clip(RoundedCornerShape(QualORockThemeTokens.RadiusSmDp.dp))
+                        .background(Color(QualORockThemeTokens.ColorBgDeep).copy(alpha = 0.8f))
+                        .padding(horizontal = QualORockThemeTokens.Space2Dp.dp, vertical = QualORockThemeTokens.Space1Dp.dp),
                 ) {
                     Column {
-                        Text(dateLabel.month, color = Color(NightlifeGvTokens.ColorTextSecondary), fontSize = 10.sp)
+                        Text(dateLabel.month, color = Color(QualORockThemeTokens.ColorTextSecondary), fontSize = 10.sp)
                         Text(
                             dateLabel.day,
-                            color = Color(NightlifeGvTokens.ColorTextPrimary),
+                            color = Color(QualORockThemeTokens.ColorTextPrimary),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
                         )
                     }
                 }
-                GenreTag(genre = event.genre, modifier = Modifier.padding(NightlifeGvTokens.Space3Dp.dp))
+                GenreTag(genre = event.genre, modifier = Modifier.padding(QualORockThemeTokens.Space3Dp.dp))
             }
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(NightlifeGvTokens.Space2Dp.dp),
-                modifier = Modifier.padding(NightlifeGvTokens.Space3Dp.dp),
+                verticalArrangement = Arrangement.spacedBy(QualORockThemeTokens.Space2Dp.dp),
+                modifier = Modifier.padding(QualORockThemeTokens.Space3Dp.dp),
             ) {
                 Text(
                     text = event.title,
-                    color = Color(NightlifeGvTokens.ColorTextPrimary),
+                    color = Color(QualORockThemeTokens.ColorTextPrimary),
                     fontWeight = FontWeight.Bold,
-                    fontSize = NightlifeGvTokens.TextEventTitle.SizeSp.sp,
+                    fontSize = QualORockThemeTokens.TextEventTitle.SizeSp.sp,
                     maxLines = 2,
                 )
 
@@ -134,21 +134,21 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
                     Column {
                         Text(
                             event.address,
-                            color = Color(NightlifeGvTokens.ColorTextPrimary),
+                            color = Color(QualORockThemeTokens.ColorTextPrimary),
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp,
                         )
-                        Text(timeLabel, color = Color(NightlifeGvTokens.ColorTextSecondary), fontSize = 13.sp)
+                        Text(timeLabel, color = Color(QualORockThemeTokens.ColorTextSecondary), fontSize = 13.sp)
                     }
                     Text(
                         text = stringResource(cityStyle.labelRes).uppercase(),
                         color = cityStyle.activeColor,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = NightlifeGvTokens.TextBadge.SizeSp.sp,
+                        fontSize = QualORockThemeTokens.TextBadge.SizeSp.sp,
                         modifier = Modifier
-                            .clip(RoundedCornerShape(NightlifeGvTokens.RadiusPillDp.dp))
+                            .clip(RoundedCornerShape(QualORockThemeTokens.RadiusPillDp.dp))
                             .background(cityStyle.activeColor.copy(alpha = 0.15f))
-                            .padding(horizontal = NightlifeGvTokens.Space2Dp.dp, vertical = NightlifeGvTokens.Space1Dp.dp),
+                            .padding(horizontal = QualORockThemeTokens.Space2Dp.dp, vertical = QualORockThemeTokens.Space1Dp.dp),
                     )
                 }
             }
@@ -158,7 +158,7 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
             onClick = onMapClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = NightlifeGvTokens.Space3Dp.dp, end = NightlifeGvTokens.Space3Dp.dp, bottom = NightlifeGvTokens.Space3Dp.dp),
+                .padding(start = QualORockThemeTokens.Space3Dp.dp, end = QualORockThemeTokens.Space3Dp.dp, bottom = QualORockThemeTokens.Space3Dp.dp),
         )
     }
 }

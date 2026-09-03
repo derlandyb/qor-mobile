@@ -1,7 +1,7 @@
 package br.com.qualorock.androidApp.ui.components
 
 import androidx.compose.ui.graphics.Color
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -12,7 +12,7 @@ class GenreTagColorsTest {
     @Test
     fun `GIVEN Rock WHEN styleFor is called THEN it uses the accent-orange 15pct tint, not solid`() {
         val style = GenreTagColors.styleFor("Rock")
-        assertEquals(Color(NightlifeGvTokens.AccentOrange), style.textColor)
+        assertEquals(Color(QualORockThemeTokens.AccentOrange), style.textColor)
         assertFalse(style.solidBackground)
     }
 
@@ -20,13 +20,13 @@ class GenreTagColorsTest {
     fun `GIVEN Sertanejo WHEN styleFor is called THEN it uses a solid accent-pink background`() {
         val style = GenreTagColors.styleFor("Sertanejo")
         assertTrue(style.solidBackground)
-        assertEquals(Color(NightlifeGvTokens.AccentPink), style.backgroundColor)
+        assertEquals(Color(QualORockThemeTokens.AccentPink), style.backgroundColor)
     }
 
     @Test
     fun `GIVEN an unknown genre string WHEN styleFor is called THEN it falls back to a neutral tint`() {
         val style = GenreTagColors.styleFor("Forró")
-        assertEquals(Color(NightlifeGvTokens.ColorTextSecondary), style.textColor)
+        assertEquals(Color(QualORockThemeTokens.ColorTextSecondary), style.textColor)
         assertFalse(style.solidBackground)
     }
 

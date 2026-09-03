@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.qualorock.androidApp.R
-import design.NightlifeGvTokens
+import design.QualORockThemeTokens
 
 /**
  * design-system.md §4.4's two CTA treatments, as pure functions of press state so the target
@@ -49,11 +49,11 @@ fun MapaCta(onClick: () -> Unit, modifier: Modifier = Modifier) {
     val pressed by interactionSource.collectIsPressedAsState()
     val progress by animateFloatAsState(
         targetValue = if (pressed) 1f else 0f,
-        animationSpec = tween(NightlifeGvTokens.DurationBaseMs),
+        animationSpec = tween(QualORockThemeTokens.DurationBaseMs),
         label = "mapaCtaPress",
     )
-    val blue = Color(NightlifeGvTokens.AccentBlue)
-    val dark = Color(NightlifeGvTokens.ColorBgDeep)
+    val blue = Color(QualORockThemeTokens.AccentBlue)
+    val dark = Color(QualORockThemeTokens.ColorBgDeep)
     val backgroundColor = lerp(blue.copy(alpha = CtaButtonMotion.MapaRestingAlpha), blue, progress)
     val contentColor = lerp(blue, dark, progress)
 
@@ -61,16 +61,16 @@ fun MapaCta(onClick: () -> Unit, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.Center,
         modifier = modifier
             .testTag(stringResource(R.string.test_tag_mapa_cta))
-            .clip(RoundedCornerShape(NightlifeGvTokens.RadiusMdDp.dp))
+            .clip(RoundedCornerShape(QualORockThemeTokens.RadiusMdDp.dp))
             .background(backgroundColor)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
-            .padding(horizontal = NightlifeGvTokens.Space3Dp.dp, vertical = NightlifeGvTokens.Space2Dp.dp),
+            .padding(horizontal = QualORockThemeTokens.Space3Dp.dp, vertical = QualORockThemeTokens.Space2Dp.dp),
     ) {
         androidx.compose.material3.Text(
             text = stringResource(R.string.cta_ver_no_mapa),
             color = contentColor,
             fontWeight = FontWeight.SemiBold,
-            fontSize = NightlifeGvTokens.TextButton.SizeSp.sp,
+            fontSize = QualORockThemeTokens.TextButton.SizeSp.sp,
         )
     }
 }
@@ -82,11 +82,11 @@ fun InstagramCta(onClick: () -> Unit, modifier: Modifier = Modifier) {
     val pressed by interactionSource.collectIsPressedAsState()
     val progress by animateFloatAsState(
         targetValue = CtaButtonMotion.instagramGradientOffset(pressed),
-        animationSpec = tween(NightlifeGvTokens.DurationBaseMs),
+        animationSpec = tween(QualORockThemeTokens.DurationBaseMs),
         label = "instagramCtaPress",
     )
-    val pink = Color(NightlifeGvTokens.AccentPink)
-    val purple = Color(NightlifeGvTokens.AccentPurple)
+    val pink = Color(QualORockThemeTokens.AccentPink)
+    val purple = Color(QualORockThemeTokens.AccentPurple)
     val shift = InstagramGradientSpanPx * progress
     val brush = Brush.horizontalGradient(
         colors = listOf(pink, purple),
@@ -97,16 +97,16 @@ fun InstagramCta(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = modifier
-            .clip(RoundedCornerShape(NightlifeGvTokens.RadiusMdDp.dp))
+            .clip(RoundedCornerShape(QualORockThemeTokens.RadiusMdDp.dp))
             .background(brush)
             .clickable(interactionSource = interactionSource, indication = null, onClick = onClick)
-            .padding(horizontal = NightlifeGvTokens.Space3Dp.dp, vertical = NightlifeGvTokens.Space2Dp.dp),
+            .padding(horizontal = QualORockThemeTokens.Space3Dp.dp, vertical = QualORockThemeTokens.Space2Dp.dp),
     ) {
         androidx.compose.material3.Text(
             text = stringResource(R.string.cta_ver_instagram),
             color = Color.White,
             fontWeight = FontWeight.SemiBold,
-            fontSize = NightlifeGvTokens.TextButton.SizeSp.sp,
+            fontSize = QualORockThemeTokens.TextButton.SizeSp.sp,
         )
     }
 }
