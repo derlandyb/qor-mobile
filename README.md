@@ -95,7 +95,8 @@ cd qor-mobile
 
 # Android + shared (uses the Gradle wrapper — no local Gradle install needed)
 ./gradlew build            # shared + androidApp
-./gradlew test              # commonTest, run on the jvm() target — fast, no emulator
+./gradlew test              # commonTest (jvm() target) + androidApp Robolectric unit tests
+./gradlew koverVerify :androidApp:koverVerifyDebug   # coverage gate — minimum 80%, same commands CI's gate runs
 ./gradlew detekt
 
 # iOS — regenerate the Xcode project from project.yml, then build

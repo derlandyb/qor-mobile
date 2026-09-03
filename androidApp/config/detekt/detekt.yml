@@ -1,0 +1,51 @@
+build:
+  maxIssues: 0
+
+config:
+  validation: true
+  warningsAsErrors: false
+
+# `androidApp` is a Compose UI module — a handful of detekt's plain-Kotlin defaults fight
+# established, widespread Compose conventions rather than catching real smells. Each override
+# below is scoped as narrowly as the rule allows (annotation-based where supported), not a
+# blanket rule disable.
+naming:
+  FunctionNaming:
+    active: true
+    # PascalCase `@Composable` functions are the standard Compose naming convention (a
+    # Composable reads as the UI element it produces, like a type name) — not a smell.
+    ignoreAnnotated: ['Composable']
+  TopLevelPropertyNaming:
+    active: true
+    # This module's design-token/motion constants (e.g. `EventCardMotion`'s `PressedScale`,
+    # `NightlifeGvTokens`'s own member constants in `shared`) consistently use PascalCase
+    # rather than SCREAMING_SNAKE_CASE — an intentional, consistently-applied house style for
+    # named token/spec values, not an oversight.
+    constantPattern: '[A-Z][a-zA-Z0-9]*'
+  MatchingDeclarationName:
+    # This rule only compares a file's name against its top-level *class-like* declarations
+    # (class/interface/object/enum) — it has no concept of a top-level `@Composable` function,
+    # which is this module's actual per-file "primary declaration" convention (one Composable
+    # per file, e.g. `BottomNav.kt`'s `fun BottomNav`, `EventCard.kt`'s `fun EventCard`), each
+    # legitimately paired with a small state/motion type (`BottomNavDestination`,
+    # `EventCardMotion`) kept in the same file for cohesion and unit-testability without
+    # Compose. `mustBeFirst: false` alone can't satisfy the rule since it still requires *some*
+    # class-like declaration to match the filename, so it's disabled rather than fought file by
+    # file.
+    active: false
+
+complexity:
+  LongMethod:
+    active: true
+    ignoreAnnotated: ['Composable']
+  LongParameterList:
+    active: true
+    ignoreAnnotated: ['Composable']
+
+style:
+  MaxLineLength:
+    active: true
+    # Compose's fluent `Modifier`/parameter-chain style routinely exceeds the plain-Kotlin 120
+    # default; 150 comfortably covers this module's longest lines without licensing genuinely
+    # unreadable ones.
+    maxLineLength: 150
