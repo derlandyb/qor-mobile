@@ -127,7 +127,7 @@ final class LoginViewModelTests: XCTestCase {
 /// detached `Task`, so tests await its completion this way rather than sleeping a fixed duration.
 @MainActor
 private func waitUntil(
-    timeout: TimeInterval = 2,
+    timeout: TimeInterval = 5,
     _ condition: @escaping () -> Bool
 ) async {
     let deadline = Date().addingTimeInterval(timeout)

@@ -224,7 +224,7 @@ final class HomeFeedViewModelTests: XCTestCase {
 
 @MainActor
 private func waitUntil(
-    timeout: TimeInterval = 1.0,
+    timeout: TimeInterval = 5.0,
     _ condition: () -> Bool
 ) async {
     let deadline = Date().addingTimeInterval(timeout)

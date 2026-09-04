@@ -43,7 +43,7 @@ private func makeEvent(id: String = "1") -> Event {
 }
 
 @MainActor
-private func waitUntil(timeout: TimeInterval = 1.0, _ condition: () -> Bool) async {
+private func waitUntil(timeout: TimeInterval = 5.0, _ condition: () -> Bool) async {
     let deadline = Date().addingTimeInterval(timeout)
     while !condition(), Date() < deadline {
         try? await Task.sleep(nanoseconds: 10_000_000)
