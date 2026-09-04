@@ -32,9 +32,12 @@ enum CityFilterColors {
                 activeColor: QorColor.accentPurple, activeTextColor: .white, labelKey: "city_cariacica"
             )
         default:
-            return CityFilterStyle(
-                activeColor: QorColor.textSecondary, activeTextColor: QorColor.bgDeep, labelKey: "city_vitoria"
-            )
+            // Kotlin/Native's Objective-C export represents `City` as a class hierarchy, not a
+            // true Swift enum, so `switch` requires this clause even though every real case is
+            // covered above — fail loudly (mirrors the fail-loud, no-catch-all rule
+            // `shared/domain/enum/City.kt` documents) rather than silently defaulting to a real
+            // city's styling, which would misrepresent a genuine contract break as valid data.
+            fatalError("Unhandled City case: \(city)")
         }
     }
 }

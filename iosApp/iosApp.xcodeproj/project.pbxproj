@@ -20,6 +20,7 @@
 		6C9FDA3B4DD331972B4ABFFF /* FormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5F97CF8808042B65E34058 /* FormFields.swift */; };
 		701DB10C0A26285D95B1F6DA /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC880FE7D8D68D8C6C50F34E /* EmptyState.swift */; };
 		73D657A9DD7C1150A7F69895 /* EntranceStagger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267442C81CB2AB1C75774CAD /* EntranceStagger.swift */; };
+		885AB069FE0AAE423DEB685F /* EmptyStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A27CBD1B1A01DCEE0376024 /* EmptyStateTests.swift */; };
 		898EEAEC11D8191CB7666ED5 /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B41F95B4FD2A9CA6D615B /* iosAppTests.swift */; };
 		962187F1D90C61B9FB47362C /* EventDateBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DBF960FE47E5FFBD580953 /* EventDateBadgeTests.swift */; };
 		A119A8CE46766B32FC14DE5C /* BottomNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C8047226B9A556453107D /* BottomNav.swift */; };
@@ -60,6 +61,7 @@
 		86038AE1032E284E79B32AD6 /* iosApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95772703A2F4FC57B7258A6B /* EventCardMotionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardMotionTests.swift; sourceTree = "<group>"; };
 		989B41F95B4FD2A9CA6D615B /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
+		9A27CBD1B1A01DCEE0376024 /* EmptyStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateTests.swift; sourceTree = "<group>"; };
 		AB6D48E4DB58C84ED6420C62 /* CityFilterColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityFilterColorsTests.swift; sourceTree = "<group>"; };
 		B3BBCDFEA8E40D419A30397F /* EntranceStaggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceStaggerTests.swift; sourceTree = "<group>"; };
 		B767F98392C7AC9620D8168B /* ColorTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTokens.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				FF463822DA61AF7A7CD14446 /* BottomNavDestinationTests.swift */,
 				AB6D48E4DB58C84ED6420C62 /* CityFilterColorsTests.swift */,
 				859550D2AE689447624298E0 /* CtaButtonMotionTests.swift */,
+				9A27CBD1B1A01DCEE0376024 /* EmptyStateTests.swift */,
 				B3BBCDFEA8E40D419A30397F /* EntranceStaggerTests.swift */,
 				95772703A2F4FC57B7258A6B /* EventCardMotionTests.swift */,
 				E9DBF960FE47E5FFBD580953 /* EventDateBadgeTests.swift */,
@@ -300,6 +303,7 @@
 				692E26574F77B90A5CDA37FB /* BottomNavDestinationTests.swift in Sources */,
 				BEB34CEBDDAC870450DF5EF3 /* CityFilterColorsTests.swift in Sources */,
 				44D2D375FFC73DB086C66DE5 /* CtaButtonMotionTests.swift in Sources */,
+				885AB069FE0AAE423DEB685F /* EmptyStateTests.swift in Sources */,
 				69C3F7CC4E027B6C03DC60F4 /* EntranceStaggerTests.swift in Sources */,
 				1DC36DA4896087859B87657F /* EventCardMotionTests.swift in Sources */,
 				962187F1D90C61B9FB47362C /* EventDateBadgeTests.swift in Sources */,
