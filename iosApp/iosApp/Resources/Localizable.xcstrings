@@ -81,6 +81,26 @@
         }
       }
     },
+    "cta_abrir_no_mapa": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir no mapa"
+          }
+        }
+      }
+    },
+    "cta_alterar_foto": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alterar foto"
+          }
+        }
+      }
+    },
     "cta_cadastrar": {
       "localizations": {
         "pt-BR": {
@@ -97,6 +117,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cadastrar com Google"
+          }
+        }
+      }
+    },
+    "cta_compartilhar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartilhar"
+          }
+        }
+      }
+    },
+    "cta_comprar_ingresso": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprar ingresso"
           }
         }
       }
@@ -121,12 +161,32 @@
         }
       }
     },
+    "cta_enviar_email": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar e-mail"
+          }
+        }
+      }
+    },
     "cta_enviar_link_recuperacao": {
       "localizations": {
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Enviar link de recuperação"
+          }
+        }
+      }
+    },
+    "cta_ligar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ligar"
           }
         }
       }
@@ -147,6 +207,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reenviar"
+          }
+        }
+      }
+    },
+    "cta_salvar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvar"
+          }
+        }
+      }
+    },
+    "cta_tiktok": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TikTok"
           }
         }
       }
@@ -271,6 +351,86 @@
         }
       }
     },
+    "event_detail_contacts_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contato dos promotores"
+          }
+        }
+      }
+    },
+    "event_detail_cta_tentar_novamente": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
+          }
+        }
+      }
+    },
+    "event_detail_error_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar o evento. Tente novamente."
+          }
+        }
+      }
+    },
+    "event_detail_label_free": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gratuito"
+          }
+        }
+      }
+    },
+    "event_detail_label_paid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pago"
+          }
+        }
+      }
+    },
+    "event_detail_share_text": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confira %1$@! %2$@"
+          }
+        }
+      }
+    },
+    "event_detail_status_cancelled": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Evento cancelado"
+          }
+        }
+      }
+    },
+    "event_detail_status_ended": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este evento já aconteceu"
+          }
+        }
+      }
+    },
     "field_label_birthdate": {
       "localizations": {
         "pt-BR": {
@@ -327,6 +487,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Senha"
+          }
+        }
+      }
+    },
+    "field_label_phone": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefone"
           }
         }
       }
@@ -637,6 +807,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostrar senha"
+          }
+        }
+      }
+    },
+    "profile_picture_change_unavailable": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não é possível alterar a foto do perfil por aqui."
+          }
+        }
+      }
+    },
+    "profile_save_error": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível salvar. Tente novamente."
+          }
+        }
+      }
+    },
+    "profile_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meu perfil"
           }
         }
       }
