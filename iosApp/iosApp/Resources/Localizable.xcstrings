@@ -450,6 +450,96 @@
           }
         }
       }
+    },
+    "email_verification_title" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirme seu e-mail"
+          }
+        }
+      }
+    },
+    "email_verification_instructions" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviamos um código de 6 dígitos para %@. Insira-o abaixo para confirmar sua conta."
+          }
+        }
+      }
+    },
+    "email_verification_error_code_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe o código recebido."
+          }
+        }
+      }
+    },
+    "email_verification_error_code_invalid_length" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O código deve ter 6 dígitos."
+          }
+        }
+      }
+    },
+    "cta_verificar_codigo" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificar código"
+          }
+        }
+      }
+    },
+    "email_verification_resend_prompt" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não recebeu o código?"
+          }
+        }
+      }
+    },
+    "email_verification_resend_countdown" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenviar em %ds"
+          }
+        }
+      }
+    },
+    "cta_reenviar" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenviar"
+          }
+        }
+      }
+    },
+    "email_verification_resend_confirmation" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código reenviado."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
