@@ -431,6 +431,46 @@
         }
       }
     },
+    "explore_cta_limpar_filtros": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpar filtros"
+          }
+        }
+      }
+    },
+    "explore_cta_tentar_novamente": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
+          }
+        }
+      }
+    },
+    "explore_empty_state_no_matches": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum evento corresponde aos filtros selecionados"
+          }
+        }
+      }
+    },
+    "explore_error_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar os eventos"
+          }
+        }
+      }
+    },
     "field_label_birthdate": {
       "localizations": {
         "pt-BR": {
