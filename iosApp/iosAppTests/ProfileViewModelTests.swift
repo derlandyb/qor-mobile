@@ -4,7 +4,9 @@ import shared
 
 @MainActor
 final class ProfileViewModelTests: XCTestCase {
-    private func makeUser(name: String = "Ana Souza", email: String = "ana@example.com", phone: String? = "27999998888") -> User {
+    private func makeUser(
+        name: String = "Ana Souza", email: String = "ana@example.com", phone: String? = "27999998888"
+    ) -> User {
         User(
             id: 1,
             name: name,

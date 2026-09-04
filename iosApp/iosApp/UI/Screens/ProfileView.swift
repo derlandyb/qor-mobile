@@ -83,7 +83,8 @@ final class ProfileViewModel: ObservableObject {
         isSavingName = true
         nameError = false
         do {
-            let updated = try await saveProfile(ProfileUpdateFields(name: nameInput, phone: nil, profilePictureUrl: nil, email: nil))
+            let fields = ProfileUpdateFields(name: nameInput, phone: nil, profilePictureUrl: nil, email: nil)
+            let updated = try await saveProfile(fields)
             applySessionUser(updated)
             user = updated
             isSavingName = false
@@ -98,7 +99,8 @@ final class ProfileViewModel: ObservableObject {
         isSavingPhone = true
         phoneError = false
         do {
-            let updated = try await saveProfile(ProfileUpdateFields(name: nil, phone: phoneInput, profilePictureUrl: nil, email: nil))
+            let fields = ProfileUpdateFields(name: nil, phone: phoneInput, profilePictureUrl: nil, email: nil)
+            let updated = try await saveProfile(fields)
             applySessionUser(updated)
             user = updated
             isSavingPhone = false
@@ -116,7 +118,8 @@ final class ProfileViewModel: ObservableObject {
         emailError = false
         let newEmail = emailInput
         do {
-            _ = try await saveProfile(ProfileUpdateFields(name: nil, phone: nil, profilePictureUrl: nil, email: newEmail))
+            let fields = ProfileUpdateFields(name: nil, phone: nil, profilePictureUrl: nil, email: newEmail)
+            _ = try await saveProfile(fields)
             isSavingEmail = false
             emailInput = user?.email ?? ""
             pendingEmailChange = newEmail
@@ -203,32 +206,29 @@ struct ProfileView: View {
                         .accessibilityIdentifier("profile_birthdate")
                 }
 
-                fieldRow(
+                fieldRow(FieldRowConfig(
                     value: Binding(get: { viewModel.nameInput }, set: viewModel.onNameChange),
                     label: String(localized: "field_label_name"),
                     hasError: viewModel.nameError,
                     isSaving: viewModel.isSavingName,
-                    accessibilityId: "profile_name_field",
-                    onSave: { Task { await viewModel.saveName() } }
-                )
+                    accessibilityId: "profile_name_field"
+                ), onSave: { Task { await viewModel.saveName() } })
 
-                fieldRow(
+                fieldRow(FieldRowConfig(
                     value: Binding(get: { viewModel.phoneInput }, set: viewModel.onPhoneChange),
                     label: String(localized: "field_label_phone"),
                     hasError: viewModel.phoneError,
                     isSaving: viewModel.isSavingPhone,
-                    accessibilityId: "profile_phone_field",
-                    onSave: { Task { await viewModel.savePhone() } }
-                )
+                    accessibilityId: "profile_phone_field"
+                ), onSave: { Task { await viewModel.savePhone() } })
 
-                fieldRow(
+                fieldRow(FieldRowConfig(
                     value: Binding(get: { viewModel.emailInput }, set: viewModel.onEmailChange),
                     label: String(localized: "field_label_email"),
                     hasError: viewModel.emailError,
                     isSaving: viewModel.isSavingEmail,
-                    accessibilityId: "profile_email_field",
-                    onSave: { Task { await viewModel.saveEmail() } }
-                )
+                    accessibilityId: "profile_email_field"
+                ), onSave: { Task { await viewModel.saveEmail() } })
             }
             .padding(QorSpace.space4)
         }
@@ -241,25 +241,26 @@ struct ProfileView: View {
         }
     }
 
+    private struct FieldRowConfig {
+        let value: Binding<String>
+        let label: String
+        let hasError: Bool
+        let isSaving: Bool
+        let accessibilityId: String
+    }
+
     @ViewBuilder
-    private func fieldRow(
-        value: Binding<String>,
-        label: String,
-        hasError: Bool,
-        isSaving: Bool,
-        accessibilityId: String,
-        onSave: @escaping () -> Void
-    ) -> some View {
+    private func fieldRow(_ config: FieldRowConfig, onSave: @escaping () -> Void) -> some View {
         HStack(alignment: .bottom, spacing: QorSpace.space2) {
             QorTextField(
-                value: value,
-                label: label,
-                errorMessage: hasError ? String(localized: "profile_save_error") : nil
+                value: config.value,
+                label: config.label,
+                errorMessage: config.hasError ? String(localized: "profile_save_error") : nil
             )
-            .accessibilityIdentifier(accessibilityId)
+            .accessibilityIdentifier(config.accessibilityId)
 
-            PrimaryButton(text: String(localized: "cta_salvar"), onClick: onSave, isLoading: isSaving)
-                .accessibilityIdentifier("\(accessibilityId)_save")
+            PrimaryButton(text: String(localized: "cta_salvar"), onClick: onSave, isLoading: config.isSaving)
+                .accessibilityIdentifier("\(config.accessibilityId)_save")
         }
     }
 }

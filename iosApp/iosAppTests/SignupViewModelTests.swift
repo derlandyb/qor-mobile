@@ -87,9 +87,12 @@ final class SignupViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_validForm_WHEN_submitting_THEN_registerFanIsCalledWithFormValues() async {
-        var captured: (String, String, String, String, Bool)?
+        struct CapturedArgs { let email, password, birthdate, name: String; let consent: Bool }
+        var captured: CapturedArgs?
         let registering = FakeSignupRegistering(receivedArgs: { email, password, birthdate, name, consent in
-            captured = (email, password, birthdate, name, consent)
+            captured = CapturedArgs(
+                email: email, password: password, birthdate: birthdate, name: name, consent: consent
+            )
         })
         let sut = makeSut(registering: registering)
         sut.onNameChange("Ana")
@@ -101,11 +104,11 @@ final class SignupViewModelTests: XCTestCase {
 
         await sut.submit()
 
-        XCTAssertEqual(captured?.0, "ana@example.com")
-        XCTAssertEqual(captured?.1, "secret123")
-        XCTAssertEqual(captured?.2, "2000-01-01")
-        XCTAssertEqual(captured?.3, "Ana")
-        XCTAssertEqual(captured?.4, true)
+        XCTAssertEqual(captured?.email, "ana@example.com")
+        XCTAssertEqual(captured?.password, "secret123")
+        XCTAssertEqual(captured?.birthdate, "2000-01-01")
+        XCTAssertEqual(captured?.name, "Ana")
+        XCTAssertEqual(captured?.consent, true)
     }
 
     func test_GIVEN_validForm_WHEN_registerSucceeds_THEN_onSignupSuccessIsCalledWithEmail() async {

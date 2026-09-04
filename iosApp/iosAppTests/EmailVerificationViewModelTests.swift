@@ -91,10 +91,17 @@ private func sampleUser() -> User {
 
 @MainActor
 final class EmailVerificationViewModelTests: XCTestCase {
+    private struct Fixture {
+        let viewModel: EmailVerificationViewModel
+        let repository: FakeVerifyEmailUserRepository
+        let signupCalls: Box
+        let emailChangeCalls: Box
+    }
+
     private func makeViewModel(
         verifyResult: VerifyEmailResult = VerifyEmailResult.Failure(message: "n/a"),
         context: EmailVerificationContext = .signup
-    ) -> (viewModel: EmailVerificationViewModel, repository: FakeVerifyEmailUserRepository, signupCalls: Box, emailChangeCalls: Box) {
+    ) -> Fixture {
         let repository = FakeVerifyEmailUserRepository(verifyResult: verifyResult)
         let verifyEmail = VerifyEmail(userRepository: repository)
         let signupCalls = Box()
@@ -105,7 +112,9 @@ final class EmailVerificationViewModelTests: XCTestCase {
             onVerifiedForSignup: { signupCalls.count += 1 },
             onVerifiedForEmailChange: { emailChangeCalls.count += 1 }
         )
-        return (viewModel, repository, signupCalls, emailChangeCalls)
+        return Fixture(
+            viewModel: viewModel, repository: repository, signupCalls: signupCalls, emailChangeCalls: emailChangeCalls
+        )
     }
 
     /// Plain reference-type counter — closures need a shared mutable box to record calls.
@@ -114,7 +123,8 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_itIsConstructed_THEN_theCooldownStartsAtTheConfiguredResendInterval() {
-        let (viewModel, _, _, _) = makeViewModel()
+        let fixture = makeViewModel()
+        let viewModel = fixture.viewModel
 
         XCTAssertEqual(
             viewModel.uiState.cooldown.remainingSeconds, Int(QorConfig.shared.EmailVerificationResendCooldownSeconds)
@@ -123,7 +133,8 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_anEmptyCode_WHEN_onSubmitIsCalled_THEN_aRequiredFieldErrorIsSet() async {
-        let (viewModel, _, _, _) = makeViewModel()
+        let fixture = makeViewModel()
+        let viewModel = fixture.viewModel
 
         await viewModel.onSubmit(email: "ana@example.com")
 
@@ -131,7 +142,8 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_aCodeShorterThanSixDigits_WHEN_onSubmitIsCalled_THEN_anInvalidLengthErrorIsSet() async {
-        let (viewModel, _, _, _) = makeViewModel()
+        let fixture = makeViewModel()
+        let viewModel = fixture.viewModel
         viewModel.onCodeChange("123")
 
         await viewModel.onSubmit(email: "ana@example.com")
@@ -140,7 +152,8 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_aCodeWasInvalid_WHEN_itIsEditedAgain_THEN_itsErrorIsCleared() async {
-        let (viewModel, _, _, _) = makeViewModel()
+        let fixture = makeViewModel()
+        let viewModel = fixture.viewModel
         await viewModel.onSubmit(email: "ana@example.com")
         XCTAssertEqual(viewModel.uiState.codeError, .required)
 
@@ -150,9 +163,13 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_aValidCodeAndSignupContext_WHEN_theUseCaseReturnsSuccess_THEN_onVerifiedForSignupFires() async {
-        let (viewModel, repository, signupCalls, emailChangeCalls) = makeViewModel(
+        let fixture = makeViewModel(
             verifyResult: VerifyEmailResult.Success(user: sampleUser()), context: .signup
         )
+        let viewModel = fixture.viewModel
+        let repository = fixture.repository
+        let signupCalls = fixture.signupCalls
+        let emailChangeCalls = fixture.emailChangeCalls
         viewModel.onCodeChange("123456")
 
         await viewModel.onSubmit(email: "ana@example.com")
@@ -165,10 +182,13 @@ final class EmailVerificationViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.uiState.submitError)
     }
 
-    func test_GIVEN_aValidCodeAndEmailChangeContext_WHEN_theUseCaseReturnsSuccess_THEN_onVerifiedForEmailChangeFires() async {
-        let (viewModel, _, signupCalls, emailChangeCalls) = makeViewModel(
+    func test_GIVEN_aValidCodeAndEmailChangeContext_WHEN_useCaseSucceeds_THEN_onVerifiedForEmailChangeFires() async {
+        let fixture = makeViewModel(
             verifyResult: VerifyEmailResult.Success(user: sampleUser()), context: .emailChange
         )
+        let viewModel = fixture.viewModel
+        let signupCalls = fixture.signupCalls
+        let emailChangeCalls = fixture.emailChangeCalls
         viewModel.onCodeChange("123456")
 
         await viewModel.onSubmit(email: "ana@example.com")
@@ -178,9 +198,10 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_aValidCode_WHEN_theUseCaseReturnsFailure_THEN_theServerMessageIsShownAsAnInlineError() async {
-        let (viewModel, _, _, _) = makeViewModel(
+        let fixture = makeViewModel(
             verifyResult: VerifyEmailResult.Failure(message: "Código inválido ou expirado.")
         )
+        let viewModel = fixture.viewModel
         viewModel.onCodeChange("123456")
 
         await viewModel.onSubmit(email: "ana@example.com")
@@ -190,7 +211,9 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_theCooldownHasNotElapsed_WHEN_onResendIsCalled_THEN_itIsIgnored() async {
-        let (viewModel, repository, _, _) = makeViewModel()
+        let fixture = makeViewModel()
+        let viewModel = fixture.viewModel
+        let repository = fixture.repository
 
         await viewModel.onResend(email: "ana@example.com")
 
@@ -198,7 +221,9 @@ final class EmailVerificationViewModelTests: XCTestCase {
     }
 
     func test_GIVEN_theCooldownHasElapsed_WHEN_onResendIsCalled_THEN_resendFiresAndTheCooldownRestarts() async {
-        let (viewModel, repository, _, _) = makeViewModel()
+        let fixture = makeViewModel()
+        let viewModel = fixture.viewModel
+        let repository = fixture.repository
         viewModel.forceCooldownElapsedForTesting()
         XCTAssertTrue(viewModel.uiState.cooldown.canResend)
 

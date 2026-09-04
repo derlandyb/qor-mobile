@@ -194,7 +194,9 @@ final class SignupViewModel: ObservableObject {
         let nameError = validateName(uiState.name)
         let emailError = validateEmail(uiState.email)
         let passwordError = validatePassword(uiState.password)
-        let confirmPasswordError = validateConfirmPassword(password: uiState.password, confirmPassword: uiState.confirmPassword)
+        let confirmPasswordError = validateConfirmPassword(
+            password: uiState.password, confirmPassword: uiState.confirmPassword
+        )
         let birthdateError = validateBirthdate(uiState.birthdate)
         let consentError = validateConsent(uiState.consentAccepted)
 

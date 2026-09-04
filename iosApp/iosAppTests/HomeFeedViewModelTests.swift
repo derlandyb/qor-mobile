@@ -2,13 +2,15 @@ import XCTest
 import shared
 @testable import iosApp
 
+struct LoadCall: Equatable { let city: City?; let genre: String?; let cursor: String? }
+
 private final class FakeHomeFeedEventsGateway: HomeFeedEventsGateway {
     var pagesByCursor: [String?: EventPage] = [:]
     var errorToThrow: Error?
-    private(set) var loadCalls: [(city: City?, genre: String?, cursor: String?)] = []
+    private(set) var loadCalls: [LoadCall] = []
 
     func loadUpcoming(city: City?, genre: String?, cursor: String?) async throws -> EventPage {
-        loadCalls.append((city, genre, cursor))
+        loadCalls.append(LoadCall(city: city, genre: genre, cursor: cursor))
         if let errorToThrow {
             throw errorToThrow
         }

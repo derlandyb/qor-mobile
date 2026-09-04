@@ -41,79 +41,85 @@ private func sampleUser() -> User {
 @MainActor
 final class LoginViewModelTests: XCTestCase {
     func test_GIVEN_bothFieldsAreEmpty_WHEN_onSubmitIsCalled_THEN_requiredFieldErrorsAreSet() {
-        let vm = LoginViewModel(authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "n/a")))
+        let sut = LoginViewModel(
+            authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "n/a"))
+        )
 
-        vm.onSubmit()
+        sut.onSubmit()
 
-        XCTAssertEqual(vm.uiState.emailError, .required)
-        XCTAssertEqual(vm.uiState.passwordError, .required)
+        XCTAssertEqual(sut.uiState.emailError, .required)
+        XCTAssertEqual(sut.uiState.passwordError, .required)
     }
 
     func test_GIVEN_anInvalidEmailFormat_WHEN_onSubmitIsCalled_THEN_anEmailFormatErrorIsSet() {
-        let vm = LoginViewModel(authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "n/a")))
-        vm.onEmailChange("not-an-email")
-        vm.onPasswordChange("senha123")
+        let sut = LoginViewModel(
+            authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "n/a"))
+        )
+        sut.onEmailChange("not-an-email")
+        sut.onPasswordChange("senha123")
 
-        vm.onSubmit()
+        sut.onSubmit()
 
-        XCTAssertEqual(vm.uiState.emailError, .invalidFormat)
-        XCTAssertNil(vm.uiState.passwordError)
+        XCTAssertEqual(sut.uiState.emailError, .invalidFormat)
+        XCTAssertNil(sut.uiState.passwordError)
     }
 
     func test_GIVEN_aFieldWasInvalid_WHEN_itIsEditedAgain_THEN_itsErrorIsCleared() {
-        let vm = LoginViewModel(authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "n/a")))
-        vm.onSubmit()
-        XCTAssertEqual(vm.uiState.emailError, .required)
-
-        vm.onEmailChange("a")
-
-        XCTAssertNil(vm.uiState.emailError)
-    }
-
-    func test_GIVEN_validFields_WHEN_theRepositoryReturnsInvalidCredentials_THEN_theSubmitErrorIsSetAndLoadingEnds() async {
-        let vm = LoginViewModel(
-            authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "Credenciais inválidas."))
+        let sut = LoginViewModel(
+            authenticateFan: FakeFanAuthenticator(result: LoginResult.InvalidCredentials(message: "n/a"))
         )
-        vm.onEmailChange("ana@example.com")
-        vm.onPasswordChange("senha123")
+        sut.onSubmit()
+        XCTAssertEqual(sut.uiState.emailError, .required)
 
-        vm.onSubmit()
-        await waitUntil { vm.uiState.isLoading == false }
+        sut.onEmailChange("a")
 
-        XCTAssertEqual(vm.uiState.submitError, .invalidCredentials)
-        XCTAssertFalse(vm.uiState.isLoading)
+        XCTAssertNil(sut.uiState.emailError)
     }
 
-    func test_GIVEN_validFields_WHEN_theRepositoryReturnsUnverifiedAccount_THEN_theNavigationCallbackCarriesTheEmail() async {
-        let vm = LoginViewModel(
-            authenticateFan: FakeFanAuthenticator(result: LoginResult.UnverifiedAccount(message: "Confirme seu e-mail."))
+    func test_GIVEN_validFields_WHEN_repoReturnsInvalidCredentials_THEN_submitErrorIsSetAndLoadingEnds() async {
+        let invalidCredentials = LoginResult.InvalidCredentials(message: "Credenciais inválidas.")
+        let sut = LoginViewModel(authenticateFan: FakeFanAuthenticator(result: invalidCredentials))
+        sut.onEmailChange("ana@example.com")
+        sut.onPasswordChange("senha123")
+
+        sut.onSubmit()
+        await waitUntil { sut.uiState.isLoading == false }
+
+        XCTAssertEqual(sut.uiState.submitError, .invalidCredentials)
+        XCTAssertFalse(sut.uiState.isLoading)
+    }
+
+    func test_GIVEN_validFields_WHEN_repoReturnsUnverifiedAccount_THEN_navigationCallbackCarriesTheEmail() async {
+        let unverified = LoginResult.UnverifiedAccount(message: "Confirme seu e-mail.")
+        let sut = LoginViewModel(
+            authenticateFan: FakeFanAuthenticator(result: unverified)
         )
         var navigatedEmail: String?
-        vm.onNavigateToVerifyEmail = { navigatedEmail = $0 }
-        vm.onEmailChange("ana@example.com")
-        vm.onPasswordChange("senha123")
+        sut.onNavigateToVerifyEmail = { navigatedEmail = $0 }
+        sut.onEmailChange("ana@example.com")
+        sut.onPasswordChange("senha123")
 
-        vm.onSubmit()
-        await waitUntil { vm.uiState.isLoading == false }
+        sut.onSubmit()
+        await waitUntil { sut.uiState.isLoading == false }
 
-        XCTAssertEqual(vm.uiState.submitError, .unverifiedAccount(email: "ana@example.com"))
+        XCTAssertEqual(sut.uiState.submitError, .unverifiedAccount(email: "ana@example.com"))
         XCTAssertEqual(navigatedEmail, "ana@example.com")
     }
 
     func test_GIVEN_validFields_WHEN_theRepositoryReturnsSuccess_THEN_theLoginSuccessCallbackFires() async {
-        let vm = LoginViewModel(
+        let sut = LoginViewModel(
             authenticateFan: FakeFanAuthenticator(result: LoginResult.Success(user: sampleUser(), token: "tok-1"))
         )
         var loggedIn = false
-        vm.onLoginSuccess = { loggedIn = true }
-        vm.onEmailChange("ana@example.com")
-        vm.onPasswordChange("senha123")
+        sut.onLoginSuccess = { loggedIn = true }
+        sut.onEmailChange("ana@example.com")
+        sut.onPasswordChange("senha123")
 
-        vm.onSubmit()
-        await waitUntil { vm.uiState.isLoading == false }
+        sut.onSubmit()
+        await waitUntil { sut.uiState.isLoading == false }
 
         XCTAssertTrue(loggedIn)
-        XCTAssertNil(vm.uiState.submitError)
+        XCTAssertNil(sut.uiState.submitError)
     }
 }
 

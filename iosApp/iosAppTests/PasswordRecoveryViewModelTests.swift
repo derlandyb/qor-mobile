@@ -140,7 +140,7 @@ final class PasswordRecoveryViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.uiState.emailError, .invalidFormat)
     }
 
-    func test_GIVEN_aValidEmail_WHEN_onSubmitEmailIsCalled_THEN_step2VerifyCodeAdvancesRegardlessOfBackendResponse() async {
+    func test_GIVEN_aValidEmail_WHEN_onSubmitEmailIsCalled_THEN_step2AdvancesRegardlessOfBackendResponse() async {
         let (viewModel, repository) = makeViewModel()
         viewModel.onEmailChange("ana@example.com")
 

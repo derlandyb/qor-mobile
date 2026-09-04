@@ -8,7 +8,9 @@ import shared
 /// — see `EventDetailViewTests`'s header comment for why this avoids `.task`/lifecycle races.
 @MainActor
 final class ProfileViewTests: XCTestCase {
-    private func makeUser(name: String = "Ana Souza", email: String = "ana@example.com", phone: String? = "27999998888") -> User {
+    private func makeUser(
+        name: String = "Ana Souza", email: String = "ana@example.com", phone: String? = "27999998888"
+    ) -> User {
         User(
             id: 1,
             name: name,
@@ -45,7 +47,8 @@ final class ProfileViewTests: XCTestCase {
         )
         let view = ProfileView(viewModel: viewModel)
 
-        let changePhotoButton = try view.inspect().find(viewWithAccessibilityIdentifier: "profile_change_photo").button()
+        let changePhotoButton = try view.inspect()
+            .find(viewWithAccessibilityIdentifier: "profile_change_photo").button()
         XCTAssertTrue(try changePhotoButton.isDisabled())
     }
 

@@ -186,26 +186,7 @@ struct EventDetailView: View {
             PlaceholderImage()
                 .frame(height: eventMapHeight)
 
-            Text(event.title)
-                .font(.system(size: CGFloat(QualORockThemeTokens.TextEventTitleLg.shared.SizeSp), weight: .bold))
-                .foregroundStyle(QorColor.textPrimary)
-                .accessibilityIdentifier("event_detail_title")
-
-            HStack(spacing: QorSpace.space2) {
-                GenreTag(genre: event.genre)
-                Text(String(localized: event.isFree ? "event_detail_label_free" : "event_detail_label_paid"))
-                    .font(.system(size: CGFloat(QualORockThemeTokens.TextBadge.shared.SizeSp), weight: .semibold))
-                    .foregroundStyle(QorColor.textSecondary)
-            }
-
-            Text("\(dateLabel.day) \(dateLabel.month) · \(timeLabel)")
-                .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
-                .foregroundStyle(QorColor.textSecondary)
-
-            Text(event.address)
-                .font(.system(size: CGFloat(QualORockThemeTokens.TextBody.shared.SizeSp), weight: .semibold))
-                .foregroundStyle(QorColor.textPrimary)
-                .accessibilityIdentifier("event_detail_address")
+            eventHeader(event: event, dateLabel: dateLabel, timeLabel: timeLabel)
 
             mapSection(address: event.address)
 
@@ -231,18 +212,48 @@ struct EventDetailView: View {
                 }
             }
 
-            ShareLink(item: shareText) {
-                Text(String(localized: "cta_compartilhar"))
-                    .font(.system(size: CGFloat(QualORockThemeTokens.TextButton.shared.SizeSp), weight: .semibold))
-                    .foregroundStyle(QorColor.textPrimary)
-                    .frame(maxWidth: .infinity, minHeight: 44)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: QorRadius.radiusMd)
-                            .stroke(QorColor.textPrimary, lineWidth: CGFloat(QualORockThemeTokens.shared.BorderWidthHairlineDp))
-                    )
-            }
-            .accessibilityIdentifier("event_detail_share")
+            shareLink(text: shareText)
         }
+    }
+
+    @ViewBuilder
+    private func eventHeader(event: Event, dateLabel: DateBadgeLabel, timeLabel: String) -> some View {
+        Text(event.title)
+            .font(.system(size: CGFloat(QualORockThemeTokens.TextEventTitleLg.shared.SizeSp), weight: .bold))
+            .foregroundStyle(QorColor.textPrimary)
+            .accessibilityIdentifier("event_detail_title")
+
+        HStack(spacing: QorSpace.space2) {
+            GenreTag(genre: event.genre)
+            Text(String(localized: event.isFree ? "event_detail_label_free" : "event_detail_label_paid"))
+                .font(.system(size: CGFloat(QualORockThemeTokens.TextBadge.shared.SizeSp), weight: .semibold))
+                .foregroundStyle(QorColor.textSecondary)
+        }
+
+        Text("\(dateLabel.day) \(dateLabel.month) · \(timeLabel)")
+            .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
+            .foregroundStyle(QorColor.textSecondary)
+
+        Text(event.address)
+            .font(.system(size: CGFloat(QualORockThemeTokens.TextBody.shared.SizeSp), weight: .semibold))
+            .foregroundStyle(QorColor.textPrimary)
+            .accessibilityIdentifier("event_detail_address")
+    }
+
+    @ViewBuilder
+    private func shareLink(text: String) -> some View {
+        let borderWidth = CGFloat(QualORockThemeTokens.shared.BorderWidthHairlineDp)
+        ShareLink(item: text) {
+            Text(String(localized: "cta_compartilhar"))
+                .font(.system(size: CGFloat(QualORockThemeTokens.TextButton.shared.SizeSp), weight: .semibold))
+                .foregroundStyle(QorColor.textPrimary)
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .overlay(
+                    RoundedRectangle(cornerRadius: QorRadius.radiusMd)
+                        .stroke(QorColor.textPrimary, lineWidth: borderWidth)
+                )
+        }
+        .accessibilityIdentifier("event_detail_share")
     }
 
     /// DISC-10/A22 parity — a real embedded MapKit map once [EventMapState.located] resolves;

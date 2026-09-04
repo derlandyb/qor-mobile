@@ -145,7 +145,7 @@ final class LoginViewModel: ObservableObject {
         if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return .required
         }
-        if !emailRegex.hasMatch(email) {
+        if !(emailRegex?.hasMatch(email) ?? false) {
             return .invalidFormat
         }
         return nil
@@ -155,7 +155,10 @@ final class LoginViewModel: ObservableObject {
         password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .required : nil
     }
 
-    private static let emailRegex = try! NSRegularExpression(pattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
+    /// `try?`, not `try!` (swiftlint's `force_try`) — the pattern is a fixed, known-valid literal,
+    /// so this is always non-nil in practice; `hasMatch`'s call site treats a `nil` regex as a
+    /// failed match rather than crashing.
+    private static let emailRegex = try? NSRegularExpression(pattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
 }
 
 private extension NSRegularExpression {

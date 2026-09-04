@@ -80,7 +80,8 @@ final class ExploreViewModel: ObservableObject {
         applyFilters()
     }
 
-    /// DISC-18 pagination — call when the list scrolls near its end. No-op with no next page or a fetch already in flight.
+    /// DISC-18 pagination — call when the list scrolls near its end. No-op with no next page or a
+    /// fetch already in flight.
     func onLoadMore() {
         guard case .content(let events, let isLoadingMore, let isRefreshing) = uiState,
               !isLoadingMore, let cursor = nextCursor else { return }
@@ -88,7 +89,9 @@ final class ExploreViewModel: ObservableObject {
         uiState = .content(events: events, isLoadingMore: true, isRefreshing: isRefreshing)
         Task { @MainActor in
             do {
-                let page = try await listUpcomingEvents.execute(city: selectedCity, genre: selectedGenre, cursor: cursor)
+                let page = try await listUpcomingEvents.execute(
+                    city: selectedCity, genre: selectedGenre, cursor: cursor
+                )
                 nextCursor = page.nextCursor
                 if case .content(let current, _, let refreshing) = uiState {
                     uiState = .content(events: current + page.events, isLoadingMore: false, isRefreshing: refreshing)
@@ -226,8 +229,10 @@ struct ExploreView: View {
                     : String(localized: "empty_state_no_events")
             )
             if hasActiveFilters {
-                SecondaryButton(text: String(localized: "explore_cta_limpar_filtros"), onClick: viewModel.onClearFilters)
-                    .padding(.horizontal, QorSpace.space6)
+                SecondaryButton(
+                    text: String(localized: "explore_cta_limpar_filtros"), onClick: viewModel.onClearFilters
+                )
+                .padding(.horizontal, QorSpace.space6)
             }
             Spacer()
         }
@@ -263,7 +268,10 @@ private struct GenreFilterRow: View {
                     GenreTag(genre: genre)
                         .overlay(
                             RoundedRectangle(cornerRadius: QorRadius.radiusSm)
-                                .stroke(isActive ? QorColor.accentPink : .clear, lineWidth: CGFloat(QualORockThemeTokens.shared.BorderWidthHairlineDp))
+                                .stroke(
+                                    isActive ? QorColor.accentPink : .clear,
+                                    lineWidth: CGFloat(QualORockThemeTokens.shared.BorderWidthHairlineDp)
+                                )
                         )
                         .onTapGesture { onSelect(genre) }
                         .accessibilityAddTraits(isActive ? [.isSelected] : [])

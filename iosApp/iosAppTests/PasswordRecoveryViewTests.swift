@@ -20,13 +20,25 @@ final class PasswordRecoveryViewTests: XCTestCase {
         return (view, viewModel)
     }
 
+    private func assertShown(
+        _ id: String, in view: PasswordRecoveryView, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        XCTAssertNoThrow(try view.inspect().find(viewWithAccessibilityIdentifier: id), file: file, line: line)
+    }
+
+    private func assertHidden(
+        _ id: String, in view: PasswordRecoveryView, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        XCTAssertThrowsError(try view.inspect().find(viewWithAccessibilityIdentifier: id), file: file, line: line)
+    }
+
     func test_GIVEN_theViewJustAppeared_THEN_step1RequestEmailContentIsShown() throws {
         let (view, _) = makeView()
 
-        XCTAssertNoThrow(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_request_email"))
-        XCTAssertThrowsError(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_verify_code"))
-        XCTAssertThrowsError(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_new_password"))
-        XCTAssertThrowsError(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_success"))
+        assertShown("password_recovery_step_request_email", in: view)
+        assertHidden("password_recovery_step_verify_code", in: view)
+        assertHidden("password_recovery_step_new_password", in: view)
+        assertHidden("password_recovery_step_success", in: view)
     }
 
     func test_GIVEN_theViewModelAdvancedToStep2_THEN_verifyCodeContentIsShownAndStep1IsNot() async throws {
@@ -34,8 +46,8 @@ final class PasswordRecoveryViewTests: XCTestCase {
         viewModel.onEmailChange("ana@example.com")
         await viewModel.onSubmitEmail()
 
-        XCTAssertNoThrow(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_verify_code"))
-        XCTAssertThrowsError(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_request_email"))
+        assertShown("password_recovery_step_verify_code", in: view)
+        assertHidden("password_recovery_step_request_email", in: view)
     }
 
     func test_GIVEN_theViewModelAdvancedToStep3_THEN_newPasswordContentIsShown() async throws {
@@ -45,8 +57,8 @@ final class PasswordRecoveryViewTests: XCTestCase {
         viewModel.onCodeChange("123456")
         await viewModel.onSubmitCode()
 
-        XCTAssertNoThrow(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_new_password"))
-        XCTAssertThrowsError(try view.inspect().find(viewWithAccessibilityIdentifier: "password_recovery_step_verify_code"))
+        assertShown("password_recovery_step_new_password", in: view)
+        assertHidden("password_recovery_step_verify_code", in: view)
     }
 
     func test_GIVEN_theResetSucceeded_THEN_theSuccessScreenIsShownAndTheLoginLinkIsHidden() async throws {

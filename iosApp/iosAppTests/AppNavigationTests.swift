@@ -64,7 +64,7 @@ final class AppNavigationTests: XCTestCase {
     }
 
     @MainActor
-    func test_GIVEN_theMainTabRootsBottomNav_WHEN_onSelectIsCalledWithAnEnabledDestination_THEN_itIsForwardedUnchanged() throws {
+    func test_GIVEN_bottomNavsOnSelect_WHEN_calledWithAnEnabledDestination_THEN_itIsCallable() throws {
         let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in }, onLogout: {})
 
         let bottomNav = try sut.inspect().find(BottomNav.self).actualView()
