@@ -15,15 +15,15 @@ protocol FanAuthenticating {
 extension AuthenticateFan: FanAuthenticating {}
 
 /// Client-side validation failures for the email field — see AUTH-11's generic-message rule for
-/// why these stay separate from ``LoginSubmitError``. Mirrors Android's `EmailFieldError`.
-enum EmailFieldError: Equatable {
+/// why these stay separate from ``LoginSubmitError``. Mirrors Android's `LoginEmailFieldError`.
+enum LoginEmailFieldError: Equatable {
     case required
     case invalidFormat
 }
 
 /// Client-side validation failure for the password field (non-empty only — see
 /// ``LoginViewModel``'s doc comment for why password validation stays required-only here).
-enum PasswordFieldError: Equatable {
+enum LoginPasswordFieldError: Equatable {
     case required
 }
 
@@ -41,8 +41,8 @@ enum LoginSubmitError: Equatable {
 struct LoginUiState: Equatable {
     var email: String = ""
     var password: String = ""
-    var emailError: EmailFieldError?
-    var passwordError: PasswordFieldError?
+    var emailError: LoginEmailFieldError?
+    var passwordError: LoginPasswordFieldError?
     var submitError: LoginSubmitError?
     var isLoading: Bool = false
 }
@@ -141,7 +141,7 @@ final class LoginViewModel: ObservableObject {
         }
     }
 
-    static func validateEmail(_ email: String) -> EmailFieldError? {
+    static func validateEmail(_ email: String) -> LoginEmailFieldError? {
         if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return .required
         }
@@ -151,7 +151,7 @@ final class LoginViewModel: ObservableObject {
         return nil
     }
 
-    static func validatePassword(_ password: String) -> PasswordFieldError? {
+    static func validatePassword(_ password: String) -> LoginPasswordFieldError? {
         password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .required : nil
     }
 

@@ -9,13 +9,13 @@ enum NameFieldError {
 }
 
 /// Client-side validation failure for the email field.
-enum EmailFieldError {
+enum SignupEmailFieldError {
     case required
     case invalidFormat
 }
 
 /// Client-side validation failure for the password field (non-empty only).
-enum PasswordFieldError {
+enum SignupPasswordFieldError {
     case required
 }
 
@@ -44,7 +44,7 @@ private func validateName(_ name: String) -> NameFieldError? {
     name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .required : nil
 }
 
-private func validateEmail(_ email: String) -> EmailFieldError? {
+private func validateEmail(_ email: String) -> SignupEmailFieldError? {
     if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
         return .required
     }
@@ -53,7 +53,7 @@ private func validateEmail(_ email: String) -> EmailFieldError? {
     return regex.firstMatch(in: email, options: [], range: range) != nil ? nil : .invalidFormat
 }
 
-private func validatePassword(_ password: String) -> PasswordFieldError? {
+private func validatePassword(_ password: String) -> SignupPasswordFieldError? {
     password.isEmpty ? .required : nil
 }
 
@@ -85,8 +85,8 @@ struct SignupUiState {
     var consentAccepted = false
 
     var nameError: NameFieldError?
-    var emailError: EmailFieldError?
-    var passwordError: PasswordFieldError?
+    var emailError: SignupEmailFieldError?
+    var passwordError: SignupPasswordFieldError?
     var confirmPasswordError: ConfirmPasswordFieldError?
     var birthdateError: BirthdateFieldError?
     var consentError: ConsentFieldError?

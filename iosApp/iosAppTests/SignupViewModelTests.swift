@@ -5,7 +5,7 @@ import shared
 private struct FakeSignupRegistering: SignupRegistering {
     var result: Result<RegisterResult, Error> = .success(
         RegisterResult.Success(user: User(
-            id: "1", name: "Ana", email: "ana@example.com", emailVerifiedAt: nil,
+            id: 1, name: "Ana", email: "ana@example.com", emailVerifiedAt: nil,
             phone: nil, profilePictureUrl: nil, birthdate: "2000-01-01"
         ))
     )
@@ -189,8 +189,8 @@ final class SignupViewModelTests: XCTestCase {
 }
 
 extension NameFieldError: Equatable {}
-extension EmailFieldError: Equatable {}
-extension PasswordFieldError: Equatable {}
+extension SignupEmailFieldError: Equatable {}
+extension SignupPasswordFieldError: Equatable {}
 extension ConfirmPasswordFieldError: Equatable {}
 extension BirthdateFieldError: Equatable {}
 extension ConsentFieldError: Equatable {}

@@ -18,13 +18,13 @@ enum PasswordRecoveryStep: Equatable {
 }
 
 /// Client-side validation failure for the email field (AUTH-13/AUTH-16).
-enum EmailFieldError: Equatable {
+enum PasswordRecoveryEmailFieldError: Equatable {
     case required
     case invalidFormat
 }
 
 /// Client-side validation failure for the OTP code field.
-enum CodeFieldError: Equatable {
+enum PasswordRecoveryCodeFieldError: Equatable {
     case required
     case invalidLength
 }
@@ -40,9 +40,9 @@ enum NewPasswordFieldError: Equatable {
 struct PasswordRecoveryUiState: Equatable {
     var step: PasswordRecoveryStep = .requestEmail
     var email: String = ""
-    var emailError: EmailFieldError?
+    var emailError: PasswordRecoveryEmailFieldError?
     var code: String = ""
-    var codeError: CodeFieldError?
+    var codeError: PasswordRecoveryCodeFieldError?
     var newPassword: String = ""
     var newPasswordError: NewPasswordFieldError?
     var submitError: String?
@@ -170,7 +170,7 @@ final class PasswordRecoveryViewModel: ObservableObject {
         }
     }
 
-    private func validateEmail(_ email: String) -> EmailFieldError? {
+    private func validateEmail(_ email: String) -> PasswordRecoveryEmailFieldError? {
         if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return .required
         }
@@ -180,7 +180,7 @@ final class PasswordRecoveryViewModel: ObservableObject {
         return nil
     }
 
-    private func validateCode(_ code: String) -> CodeFieldError? {
+    private func validateCode(_ code: String) -> PasswordRecoveryCodeFieldError? {
         if code.isEmpty { return .required }
         if code.count != otpCodeLength { return .invalidLength }
         return nil
@@ -341,14 +341,14 @@ struct PasswordRecoveryView: View {
     }
 }
 
-private func emailErrorMessage(_ error: EmailFieldError) -> String {
+private func emailErrorMessage(_ error: PasswordRecoveryEmailFieldError) -> String {
     switch error {
     case .required: String(localized: "password_recovery_error_email_required")
     case .invalidFormat: String(localized: "password_recovery_error_email_invalid")
     }
 }
 
-private func codeErrorMessage(_ error: CodeFieldError) -> String {
+private func codeErrorMessage(_ error: PasswordRecoveryCodeFieldError) -> String {
     switch error {
     case .required: String(localized: "password_recovery_error_code_required")
     case .invalidLength: String(localized: "password_recovery_error_code_invalid_length")

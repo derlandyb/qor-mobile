@@ -147,7 +147,7 @@ private extension NameFieldError {
     }
 }
 
-private extension EmailFieldError {
+private extension SignupEmailFieldError {
     var message: String {
         switch self {
         case .required: return String(localized: "signup_error_email_required")
@@ -156,7 +156,7 @@ private extension EmailFieldError {
     }
 }
 
-private extension PasswordFieldError {
+private extension SignupPasswordFieldError {
     var message: String {
         switch self {
         case .required: return String(localized: "signup_error_password_required")

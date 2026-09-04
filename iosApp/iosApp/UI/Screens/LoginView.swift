@@ -92,7 +92,7 @@ struct LoginView: View {
     }
 }
 
-private extension EmailFieldError {
+private extension LoginEmailFieldError {
     var localizedMessage: String {
         switch self {
         case .required: return String(localized: "login_error_email_required")
@@ -101,7 +101,7 @@ private extension EmailFieldError {
     }
 }
 
-private extension PasswordFieldError {
+private extension LoginPasswordFieldError {
     var localizedMessage: String {
         switch self {
         case .required: return String(localized: "login_error_password_required")

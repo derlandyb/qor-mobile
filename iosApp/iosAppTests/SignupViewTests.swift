@@ -8,7 +8,7 @@ private struct FakeSignupRegistering: SignupRegistering {
         email: String, password: String, birthdate: String, name: String, consentAccepted: Bool
     ) async throws -> RegisterResult {
         RegisterResult.Success(user: User(
-            id: "1", name: name, email: email, emailVerifiedAt: nil,
+            id: 1, name: name, email: email, emailVerifiedAt: nil,
             phone: nil, profilePictureUrl: nil, birthdate: birthdate
         ))
     }

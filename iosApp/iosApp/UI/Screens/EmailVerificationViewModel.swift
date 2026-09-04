@@ -2,8 +2,8 @@ import Foundation
 import shared
 
 /// I9 — client-side validation for the 6-digit OTP field, non-empty + exact length only
-/// (AUTH-10). Mirrors Android's `CodeFieldError`.
-enum CodeFieldError: Equatable {
+/// (AUTH-10). Mirrors Android's `EmailVerificationCodeFieldError`.
+enum EmailVerificationCodeFieldError: Equatable {
     case required
     case invalidLength
 
@@ -48,7 +48,7 @@ struct VerificationCooldown: Equatable {
 /// Form + submission state for `EmailVerificationView`.
 struct EmailVerificationUiState: Equatable {
     var code: String = ""
-    var codeError: CodeFieldError?
+    var codeError: EmailVerificationCodeFieldError?
     var submitError: String?
     var isLoading: Bool = false
     var cooldown: VerificationCooldown = .started()
@@ -177,7 +177,7 @@ final class EmailVerificationViewModel: ObservableObject {
         uiState.cooldown = VerificationCooldown(remainingSeconds: 0)
     }
 
-    private static func validate(code: String) -> CodeFieldError? {
+    private static func validate(code: String) -> EmailVerificationCodeFieldError? {
         if code.isEmpty { return .required }
         if code.count != otpCodeLength { return .invalidLength }
         return nil

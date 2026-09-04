@@ -84,7 +84,7 @@ private final class FakeVerifyEmailUserRepository: UserRepository {
 
 private func sampleUser() -> User {
     User(
-        id: "u1", name: "Ana", email: "ana@example.com", emailVerifiedAt: "2026-01-01T00:00:00Z",
+        id: 1, name: "Ana", email: "ana@example.com", emailVerifiedAt: "2026-01-01T00:00:00Z",
         phone: nil, profilePictureUrl: nil, birthdate: "1990-01-01"
     )
 }
