@@ -1,6 +1,46 @@
 {
   "sourceLanguage" : "pt-BR",
   "strings" : {
+    "nav_inicio" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Início"
+          }
+        }
+      }
+    },
+    "nav_explorar" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explorar"
+          }
+        }
+      }
+    },
+    "nav_favoritos" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoritos"
+          }
+        }
+      }
+    },
+    "nav_perfil" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
+          }
+        }
+      }
+    },
     "city_vitoria" : {
       "localizations" : {
         "pt-BR" : {
@@ -91,6 +131,16 @@
         }
       }
     },
+    "content_description_no_flyer" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem imagem de divulgação"
+          }
+        }
+      }
+    },
     "empty_state_no_events" : {
       "localizations" : {
         "pt-BR" : {
@@ -101,32 +151,62 @@
         }
       }
     },
-    "consent_capture_label" : {
+    "consent_terms_text" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Li e aceito os Termos de Uso e a Política de Privacidade"
+            "value" : "Li e aceito os Termos de Uso e a Política de Privacidade."
           }
         }
       }
     },
-    "form_field_error_required" : {
+    "field_label_email" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Campo obrigatório"
+            "value" : "E-mail"
           }
         }
       }
     },
-    "form_field_error_invalid_email" : {
+    "field_label_password" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-mail inválido"
+            "value" : "Senha"
+          }
+        }
+      }
+    },
+    "field_label_code" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código de verificação"
+          }
+        }
+      }
+    },
+    "password_toggle_show" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar senha"
+          }
+        }
+      }
+    },
+    "password_toggle_hide" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar senha"
           }
         }
       }
