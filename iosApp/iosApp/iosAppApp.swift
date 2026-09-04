@@ -1,13 +1,21 @@
 import SwiftUI
+import shared
 
-/// Bare SwiftUI entry point — enough for the KMP `shared` framework to link and for
-/// `xcodebuild -scheme iosApp build` to succeed. Product screens are built in the iOS UI
-/// tasks (I1-I14), out of scope for the Shared module foundation.
+/// I1 — app entry point. Bootstraps the shared Koin DI graph (`di.doInitKoin()`, shared with
+/// Android per `feat(mobile-shared)`) once at launch, then hosts a `NavigationStack` root.
+/// Screens (I7-I14) push their own destinations onto this stack; there is no product content
+/// here yet — that's out of scope for the I1-I6 foundation slice.
 @main
 struct IosAppApp: App {
+    init() {
+        KoinHelperKt.doInitKoin()
+    }
+
     var body: some Scene {
         WindowGroup {
-            Text("QOR")
+            NavigationStack {
+                Text("QOR")
+            }
         }
     }
 }
