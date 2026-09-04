@@ -1,216 +1,996 @@
 {
-  "sourceLanguage" : "pt-BR",
-  "strings" : {
-    "nav_inicio" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Início"
+  "sourceLanguage": "pt-BR",
+  "strings": {
+    "city_cariacica": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cariacica"
           }
         }
       }
     },
-    "nav_explorar" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Explorar"
+    "city_serra": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serra"
           }
         }
       }
     },
-    "nav_favoritos" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favoritos"
+    "city_vila_velha": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vila Velha"
           }
         }
       }
     },
-    "nav_perfil" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Perfil"
+    "city_vitoria": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vitória"
           }
         }
       }
     },
-    "city_vitoria" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vitória"
+    "consent_terms_text": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Li e aceito os Termos de Uso e a Política de Privacidade."
           }
         }
       }
     },
-    "city_vila_velha" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vila Velha"
+    "content_description_genre": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gênero: %@"
           }
         }
       }
     },
-    "city_serra" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serra"
+    "content_description_live_now": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao vivo agora"
           }
         }
       }
     },
-    "city_cariacica" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cariacica"
+    "content_description_no_flyer": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem imagem de divulgação"
           }
         }
       }
     },
-    "cta_ver_no_mapa" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver no Mapa"
+    "cta_abrir_no_mapa": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir no mapa"
           }
         }
       }
     },
-    "cta_ver_instagram" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver Instagram"
+    "cta_alterar_foto": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alterar foto"
           }
         }
       }
     },
-    "content_description_genre" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gênero: %@"
+    "cta_cadastrar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadastrar"
           }
         }
       }
     },
-    "live_pulse_label" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ao vivo"
+    "cta_cadastrar_com_google": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadastrar com Google"
           }
         }
       }
     },
-    "content_description_live_now" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ao vivo agora"
+    "cta_compartilhar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartilhar"
           }
         }
       }
     },
-    "content_description_no_flyer" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem imagem de divulgação"
+    "cta_comprar_ingresso": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprar ingresso"
           }
         }
       }
     },
-    "empty_state_no_events" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum evento encontrado"
+    "cta_entrar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrar"
           }
         }
       }
     },
-    "consent_terms_text" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Li e aceito os Termos de Uso e a Política de Privacidade."
+    "cta_entrar_com_google": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrar com Google"
           }
         }
       }
     },
-    "field_label_email" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-mail"
+    "cta_enviar_email": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar e-mail"
           }
         }
       }
     },
-    "field_label_password" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Senha"
+    "cta_enviar_link_recuperacao": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar link de recuperação"
           }
         }
       }
     },
-    "field_label_code" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Código de verificação"
+    "cta_ligar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ligar"
           }
         }
       }
     },
-    "password_toggle_show" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar senha"
+    "cta_redefinir_senha": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir senha"
           }
         }
       }
     },
-    "password_toggle_hide" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ocultar senha"
+    "cta_reenviar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reenviar"
+          }
+        }
+      }
+    },
+    "cta_salvar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvar"
+          }
+        }
+      }
+    },
+    "cta_tiktok": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TikTok"
+          }
+        }
+      }
+    },
+    "cta_ver_instagram": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver Instagram"
+          }
+        }
+      }
+    },
+    "cta_ver_no_mapa": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver no Mapa"
+          }
+        }
+      }
+    },
+    "cta_verificar_codigo": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificar código"
+          }
+        }
+      }
+    },
+    "cta_voltar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar"
+          }
+        }
+      }
+    },
+    "email_verification_error_code_invalid_length": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O código deve ter 6 dígitos."
+          }
+        }
+      }
+    },
+    "email_verification_error_code_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe o código recebido."
+          }
+        }
+      }
+    },
+    "email_verification_instructions": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviamos um código de 6 dígitos para %@. Insira-o abaixo para confirmar sua conta."
+          }
+        }
+      }
+    },
+    "email_verification_resend_confirmation": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código reenviado."
+          }
+        }
+      }
+    },
+    "email_verification_resend_countdown": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reenviar em %ds"
+          }
+        }
+      }
+    },
+    "email_verification_resend_prompt": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não recebeu o código?"
+          }
+        }
+      }
+    },
+    "email_verification_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirme seu e-mail"
+          }
+        }
+      }
+    },
+    "empty_state_no_events": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum evento encontrado"
+          }
+        }
+      }
+    },
+    "error_generic_try_again": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algo deu errado. Tente novamente."
+          }
+        }
+      }
+    },
+    "event_detail_contacts_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contato dos promotores"
+          }
+        }
+      }
+    },
+    "event_detail_cta_tentar_novamente": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
+          }
+        }
+      }
+    },
+    "event_detail_error_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar o evento. Tente novamente."
+          }
+        }
+      }
+    },
+    "event_detail_label_free": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gratuito"
+          }
+        }
+      }
+    },
+    "event_detail_label_paid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pago"
+          }
+        }
+      }
+    },
+    "event_detail_share_text": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confira %1$@! %2$@"
+          }
+        }
+      }
+    },
+    "event_detail_status_cancelled": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Evento cancelado"
+          }
+        }
+      }
+    },
+    "event_detail_status_ended": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este evento já aconteceu"
+          }
+        }
+      }
+    },
+    "explore_cta_limpar_filtros": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpar filtros"
+          }
+        }
+      }
+    },
+    "explore_cta_tentar_novamente": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
+          }
+        }
+      }
+    },
+    "explore_empty_state_no_matches": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum evento corresponde aos filtros selecionados"
+          }
+        }
+      }
+    },
+    "explore_error_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar os eventos"
+          }
+        }
+      }
+    },
+    "field_label_birthdate": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data de nascimento"
+          }
+        }
+      }
+    },
+    "field_label_code": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código de verificação"
+          }
+        }
+      }
+    },
+    "field_label_confirm_password": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmar senha"
+          }
+        }
+      }
+    },
+    "field_label_email": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail"
+          }
+        }
+      }
+    },
+    "field_label_name": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome completo"
+          }
+        }
+      }
+    },
+    "field_label_password": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senha"
+          }
+        }
+      }
+    },
+    "field_label_phone": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefone"
+          }
+        }
+      }
+    },
+    "home_feed_cta_tentar_novamente": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
+          }
+        }
+      }
+    },
+    "home_feed_error_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar os eventos. Tente novamente."
+          }
+        }
+      }
+    },
+    "live_pulse_label": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao vivo"
+          }
+        }
+      }
+    },
+    "login_error_email_invalid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail inválido."
+          }
+        }
+      }
+    },
+    "login_error_email_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu e-mail."
+          }
+        }
+      }
+    },
+    "login_error_invalid_credentials": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Credenciais inválidas"
+          }
+        }
+      }
+    },
+    "login_error_password_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe sua senha."
+          }
+        }
+      }
+    },
+    "login_error_unverified_account": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirme seu e-mail para continuar"
+          }
+        }
+      }
+    },
+    "login_link_password_recovery": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esqueci minha senha"
+          }
+        }
+      }
+    },
+    "login_link_signup": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não tem conta? Cadastre-se"
+          }
+        }
+      }
+    },
+    "login_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo de volta"
+          }
+        }
+      }
+    },
+    "nav_explorar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorar"
+          }
+        }
+      }
+    },
+    "nav_favoritos": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favoritos"
+          }
+        }
+      }
+    },
+    "nav_inicio": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Início"
+          }
+        }
+      }
+    },
+    "nav_perfil": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil"
+          }
+        }
+      }
+    },
+    "nav_startup_loading": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carregando..."
+          }
+        }
+      }
+    },
+    "password_recovery_error_code_invalid_length": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O código deve ter 6 dígitos."
+          }
+        }
+      }
+    },
+    "password_recovery_error_code_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe o código recebido."
+          }
+        }
+      }
+    },
+    "password_recovery_error_email_invalid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail inválido."
+          }
+        }
+      }
+    },
+    "password_recovery_error_email_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu e-mail."
+          }
+        }
+      }
+    },
+    "password_recovery_error_password_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe a nova senha."
+          }
+        }
+      }
+    },
+    "password_recovery_error_password_too_short": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A senha deve ter pelo menos 8 caracteres."
+          }
+        }
+      }
+    },
+    "password_recovery_generic_confirmation": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se este e-mail existir, você receberá um código de redefinição."
+          }
+        }
+      }
+    },
+    "password_recovery_link_login": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lembrou da senha? Fazer login"
+          }
+        }
+      }
+    },
+    "password_recovery_new_password_instructions": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie uma nova senha para sua conta."
+          }
+        }
+      }
+    },
+    "password_recovery_request_instructions": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu e-mail para receber as instruções de redefinição."
+          }
+        }
+      }
+    },
+    "password_recovery_success_cta": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ir para o login"
+          }
+        }
+      }
+    },
+    "password_recovery_success_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua senha foi redefinida com sucesso. Você já pode fazer login com a nova senha."
+          }
+        }
+      }
+    },
+    "password_recovery_success_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senha redefinida"
+          }
+        }
+      }
+    },
+    "password_recovery_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recuperar senha"
+          }
+        }
+      }
+    },
+    "password_toggle_hide": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar senha"
+          }
+        }
+      }
+    },
+    "password_toggle_show": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar senha"
+          }
+        }
+      }
+    },
+    "profile_picture_change_unavailable": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não é possível alterar a foto do perfil por aqui."
+          }
+        }
+      }
+    },
+    "profile_save_error": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível salvar. Tente novamente."
+          }
+        }
+      }
+    },
+    "profile_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meu perfil"
+          }
+        }
+      }
+    },
+    "signup_error_birthdate_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe sua data de nascimento."
+          }
+        }
+      }
+    },
+    "signup_error_confirm_password_mismatch": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As senhas não coincidem."
+          }
+        }
+      }
+    },
+    "signup_error_consent_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "É necessário aceitar os Termos de Uso e a Política de Privacidade."
+          }
+        }
+      }
+    },
+    "signup_error_email_invalid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail inválido."
+          }
+        }
+      }
+    },
+    "signup_error_email_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu e-mail."
+          }
+        }
+      }
+    },
+    "signup_error_name_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu nome."
+          }
+        }
+      }
+    },
+    "signup_error_password_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe uma senha."
+          }
+        }
+      }
+    },
+    "signup_link_login": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já tem conta? Entrar"
+          }
+        }
+      }
+    },
+    "signup_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie sua conta"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

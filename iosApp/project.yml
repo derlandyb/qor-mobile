@@ -6,6 +6,10 @@ options:
 settings:
   base:
     SWIFT_VERSION: "5.0"
+packages:
+  ViewInspector:
+    url: https://github.com/nalexn/ViewInspector
+    from: 0.10.0
 targets:
   iosApp:
     type: application
@@ -35,8 +39,14 @@ targets:
     platform: iOS
     sources:
       - path: iosAppTests
+    settings:
+      base:
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGNING_ALLOWED: NO
+        GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: iosApp
+      - package: ViewInspector
 schemes:
   iosApp:
     build:

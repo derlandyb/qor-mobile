@@ -92,6 +92,9 @@ detekt {
  * "Gate: build-verified only... needs an Android runtime", since `commonTest` runs on the jvm()
  * target and can't instantiate `EncryptedSharedPreferences`/App Startup. `InMemorySecureTokenStorage`
  * (jvmMain) is the same category — dev/test scaffolding, not exercised via a unit test.
+ *
+ * `di.IosDependencies` (I7-I14's DI-accessor object) is NOT excluded — see `IosDependenciesTest`,
+ * which resolves every accessor against a real Koin graph.
  */
 kover {
     reports {

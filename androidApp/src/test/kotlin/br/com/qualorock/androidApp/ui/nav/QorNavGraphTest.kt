@@ -177,7 +177,7 @@ class QorNavGraphTest {
     @Test
     fun `GIVEN a restorable session WHEN the graph starts THEN it lands on the authenticated Home tab`() {
         val user = User(
-            id = "1",
+            id = 1,
             name = "Ana",
             email = "ana@example.com",
             emailVerifiedAt = "2026-01-01T00:00:00Z",
@@ -199,7 +199,7 @@ class QorNavGraphTest {
     @Test
     fun `GIVEN a fan WHEN they log in, open an event, and press back THEN they land back on Home`() {
         val user = User(
-            id = "1",
+            id = 1,
             name = "Ana",
             email = "ana@example.com",
             emailVerifiedAt = "2026-01-01T00:00:00Z",

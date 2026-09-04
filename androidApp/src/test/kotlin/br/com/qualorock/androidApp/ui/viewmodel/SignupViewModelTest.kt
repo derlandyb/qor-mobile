@@ -82,7 +82,7 @@ private class FakeSignupUserRepository(private val registerResult: RegisterResul
 }
 
 private fun sampleUser() = User(
-    id = "u1",
+    id = 1,
     name = "Ana",
     email = "ana@example.com",
     emailVerifiedAt = null,

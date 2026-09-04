@@ -11,7 +11,7 @@ class UpdateProfileTest {
     @Test
     fun `GIVEN edited fields WHEN execute is called THEN they pass through unchanged to the repository`() = runTest {
         val updatedUser = User(
-            id = "1",
+            id = 1,
             name = "Ana Nova",
             email = "ana@example.com",
             emailVerifiedAt = "2026-01-01T00:00:00Z",
