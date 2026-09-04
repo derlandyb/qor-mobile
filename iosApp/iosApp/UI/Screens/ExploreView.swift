@@ -18,47 +18,45 @@ enum ExploreUiState: Equatable {
 }
 
 /// I12 — Explore tab (DISC-14–DISC-18): the same public event list as [HomeFeedView], with
-/// city/genre filters on top, as its own BottomNav destination. Owns its own [PollingCoordinator]
-/// instance via [PollingEventsWatcher] (a Koin `factory`, not `single` — AD-021/STATE.md) so it
-/// never fights [HomeFeedViewModel] over shared poll state.
-///
-/// Mirrors Android's `ExploreViewModel`/`HomeFeedViewModel` split behaviorally rather than via
-/// Swift subclassing (no idiomatic open-class inheritance pattern here, and I11/I12 build in
-/// parallel worktrees) — this class re-implements the same pagination/polling/filter contract
-/// independently.
+/// city/genre filters on top, as its own BottomNav destination. Reuses [HomeFeedView]'s
+/// `HomeFeedEventsGateway`/`HomeFeedPollingGateway` seam (their production implementations each
+/// resolve a *fresh* `PollingCoordinator` — a Koin `factory`, not `single`, per AD-021/STATE.md —
+/// so this never fights `HomeFeedViewModel` over shared poll state) rather than a second,
+/// independent Kotlin-side bridge: consolidating onto one `StateFlow`-to-Swift mechanism instead
+/// of two, and giving this view model the same fake-injectable seam every other I7-I14 screen
+/// has (its earlier direct `IosDependencies.shared` construction had no test seam at all, which
+/// let every `ExploreViewModel()` in a test process start a real, unbounded background network
+/// poll loop hitting the real API host — harmless alone, but destabilizing once the full suite
+/// runs together).
 @MainActor
 final class ExploreViewModel: ObservableObject {
     @Published private(set) var uiState: ExploreUiState = .loading
     @Published private(set) var selectedCity: City?
     @Published private(set) var selectedGenre: String?
 
-    private let listUpcomingEvents = IosDependencies.shared.listUpcomingEvents()
-    private let watcher = PollingEventsWatcher(coordinator: IosDependencies.shared.pollingCoordinator())
+    private let eventsGateway: HomeFeedEventsGateway
+    private let pollingGateway: HomeFeedPollingGateway
 
     private var nextCursor: String?
-    private var didReceiveFirstPoll = false
     private var loadTask: Task<Void, Never>?
 
-    init() {
-        watcher.watch { [weak self] page in
-            Task { @MainActor in
-                guard let self else { return }
-                // Mirrors Android's `events.drop(1)`: a `StateFlow` replays its current (possibly
-                // stale/default) value synchronously on subscribe — only genuinely new pushes
-                // (a real tick, or `refreshNow`) should update state through this path.
-                guard self.didReceiveFirstPoll else {
-                    self.didReceiveFirstPoll = true
-                    return
-                }
-                self.applyPage(page)
-            }
+    init(
+        eventsGateway: HomeFeedEventsGateway = SharedHomeFeedEventsGateway(),
+        pollingGateway: HomeFeedPollingGateway = SharedHomeFeedPollingGateway()
+    ) {
+        self.eventsGateway = eventsGateway
+        self.pollingGateway = pollingGateway
+
+        pollingGateway.observeUpdates { [weak self] page in
+            self?.applyPage(page)
         }
-        watcher.start(city: nil, genre: nil)
+        pollingGateway.start(city: nil, genre: nil)
         loadInitial()
     }
 
     deinit {
-        watcher.close()
+        pollingGateway.stop()
+        loadTask?.cancel()
     }
 
     /// DISC-14 — toggles `city`: selecting the already-active city clears it (back to unfiltered).
@@ -89,7 +87,7 @@ final class ExploreViewModel: ObservableObject {
         uiState = .content(events: events, isLoadingMore: true, isRefreshing: isRefreshing)
         Task { @MainActor in
             do {
-                let page = try await listUpcomingEvents.execute(
+                let page = try await eventsGateway.loadUpcoming(
                     city: selectedCity, genre: selectedGenre, cursor: cursor
                 )
                 nextCursor = page.nextCursor
@@ -106,14 +104,15 @@ final class ExploreViewModel: ObservableObject {
         }
     }
 
-    /// DISC-04's manual pull-to-refresh trigger — an immediate out-of-band fetch via [PollingEventsWatcher.refreshNow].
+    /// DISC-04's manual pull-to-refresh trigger — an immediate out-of-band fetch via
+    /// [HomeFeedPollingGateway.refreshNow].
     func onRefresh() {
         if case .content(let events, let isLoadingMore, _) = uiState {
             uiState = .content(events: events, isLoadingMore: isLoadingMore, isRefreshing: true)
         }
         Task { @MainActor in
             do {
-                try await watcher.refreshNow()
+                try await pollingGateway.refreshNow()
             } catch {
                 if case .content(let events, let isLoadingMore, _) = uiState {
                     uiState = .content(events: events, isLoadingMore: isLoadingMore, isRefreshing: false)
@@ -126,9 +125,8 @@ final class ExploreViewModel: ObservableObject {
 
     private func applyFilters() {
         nextCursor = nil
-        didReceiveFirstPoll = false
         loadInitial()
-        watcher.start(city: selectedCity, genre: selectedGenre)
+        pollingGateway.start(city: selectedCity, genre: selectedGenre)
     }
 
     private func loadInitial() {
@@ -136,7 +134,7 @@ final class ExploreViewModel: ObservableObject {
         uiState = .loading
         loadTask = Task { @MainActor in
             do {
-                let page = try await listUpcomingEvents.execute(city: selectedCity, genre: selectedGenre, cursor: nil)
+                let page = try await eventsGateway.loadUpcoming(city: selectedCity, genre: selectedGenre, cursor: nil)
                 guard !Task.isCancelled else { return }
                 applyPage(page)
             } catch {
@@ -157,7 +155,17 @@ struct ExploreView: View {
     let onEventClick: (Event) -> Void
     var onMapClick: (Event) -> Void = { _ in }
 
-    @StateObject private var viewModel = ExploreViewModel()
+    @StateObject private var viewModel: ExploreViewModel
+
+    init(
+        onEventClick: @escaping (Event) -> Void,
+        onMapClick: @escaping (Event) -> Void = { _ in },
+        viewModel: ExploreViewModel? = nil
+    ) {
+        self.onEventClick = onEventClick
+        self.onMapClick = onMapClick
+        _viewModel = StateObject(wrappedValue: viewModel ?? ExploreViewModel())
+    }
 
     private var hasActiveFilters: Bool { viewModel.selectedCity != nil || viewModel.selectedGenre != nil }
 

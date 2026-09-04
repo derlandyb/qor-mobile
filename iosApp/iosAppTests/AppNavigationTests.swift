@@ -1,6 +1,41 @@
 import XCTest
 import ViewInspector
+import shared
 @testable import iosApp
+
+/// A no-op `HomeFeedEventsGateway`/`HomeFeedPollingGateway` pair — `MainTabRootView`'s tests only
+/// assert routing, never event-list content, so these just need to exist and never touch the
+/// real Koin graph or network (see `MainTabRootView`'s own doc comment on its view-model seams).
+private final class NoopEventsGateway: HomeFeedEventsGateway {
+    func loadUpcoming(city: City?, genre: String?, cursor: String?) async throws -> EventPage {
+        EventPage(events: [], nextCursor: nil)
+    }
+}
+
+private final class NoopPollingGateway: HomeFeedPollingGateway {
+    func start(city: City?, genre: String?) {}
+    func stop() {}
+    func refreshNow() async throws {}
+    func currentPage() -> EventPage { EventPage(events: [], nextCursor: nil) }
+    func observeUpdates(_ onUpdate: @escaping (EventPage) -> Void) {}
+}
+
+@MainActor
+private func makeHomeFeedViewModel() -> HomeFeedViewModel {
+    HomeFeedViewModel(eventsGateway: NoopEventsGateway(), pollingGateway: NoopPollingGateway())
+}
+
+@MainActor
+private func makeExploreViewModel() -> ExploreViewModel {
+    ExploreViewModel(eventsGateway: NoopEventsGateway(), pollingGateway: NoopPollingGateway())
+}
+
+@MainActor
+private func makeProfileViewModel() -> ProfileViewModel {
+    ProfileViewModel(loadCurrentUser: { nil }, saveProfile: { _ in throw NoopError() }, applySessionUser: { _ in })
+}
+
+private struct NoopError: Error {}
 
 final class AppNavigationTests: XCTestCase {
     // MARK: - Deep link (qualorock://evento/{eventId})
@@ -33,7 +68,9 @@ final class AppNavigationTests: XCTestCase {
 
     @MainActor
     func test_GIVEN_theMainTabRoot_WHEN_freshlyRendered_THEN_homeFeedIsTheDefaultTab() throws {
-        let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in })
+        let sut = MainTabRootView(
+            onEventClick: { _ in }, onEmailChangePending: { _ in }, homeFeedViewModel: makeHomeFeedViewModel()
+        )
 
         XCTAssertNoThrow(try sut.inspect().find(HomeFeedView.self))
     }
@@ -48,7 +85,8 @@ final class AppNavigationTests: XCTestCase {
     @MainActor
     func test_GIVEN_theMainTabRoot_WHEN_startingOnExplorar_THEN_exploreViewIsShown() throws {
         let sut = MainTabRootView(
-            initialTab: .explorar, onEventClick: { _ in }, onEmailChangePending: { _ in }
+            initialTab: .explorar, onEventClick: { _ in }, onEmailChangePending: { _ in },
+            exploreViewModel: makeExploreViewModel()
         )
 
         XCTAssertNoThrow(try sut.inspect().find(ExploreView.self))
@@ -57,7 +95,8 @@ final class AppNavigationTests: XCTestCase {
     @MainActor
     func test_GIVEN_theMainTabRoot_WHEN_startingOnPerfil_THEN_profileViewIsShown() throws {
         let sut = MainTabRootView(
-            initialTab: .perfil, onEventClick: { _ in }, onEmailChangePending: { _ in }
+            initialTab: .perfil, onEventClick: { _ in }, onEmailChangePending: { _ in },
+            profileViewModel: makeProfileViewModel()
         )
 
         XCTAssertNoThrow(try sut.inspect().find(ProfileView.self))
@@ -65,7 +104,9 @@ final class AppNavigationTests: XCTestCase {
 
     @MainActor
     func test_GIVEN_bottomNavsOnSelect_WHEN_calledWithAnEnabledDestination_THEN_itIsCallable() throws {
-        let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in })
+        let sut = MainTabRootView(
+            onEventClick: { _ in }, onEmailChangePending: { _ in }, homeFeedViewModel: makeHomeFeedViewModel()
+        )
 
         let bottomNav = try sut.inspect().find(BottomNav.self).actualView()
 

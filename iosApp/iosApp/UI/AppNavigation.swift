@@ -151,16 +151,31 @@ struct MainTabRootView: View {
     let onEventClick: (String) -> Void
     let onEmailChangePending: (String) -> Void
 
+    /// Test-only injection seams (production always passes `nil`, letting each screen's own
+    /// `init` default to its real Koin-backed view model) — without these, constructing this
+    /// view in a test process starts real, unbounded background network activity via whichever
+    /// tab's default view model happens to render, the same test-isolation hazard `ExploreView`
+    /// itself had before this file's `ExploreViewModel` fix.
+    private let homeFeedViewModel: HomeFeedViewModel?
+    private let exploreViewModel: ExploreViewModel?
+    private let profileViewModel: ProfileViewModel?
+
     @State private var current: BottomNavDestination
 
     init(
         initialTab: BottomNavDestination = .inicio,
         onEventClick: @escaping (String) -> Void,
-        onEmailChangePending: @escaping (String) -> Void
+        onEmailChangePending: @escaping (String) -> Void,
+        homeFeedViewModel: HomeFeedViewModel? = nil,
+        exploreViewModel: ExploreViewModel? = nil,
+        profileViewModel: ProfileViewModel? = nil
     ) {
         _current = State(initialValue: initialTab)
         self.onEventClick = onEventClick
         self.onEmailChangePending = onEmailChangePending
+        self.homeFeedViewModel = homeFeedViewModel
+        self.exploreViewModel = exploreViewModel
+        self.profileViewModel = profileViewModel
     }
 
     var body: some View {
@@ -168,11 +183,11 @@ struct MainTabRootView: View {
             Group {
                 switch current {
                 case .inicio:
-                    HomeFeedView(onEventClick: onEventClick)
+                    HomeFeedView(onEventClick: onEventClick, viewModel: homeFeedViewModel)
                 case .explorar:
-                    ExploreView(onEventClick: { event in onEventClick(event.id) })
+                    ExploreView(onEventClick: { event in onEventClick(event.id) }, viewModel: exploreViewModel)
                 case .perfil:
-                    ProfileView(onEmailChangePending: onEmailChangePending)
+                    ProfileView(onEmailChangePending: onEmailChangePending, viewModel: profileViewModel)
                 case .favoritos:
                     EmptyView()
                 }

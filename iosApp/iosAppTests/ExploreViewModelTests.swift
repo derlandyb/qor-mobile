@@ -2,18 +2,31 @@ import XCTest
 import shared
 @testable import iosApp
 
-/// I12 — pure state-shape assertions for `ExploreUiState`/filter-toggle logic. `ExploreViewModel`
-/// resolves `IosDependencies.shared` at `init`, which needs `di.doInitKoin()` to have run —
-/// `iosAppTests` is hosted inside the `iosApp` application target, which already calls
-/// `KoinHelperKt.doInitKoin()` from `IosAppApp`'s `init` before any test runs, so tests must NOT
-/// call it again (Koin's `startKoin` throws `KoinAppAlreadyStartedException` on a second call,
-/// which crashes the whole process — Kotlin/Native has no automatic bridge from an uncaught
-/// Kotlin exception to a catchable Swift/XCTest failure).
+private final class FakeExploreEventsGateway: HomeFeedEventsGateway {
+    func loadUpcoming(city: City?, genre: String?, cursor: String?) async throws -> EventPage {
+        EventPage(events: [], nextCursor: nil)
+    }
+}
+
+private final class FakeExplorePollingGateway: HomeFeedPollingGateway {
+    func start(city: City?, genre: String?) {}
+    func stop() {}
+    func refreshNow() async throws {}
+    func currentPage() -> EventPage { EventPage(events: [], nextCursor: nil) }
+    func observeUpdates(_ onUpdate: @escaping (EventPage) -> Void) {}
+}
+
+/// I12 — pure state-shape assertions for `ExploreUiState`/filter-toggle logic. Injects fakes for
+/// both gateways so these tests never touch the real Koin graph or make a real network call —
+/// `ExploreViewModel`'s own doc comment explains why that matters beyond just these tests.
 @MainActor
 final class ExploreViewModelTests: XCTestCase {
+    private func makeViewModel() -> ExploreViewModel {
+        ExploreViewModel(eventsGateway: FakeExploreEventsGateway(), pollingGateway: FakeExplorePollingGateway())
+    }
 
     func test_toggleCity_selectingSameCityTwice_clearsSelection() {
-        let viewModel = ExploreViewModel()
+        let viewModel = makeViewModel()
         XCTAssertNil(viewModel.selectedCity)
 
         viewModel.onCitySelected(.vitoria)
@@ -24,7 +37,7 @@ final class ExploreViewModelTests: XCTestCase {
     }
 
     func test_toggleGenre_selectingDifferentGenre_replacesSelection() {
-        let viewModel = ExploreViewModel()
+        let viewModel = makeViewModel()
 
         viewModel.onGenreSelected("Rock")
         XCTAssertEqual(viewModel.selectedGenre, "Rock")
@@ -34,7 +47,7 @@ final class ExploreViewModelTests: XCTestCase {
     }
 
     func test_clearFilters_resetsBothCityAndGenre() {
-        let viewModel = ExploreViewModel()
+        let viewModel = makeViewModel()
         viewModel.onCitySelected(.serra)
         viewModel.onGenreSelected("Reggae")
 
@@ -45,7 +58,7 @@ final class ExploreViewModelTests: XCTestCase {
     }
 
     func test_bothFilters_areAndCombined_neitherDiscardsTheOther() {
-        let viewModel = ExploreViewModel()
+        let viewModel = makeViewModel()
         viewModel.onCitySelected(.cariacica)
         viewModel.onGenreSelected("Eletrônico")
 
@@ -54,7 +67,7 @@ final class ExploreViewModelTests: XCTestCase {
     }
 
     func test_uiState_startsLoading() {
-        let viewModel = ExploreViewModel()
+        let viewModel = makeViewModel()
         XCTAssertEqual(viewModel.uiState, .loading)
     }
 }
