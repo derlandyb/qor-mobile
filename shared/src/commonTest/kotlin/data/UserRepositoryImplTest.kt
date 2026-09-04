@@ -5,6 +5,7 @@ import domain.user.LoginResult
 import domain.user.ProfileUpdateFields
 import domain.user.RegisterResult
 import domain.user.VerifyEmailResult
+import domain.user.VerifyResetCodeResult
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -130,12 +131,15 @@ class UserRepositoryImplTest {
 
     @Test
     fun `GIVEN a valid unexpired token WHEN confirmPasswordReset is called THEN it succeeds`() = runTest {
-        val (client, _) = clientWith { HttpStatusCode.OK to """{"message":"ok"}""" }
+        val (client, requests) = clientWith { HttpStatusCode.OK to """{"message":"ok"}""" }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
-        val result = repository.confirmPasswordReset("valid-token", "N3wStr0ng!Pass")
+        val result = repository.confirmPasswordReset("ana@example.com", "valid-token", "N3wStr0ng!Pass")
 
         assertIs<ConfirmResetResult.Success>(result)
+        val request = requests.single()
+        assertTrue(request.url.fullPath.endsWith("/auth/password/reset"))
+        assertTrue((request.body as TextContent).text.contains("ana@example.com"))
     }
 
     @Test
@@ -145,10 +149,39 @@ class UserRepositoryImplTest {
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
-        val result = repository.confirmPasswordReset("expired-token", "N3wStr0ng!Pass")
+        val result = repository.confirmPasswordReset("ana@example.com", "expired-token", "N3wStr0ng!Pass")
 
         assertIs<ConfirmResetResult.Failure>(result)
         assertEquals("Este link expirou.", result.message)
+    }
+
+    @Test
+    fun `GIVEN a valid unexpired code WHEN verifyResetCode is called THEN it builds a POST to auth password verify-code and maps the reset token`() = runTest {
+        val (client, requests) = clientWith {
+            HttpStatusCode.OK to """{"data":{"token":"reset-token-123"}}"""
+        }
+        val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
+
+        val result = repository.verifyResetCode("ana@example.com", "123456")
+
+        assertIs<VerifyResetCodeResult.Success>(result)
+        assertEquals("reset-token-123", result.token)
+        val request = requests.single()
+        assertTrue(request.url.fullPath.endsWith("/auth/password/verify-code"))
+        assertTrue((request.body as TextContent).text.contains("123456"))
+    }
+
+    @Test
+    fun `GIVEN an invalid or expired code WHEN verifyResetCode is called THEN the server's generic pt-BR message passes through unmodified`() = runTest {
+        val (client, _) = clientWith {
+            HttpStatusCode.UnprocessableEntity to """{"message":"Código inválido ou expirado."}"""
+        }
+        val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
+
+        val result = repository.verifyResetCode("ana@example.com", "000000")
+
+        assertIs<VerifyResetCodeResult.Failure>(result)
+        assertEquals("Código inválido ou expirado.", result.message)
     }
 
     @Test

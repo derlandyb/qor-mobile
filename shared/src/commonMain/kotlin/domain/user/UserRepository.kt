@@ -26,6 +26,18 @@ sealed class ConfirmResetResult {
 }
 
 /**
+ * Result of verifying a password-reset OTP code against `POST /password/verify-code` — the
+ * middle step of the 3-step reset flow (forgot -> verify-code -> reset). On success the server
+ * returns a real reset token that must be passed to [UserRepository.confirmPasswordReset]
+ * alongside the email and new password. Mirrors [VerifyEmailResult]'s Success/Failure shape
+ * since the server also collapses invalid vs. expired codes into one generic pt-BR message.
+ */
+sealed class VerifyResetCodeResult {
+    data class Success(val token: String) : VerifyResetCodeResult()
+    data class Failure(val message: String) : VerifyResetCodeResult()
+}
+
+/**
  * Result of confirming an email-verification OTP code, per `AuthController::verifyEmailCode`.
  * Unlike [LoginResult], no session is issued here — the endpoint only marks the account
  * verified, it does not return a token, so the fan still logs in separately afterwards
@@ -70,11 +82,14 @@ interface UserRepository {
 
     suspend fun logout()
 
-    /** Step 1 of the 2-step reset flow — no account enumeration (`api.md` T28). */
+    /** Step 1 of the 3-step reset flow — no account enumeration (`api.md` T28). */
     suspend fun requestPasswordReset(email: String)
 
-    /** Step 2 — confirms with the emailed token. */
-    suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult
+    /** Step 2 — verifies the emailed OTP code, returning a real reset token on success. */
+    suspend fun verifyResetCode(email: String, code: String): VerifyResetCodeResult
+
+    /** Step 3 — confirms with the email, the token from [verifyResetCode], and the new password. */
+    suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult
 
     /** Resends the email-verification OTP — no account enumeration, matches `requestPasswordReset`. */
     suspend fun resendVerification(email: String)
