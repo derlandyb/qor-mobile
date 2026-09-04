@@ -210,6 +210,146 @@
           }
         }
       }
+    },
+    "signup_title" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crie sua conta"
+          }
+        }
+      }
+    },
+    "field_label_name" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome completo"
+          }
+        }
+      }
+    },
+    "field_label_birthdate" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data de nascimento"
+          }
+        }
+      }
+    },
+    "field_label_confirm_password" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirmar senha"
+          }
+        }
+      }
+    },
+    "signup_error_name_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe seu nome."
+          }
+        }
+      }
+    },
+    "signup_error_email_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe seu e-mail."
+          }
+        }
+      }
+    },
+    "signup_error_email_invalid" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail inválido."
+          }
+        }
+      }
+    },
+    "signup_error_password_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe uma senha."
+          }
+        }
+      }
+    },
+    "signup_error_confirm_password_mismatch" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As senhas não coincidem."
+          }
+        }
+      }
+    },
+    "signup_error_birthdate_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe sua data de nascimento."
+          }
+        }
+      }
+    },
+    "signup_error_consent_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É necessário aceitar os Termos de Uso e a Política de Privacidade."
+          }
+        }
+      }
+    },
+    "cta_cadastrar" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadastrar"
+          }
+        }
+      }
+    },
+    "cta_cadastrar_com_google" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadastrar com Google"
+          }
+        }
+      }
+    },
+    "signup_link_login" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Já tem conta? Entrar"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
