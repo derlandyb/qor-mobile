@@ -37,6 +37,15 @@ class SessionStore(
         _currentUser.value = null
     }
 
+    /**
+     * A13 — reflects a profile edit ([domain.user.usecase.UpdateProfile]'s return value) into the
+     * shared session state so every screen observing [currentUser] sees it immediately (AUTH-18),
+     * without touching the stored token — a profile edit never re-issues a session.
+     */
+    fun updateCurrentUser(user: User) {
+        _currentUser.value = user
+    }
+
     override suspend fun onAuthenticated(user: User, token: String) {
         set(user, token)
     }

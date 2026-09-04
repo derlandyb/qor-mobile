@@ -31,6 +31,8 @@ private class FakeUserRepository(private val profile: User) : UserRepository {
     override suspend fun logout() = Unit
     override suspend fun requestPasswordReset(email: String) = Unit
     override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult = error("not used")
+    override suspend fun resendVerification(email: String) = Unit
+    override suspend fun verifyEmailCode(email: String, code: String): domain.user.VerifyEmailResult = error("not used")
     override suspend fun getProfile(): User = profile
     override suspend fun updateProfile(fields: ProfileUpdateFields): User = error("not used")
     override suspend fun accessData(): DataRightResult = error("not used")
@@ -94,4 +96,18 @@ class SessionStoreTest {
         assertEquals(sampleUser(), store.currentUser.value)
         assertEquals("tok-4", tokenStorage.read())
     }
+
+    @Test
+    fun `GIVEN a logged-in session WHEN updateCurrentUser is called THEN currentUser reflects the new value without touching stored token`() =
+        runTest {
+            val tokenStorage = FakeSecureTokenStorage(initialToken = "tok-5")
+            val store = SessionStore(FakeUserRepository(sampleUser()), tokenStorage)
+            store.set(sampleUser(), "tok-5")
+            val renamed = sampleUser().copy(name = "Ana Renomeada")
+
+            store.updateCurrentUser(renamed)
+
+            assertEquals(renamed, store.currentUser.value)
+            assertEquals("tok-5", tokenStorage.read())
+        }
 }

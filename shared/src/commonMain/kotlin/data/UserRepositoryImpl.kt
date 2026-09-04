@@ -8,6 +8,7 @@ import domain.user.ProfileUpdateFields
 import domain.user.RegisterResult
 import domain.user.User
 import domain.user.UserRepository
+import domain.user.VerifyEmailResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -46,6 +47,12 @@ private data class RequestResetRequestDto(val email: String)
 
 @Serializable
 private data class ConfirmResetRequestDto(val token: String, @SerialName("new_password") val newPassword: String)
+
+@Serializable
+private data class ResendVerificationRequestDto(val email: String)
+
+@Serializable
+private data class VerifyEmailCodeRequestDto(val email: String, val code: String)
 
 @Serializable
 private data class UpdateProfileRequestDto(
@@ -132,6 +139,25 @@ class UserRepositoryImpl(
             ConfirmResetResult.Success
         } else {
             ConfirmResetResult.Failure(response.body<ErrorResponseDto>().message)
+        }
+    }
+
+    override suspend fun resendVerification(email: String) {
+        httpClient.post("$authBase/email/verification-notification") {
+            contentType(ContentType.Application.Json)
+            setBody(ResendVerificationRequestDto(email))
+        }
+    }
+
+    override suspend fun verifyEmailCode(email: String, code: String): VerifyEmailResult {
+        val response = httpClient.post("$authBase/email/verify-code") {
+            contentType(ContentType.Application.Json)
+            setBody(VerifyEmailCodeRequestDto(email, code))
+        }
+        return if (response.status.isSuccess()) {
+            VerifyEmailResult.Success(response.body<VerifyEmailResponseDto>().data?.toDomain())
+        } else {
+            VerifyEmailResult.Failure(response.body<ErrorResponseDto>().message)
         }
     }
 

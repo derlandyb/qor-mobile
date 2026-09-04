@@ -12,6 +12,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- A14 — shared event-detail deep link, see QorNavGraph.eventDetailDestination's KDoc
+                 for why this is a custom scheme rather than a verified https App Link. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="qualorock" android:host="evento" />
+            </intent-filter>
         </activity>
     </application>
 

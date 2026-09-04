@@ -6,4 +6,10 @@ package data
  */
 object QorConfig {
     const val EventListPollIntervalSeconds: Long = 30
+
+    /**
+     * Mirrors `qor-website`'s `OtpCodeInput` default `resendCooldownSeconds` (AUTH-10) — kept
+     * here rather than inlined in `androidApp` so both clients read the same named constant.
+     */
+    const val EmailVerificationResendCooldownSeconds: Long = 60
 }

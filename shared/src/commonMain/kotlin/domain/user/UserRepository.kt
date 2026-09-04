@@ -25,6 +25,18 @@ sealed class ConfirmResetResult {
     data class Failure(val message: String) : ConfirmResetResult()
 }
 
+/**
+ * Result of confirming an email-verification OTP code, per `AuthController::verifyEmailCode`.
+ * Unlike [LoginResult], no session is issued here — the endpoint only marks the account
+ * verified, it does not return a token, so the fan still logs in separately afterwards
+ * (matches `qor-website`'s W20 flow). Mirrors [ConfirmResetResult]'s Success/Failure shape
+ * since the server also collapses invalid vs. expired codes into one generic pt-BR message.
+ */
+sealed class VerifyEmailResult {
+    data class Success(val user: User?) : VerifyEmailResult()
+    data class Failure(val message: String) : VerifyEmailResult()
+}
+
 /** Fields a fan can edit via `UpdateProfile` (T29) — omitted fields are left unchanged. */
 data class ProfileUpdateFields(
     val name: String? = null,
@@ -63,6 +75,12 @@ interface UserRepository {
 
     /** Step 2 — confirms with the emailed token. */
     suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult
+
+    /** Resends the email-verification OTP — no account enumeration, matches `requestPasswordReset`. */
+    suspend fun resendVerification(email: String)
+
+    /** Confirms the emailed OTP code (AUTH-10). */
+    suspend fun verifyEmailCode(email: String, code: String): VerifyEmailResult
 
     suspend fun getProfile(): User
 

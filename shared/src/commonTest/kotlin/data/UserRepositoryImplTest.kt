@@ -4,6 +4,7 @@ import domain.user.ConfirmResetResult
 import domain.user.LoginResult
 import domain.user.ProfileUpdateFields
 import domain.user.RegisterResult
+import domain.user.VerifyEmailResult
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -204,6 +205,47 @@ class UserRepositoryImplTest {
         val request = requests.single()
         assertTrue(request.url.fullPath.endsWith("/auth/password/forgot"))
         assertTrue((request.body as TextContent).text.contains("ana@example.com"))
+    }
+
+    @Test
+    fun `GIVEN an email WHEN resendVerification is called THEN it posts the email with no account enumeration`() = runTest {
+        val (client, requests) = clientWith { HttpStatusCode.OK to """{"message":"Se este e-mail existir e ainda não tiver sido verificado, você receberá um novo código."}""" }
+        val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
+
+        repository.resendVerification("ana@example.com")
+
+        val request = requests.single()
+        assertTrue(request.url.fullPath.endsWith("/auth/email/verification-notification"))
+        assertTrue((request.body as TextContent).text.contains("ana@example.com"))
+    }
+
+    @Test
+    fun `GIVEN a valid unexpired code WHEN verifyEmailCode is called THEN it builds a POST to auth email verify-code and maps the verified user`() = runTest {
+        val (client, requests) = clientWith {
+            HttpStatusCode.OK to """{"data":{"id":"u1","name":"Ana","email":"ana@example.com","email_verified_at":"2026-01-01T00:00:00Z","birthdate":"1990-01-01"}}"""
+        }
+        val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
+
+        val result = repository.verifyEmailCode("ana@example.com", "123456")
+
+        assertIs<VerifyEmailResult.Success>(result)
+        assertEquals("Ana", result.user?.name)
+        val request = requests.single()
+        assertTrue(request.url.fullPath.endsWith("/auth/email/verify-code"))
+        assertTrue((request.body as TextContent).text.contains("123456"))
+    }
+
+    @Test
+    fun `GIVEN an invalid or expired code WHEN verifyEmailCode is called THEN the server's generic pt-BR message passes through unmodified`() = runTest {
+        val (client, _) = clientWith {
+            HttpStatusCode.UnprocessableEntity to """{"message":"Código inválido ou expirado."}"""
+        }
+        val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
+
+        val result = repository.verifyEmailCode("ana@example.com", "000000")
+
+        assertIs<VerifyEmailResult.Failure>(result)
+        assertEquals("Código inválido ou expirado.", result.message)
     }
 
     @Test

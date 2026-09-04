@@ -25,6 +25,9 @@ internal data class SessionResponseDto(
 )
 
 @Serializable
+internal data class VerifyEmailResponseDto(val data: UserDto? = null)
+
+@Serializable
 internal data class ErrorResponseDto(
     val message: String,
     val errors: Map<String, List<String>> = emptyMap(),

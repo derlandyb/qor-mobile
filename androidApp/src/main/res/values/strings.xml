@@ -38,4 +38,93 @@
     <string name="field_label_password">Senha</string>
     <string name="password_toggle_show">Mostrar senha</string>
     <string name="password_toggle_hide">Ocultar senha</string>
+
+    <!-- LoginScreen (A7) -->
+    <string name="login_title">Bem-vindo de volta</string>
+    <string name="login_error_email_required">Informe seu e-mail.</string>
+    <string name="login_error_email_invalid">E-mail inválido.</string>
+    <string name="login_error_password_required">Informe sua senha.</string>
+    <string name="login_error_invalid_credentials">Credenciais inválidas</string>
+    <string name="login_error_unverified_account">Confirme seu e-mail para continuar</string>
+    <string name="cta_entrar">Entrar</string>
+    <string name="cta_entrar_com_google">Entrar com Google</string>
+    <string name="login_link_password_recovery">Esqueci minha senha</string>
+    <string name="login_link_signup">Ainda não tem conta? Cadastre-se</string>
+
+    <!-- SignupScreen (A8) -->
+    <string name="signup_title">Crie sua conta</string>
+    <string name="field_label_name">Nome completo</string>
+    <string name="field_label_birthdate">Data de nascimento</string>
+    <string name="signup_error_name_required">Informe seu nome.</string>
+    <string name="signup_error_email_required">Informe seu e-mail.</string>
+    <string name="signup_error_email_invalid">E-mail inválido.</string>
+    <string name="signup_error_password_required">Informe uma senha.</string>
+    <string name="signup_error_birthdate_required">Informe sua data de nascimento.</string>
+    <string name="signup_error_consent_required">É necessário aceitar os Termos de Uso e a Política de Privacidade.</string>
+    <string name="cta_cadastrar">Cadastrar</string>
+    <string name="cta_cadastrar_com_google">Cadastrar com Google</string>
+
+    <!-- EmailVerificationScreen (A9) -->
+    <string name="email_verification_title">Confirme seu e-mail</string>
+    <string name="email_verification_instructions">Enviamos um código de 6 dígitos para %1$s. Insira-o abaixo para confirmar sua conta.</string>
+    <string name="field_label_code">Código de verificação</string>
+    <string name="email_verification_error_code_required">Informe o código recebido.</string>
+    <string name="email_verification_error_code_invalid_length">O código deve ter 6 dígitos.</string>
+    <string name="cta_verificar_codigo">Verificar código</string>
+    <string name="email_verification_resend_prompt">Não recebeu o código?</string>
+    <string name="email_verification_resend_countdown">Reenviar em %1$ds</string>
+    <string name="cta_reenviar">Reenviar</string>
+    <string name="email_verification_resend_confirmation">Código reenviado.</string>
+    <string name="signup_link_login">Já tem conta? Entrar</string>
+
+    <!-- PasswordRecoveryScreen (A10) -->
+    <string name="password_recovery_title">Recuperar senha</string>
+    <string name="password_recovery_request_instructions">Informe seu e-mail para receber as instruções de redefinição.</string>
+    <string name="password_recovery_generic_confirmation">Se este e-mail existir, você receberá um código de redefinição.</string>
+    <string name="password_recovery_error_email_required">Informe seu e-mail.</string>
+    <string name="password_recovery_error_email_invalid">E-mail inválido.</string>
+    <string name="password_recovery_error_code_required">Informe o código recebido.</string>
+    <string name="password_recovery_error_code_invalid_length">O código deve ter 6 dígitos.</string>
+    <string name="password_recovery_error_password_required">Informe a nova senha.</string>
+    <string name="password_recovery_error_password_too_short">A senha deve ter pelo menos 8 caracteres.</string>
+    <string name="cta_enviar_link_recuperacao">Enviar link de recuperação</string>
+    <string name="cta_redefinir_senha">Redefinir senha</string>
+    <string name="password_recovery_link_login">Lembrou da senha? Fazer login</string>
+
+    <!-- HomeFeedScreen (A11) -->
+    <string name="home_feed_error_message">Não foi possível carregar os eventos. Tente novamente.</string>
+    <string name="home_feed_cta_tentar_novamente">Tentar novamente</string>
+
+    <!-- ExploreScreen (A12) -->
+    <string name="explore_empty_state_no_matches">Nenhum evento encontrado para estes filtros.</string>
+    <string name="explore_cta_limpar_filtros">Limpar filtros</string>
+
+    <!-- EventDetailScreen (A13) -->
+    <string name="event_detail_error_message">Não foi possível carregar o evento. Tente novamente.</string>
+    <string name="event_detail_cta_tentar_novamente">Tentar novamente</string>
+    <string name="event_detail_status_cancelled">Evento cancelado</string>
+    <string name="event_detail_status_ended">Este evento já aconteceu</string>
+    <string name="event_detail_label_free">Gratuito</string>
+    <string name="event_detail_label_paid">Pago</string>
+    <string name="cta_comprar_ingresso">Comprar ingresso</string>
+    <string name="event_detail_ticket_link_error">Não foi possível abrir o link do ingresso.</string>
+    <string name="cta_abrir_no_mapa">Abrir no mapa</string>
+    <string name="event_detail_contacts_title">Contato dos promotores</string>
+    <string name="cta_ligar">Ligar</string>
+    <string name="cta_enviar_email">Enviar e-mail</string>
+    <string name="cta_tiktok">TikTok</string>
+    <string name="cta_compartilhar">Compartilhar</string>
+    <string name="event_detail_share_text">Confira %1$s! %2$s</string>
+
+    <!-- ProfileScreen (A13) -->
+    <string name="profile_title">Meu perfil</string>
+    <string name="field_label_phone">Telefone</string>
+    <string name="cta_salvar">Salvar</string>
+    <string name="cta_alterar_foto">Alterar foto</string>
+    <string name="profile_picture_change_unavailable">Ainda não é possível alterar a foto do perfil por aqui.</string>
+    <string name="profile_save_error">Não foi possível salvar. Tente novamente.</string>
+    <string name="profile_email_change_pending">Confirme seu novo e-mail para concluir a alteração.</string>
+
+    <!-- Navigation (A14) -->
+    <string name="nav_startup_loading">Carregando…</string>
 </resources>

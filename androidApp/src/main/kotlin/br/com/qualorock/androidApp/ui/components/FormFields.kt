@@ -75,6 +75,25 @@ fun EmailField(value: String, onValueChange: (String) -> Unit, errorMessage: Str
     )
 }
 
+/**
+ * A9 — 6-digit OTP code field (AUTH-10), matching `qor-website`'s `OtpCodeInput` behavior:
+ * non-digit characters are stripped and input is capped at [OtpCodeMaxLength] as it's typed,
+ * rather than relying on validation alone to catch a too-long paste.
+ */
+private const val OtpCodeMaxLength = 6
+
+@Composable
+fun OtpCodeField(value: String, onValueChange: (String) -> Unit, errorMessage: String?, modifier: Modifier = Modifier) {
+    QorTextField(
+        value = value,
+        onValueChange = { raw -> onValueChange(raw.filter(Char::isDigit).take(OtpCodeMaxLength)) },
+        label = stringResource(R.string.field_label_code),
+        errorMessage = errorMessage,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        modifier = modifier,
+    )
+}
+
 /** A6 — password field variant, with a "Mostrar senha"/"Ocultar senha" visibility toggle. */
 @Composable
 fun PasswordField(value: String, onValueChange: (String) -> Unit, errorMessage: String?, modifier: Modifier = Modifier) {
