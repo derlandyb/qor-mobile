@@ -1,316 +1,456 @@
 {
-  "sourceLanguage" : "pt-BR",
-  "strings" : {
-    "nav_inicio" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Início"
+  "sourceLanguage": "pt-BR",
+  "strings": {
+    "city_cariacica": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cariacica"
           }
         }
       }
     },
-    "nav_explorar" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Explorar"
+    "city_serra": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serra"
           }
         }
       }
     },
-    "nav_favoritos" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favoritos"
+    "city_vila_velha": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vila Velha"
           }
         }
       }
     },
-    "nav_perfil" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Perfil"
+    "city_vitoria": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vitória"
           }
         }
       }
     },
-    "city_vitoria" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vitória"
+    "consent_terms_text": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Li e aceito os Termos de Uso e a Política de Privacidade."
           }
         }
       }
     },
-    "city_vila_velha" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vila Velha"
+    "content_description_genre": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gênero: %@"
           }
         }
       }
     },
-    "city_serra" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serra"
+    "content_description_live_now": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao vivo agora"
           }
         }
       }
     },
-    "city_cariacica" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cariacica"
+    "content_description_no_flyer": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem imagem de divulgação"
           }
         }
       }
     },
-    "cta_ver_no_mapa" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver no Mapa"
+    "cta_cadastrar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadastrar"
           }
         }
       }
     },
-    "cta_ver_instagram" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver Instagram"
+    "cta_cadastrar_com_google": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadastrar com Google"
           }
         }
       }
     },
-    "content_description_genre" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gênero: %@"
+    "cta_entrar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrar"
           }
         }
       }
     },
-    "live_pulse_label" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ao vivo"
+    "cta_entrar_com_google": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrar com Google"
           }
         }
       }
     },
-    "content_description_live_now" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ao vivo agora"
+    "cta_ver_instagram": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver Instagram"
           }
         }
       }
     },
-    "content_description_no_flyer" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem imagem de divulgação"
+    "cta_ver_no_mapa": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver no Mapa"
           }
         }
       }
     },
-    "empty_state_no_events" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum evento encontrado"
+    "empty_state_no_events": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum evento encontrado"
           }
         }
       }
     },
-    "consent_terms_text" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Li e aceito os Termos de Uso e a Política de Privacidade."
+    "field_label_birthdate": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data de nascimento"
           }
         }
       }
     },
-    "field_label_email" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-mail"
+    "field_label_code": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código de verificação"
           }
         }
       }
     },
-    "field_label_password" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Senha"
+    "field_label_confirm_password": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirmar senha"
           }
         }
       }
     },
-    "field_label_code" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Código de verificação"
+    "field_label_email": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail"
           }
         }
       }
     },
-    "password_toggle_show" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar senha"
+    "field_label_name": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome completo"
           }
         }
       }
     },
-    "password_toggle_hide" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ocultar senha"
+    "field_label_password": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senha"
           }
         }
       }
     },
-    "login_title" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bem-vindo de volta"
+    "live_pulse_label": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao vivo"
           }
         }
       }
     },
-    "login_error_email_required" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informe seu e-mail."
+    "login_error_email_invalid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail inválido."
           }
         }
       }
     },
-    "login_error_email_invalid" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-mail inválido."
+    "login_error_email_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu e-mail."
           }
         }
       }
     },
-    "login_error_password_required" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informe sua senha."
+    "login_error_invalid_credentials": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Credenciais inválidas"
           }
         }
       }
     },
-    "login_error_invalid_credentials" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Credenciais inválidas"
+    "login_error_password_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe sua senha."
           }
         }
       }
     },
-    "login_error_unverified_account" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Confirme seu e-mail para continuar"
+    "login_error_unverified_account": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirme seu e-mail para continuar"
           }
         }
       }
     },
-    "cta_entrar" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entrar"
+    "login_link_password_recovery": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esqueci minha senha"
           }
         }
       }
     },
-    "cta_entrar_com_google" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entrar com Google"
+    "login_link_signup": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não tem conta? Cadastre-se"
           }
         }
       }
     },
-    "login_link_password_recovery" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esqueci minha senha"
+    "login_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo de volta"
           }
         }
       }
     },
-    "login_link_signup" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ainda não tem conta? Cadastre-se"
+    "nav_explorar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorar"
+          }
+        }
+      }
+    },
+    "nav_favoritos": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favoritos"
+          }
+        }
+      }
+    },
+    "nav_inicio": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Início"
+          }
+        }
+      }
+    },
+    "nav_perfil": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil"
+          }
+        }
+      }
+    },
+    "password_toggle_hide": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar senha"
+          }
+        }
+      }
+    },
+    "password_toggle_show": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar senha"
+          }
+        }
+      }
+    },
+    "signup_error_birthdate_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe sua data de nascimento."
+          }
+        }
+      }
+    },
+    "signup_error_confirm_password_mismatch": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As senhas não coincidem."
+          }
+        }
+      }
+    },
+    "signup_error_consent_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "É necessário aceitar os Termos de Uso e a Política de Privacidade."
+          }
+        }
+      }
+    },
+    "signup_error_email_invalid": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail inválido."
+          }
+        }
+      }
+    },
+    "signup_error_email_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu e-mail."
+          }
+        }
+      }
+    },
+    "signup_error_name_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe seu nome."
+          }
+        }
+      }
+    },
+    "signup_error_password_required": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informe uma senha."
+          }
+        }
+      }
+    },
+    "signup_link_login": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já tem conta? Entrar"
+          }
+        }
+      }
+    },
+    "signup_title": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie sua conta"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }
