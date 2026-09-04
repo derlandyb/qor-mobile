@@ -1,216 +1,236 @@
 {
-  "sourceLanguage" : "pt-BR",
-  "strings" : {
-    "nav_inicio" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Início"
+  "sourceLanguage": "pt-BR",
+  "strings": {
+    "city_cariacica": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cariacica"
           }
         }
       }
     },
-    "nav_explorar" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Explorar"
+    "city_serra": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serra"
           }
         }
       }
     },
-    "nav_favoritos" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favoritos"
+    "city_vila_velha": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vila Velha"
           }
         }
       }
     },
-    "nav_perfil" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Perfil"
+    "city_vitoria": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vitória"
           }
         }
       }
     },
-    "city_vitoria" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vitória"
+    "consent_terms_text": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Li e aceito os Termos de Uso e a Política de Privacidade."
           }
         }
       }
     },
-    "city_vila_velha" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vila Velha"
+    "content_description_genre": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gênero: %@"
           }
         }
       }
     },
-    "city_serra" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serra"
+    "content_description_live_now": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao vivo agora"
           }
         }
       }
     },
-    "city_cariacica" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cariacica"
+    "content_description_no_flyer": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem imagem de divulgação"
           }
         }
       }
     },
-    "cta_ver_no_mapa" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver no Mapa"
+    "cta_ver_instagram": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver Instagram"
           }
         }
       }
     },
-    "cta_ver_instagram" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver Instagram"
+    "cta_ver_no_mapa": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver no Mapa"
           }
         }
       }
     },
-    "content_description_genre" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gênero: %@"
+    "empty_state_no_events": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum evento encontrado"
           }
         }
       }
     },
-    "live_pulse_label" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ao vivo"
+    "field_label_code": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código de verificação"
           }
         }
       }
     },
-    "content_description_live_now" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ao vivo agora"
+    "field_label_email": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail"
           }
         }
       }
     },
-    "content_description_no_flyer" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem imagem de divulgação"
+    "field_label_password": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senha"
           }
         }
       }
     },
-    "empty_state_no_events" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum evento encontrado"
+    "home_feed_cta_tentar_novamente": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar novamente"
           }
         }
       }
     },
-    "consent_terms_text" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Li e aceito os Termos de Uso e a Política de Privacidade."
+    "home_feed_error_message": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar os eventos. Tente novamente."
           }
         }
       }
     },
-    "field_label_email" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-mail"
+    "live_pulse_label": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao vivo"
           }
         }
       }
     },
-    "field_label_password" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Senha"
+    "nav_explorar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorar"
           }
         }
       }
     },
-    "field_label_code" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Código de verificação"
+    "nav_favoritos": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favoritos"
           }
         }
       }
     },
-    "password_toggle_show" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar senha"
+    "nav_inicio": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Início"
           }
         }
       }
     },
-    "password_toggle_hide" : {
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ocultar senha"
+    "nav_perfil": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil"
+          }
+        }
+      }
+    },
+    "password_toggle_hide": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar senha"
+          }
+        }
+      }
+    },
+    "password_toggle_show": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar senha"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }
