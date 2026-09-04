@@ -77,10 +77,11 @@
     <string name="email_verification_resend_confirmation">Código reenviado.</string>
     <string name="signup_link_login">Já tem conta? Entrar</string>
 
-    <!-- PasswordRecoveryScreen (A10) -->
+    <!-- PasswordRecoveryScreen (A10/A21) -->
     <string name="password_recovery_title">Recuperar senha</string>
     <string name="password_recovery_request_instructions">Informe seu e-mail para receber as instruções de redefinição.</string>
     <string name="password_recovery_generic_confirmation">Se este e-mail existir, você receberá um código de redefinição.</string>
+    <string name="password_recovery_new_password_instructions">Crie uma nova senha para sua conta.</string>
     <string name="password_recovery_error_email_required">Informe seu e-mail.</string>
     <string name="password_recovery_error_email_invalid">E-mail inválido.</string>
     <string name="password_recovery_error_code_required">Informe o código recebido.</string>

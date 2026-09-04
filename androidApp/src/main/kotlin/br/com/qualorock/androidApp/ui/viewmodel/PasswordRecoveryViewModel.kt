@@ -3,6 +3,7 @@ package br.com.qualorock.androidApp.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.user.ConfirmResetResult
+import domain.user.VerifyResetCodeResult
 import domain.user.usecase.ResetPassword
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -24,12 +25,15 @@ private const val OtpCodeLength = 6
  */
 private const val MinNewPasswordLength = 8
 
-/** Which half of the 2-step wizard is showing — see [PasswordRecoveryViewModel] KDoc. */
+/** Which of the 3 steps of the wizard is showing — see [PasswordRecoveryViewModel] KDoc. */
 sealed class PasswordRecoveryStep {
     data object RequestEmail : PasswordRecoveryStep()
 
     /** [email] is carried over from step 1 so step 2 doesn't need to ask for it again. */
-    data class ConfirmReset(val email: String) : PasswordRecoveryStep()
+    data class VerifyCode(val email: String) : PasswordRecoveryStep()
+
+    /** [email] and the [token] returned by [ResetPassword.verifyResetCode] are carried into step 3. */
+    data class NewPassword(val email: String, val token: String) : PasswordRecoveryStep()
 }
 
 /** Client-side validation failure for the new-password field (AUTH-13/AUTH-16). */
@@ -43,7 +47,7 @@ sealed class PasswordRecoveryEvent {
     data object ResetSuccess : PasswordRecoveryEvent()
 }
 
-/** Form + submission state for [PasswordRecoveryScreen], across both wizard steps. */
+/** Form + submission state for [PasswordRecoveryScreen], across all 3 wizard steps. */
 data class PasswordRecoveryUiState(
     val step: PasswordRecoveryStep = PasswordRecoveryStep.RequestEmail,
     val email: String = "",
@@ -57,24 +61,26 @@ data class PasswordRecoveryUiState(
 )
 
 /**
- * A10 — form state + submit orchestration for `PasswordRecoveryScreen` (auth-fan-profile
- * AUTH-13–AUTH-16). Delegates to [ResetPassword] (thin wrapper over `UserRepository`'s 2-step
+ * A10/A21 — form state + submit orchestration for `PasswordRecoveryScreen` (auth-fan-profile
+ * AUTH-13–AUTH-16). Delegates to [ResetPassword] (thin wrapper over `UserRepository`'s 3-step
  * reset flow); owns client-side validation, loading/error UI state, the [PasswordRecoveryStep]
  * state machine, and the one-shot [events] the caller's nav graph wires up in A14.
  *
  * **Step 1 (AUTH-14 anti-enumeration).** [ResetPassword.requestReset] is fire-and-forget (`Unit`,
  * no server message) — same shape as [EmailVerificationViewModel]'s `VerifyEmail.resend`. So
- * [onSubmitEmail] always advances to [PasswordRecoveryStep.ConfirmReset] and always shows the
- * same generic pt-BR confirmation copy, regardless of whether the email exists server-side; the
- * screen renders that copy whenever `step` is `ConfirmReset`.
+ * [onSubmitEmail] always advances to [PasswordRecoveryStep.VerifyCode] and always shows the same
+ * generic pt-BR confirmation copy, regardless of whether the email exists server-side; the screen
+ * renders that copy whenever `step` is [PasswordRecoveryStep.VerifyCode].
  *
- * **Step 2 deviates from `qor-website`'s 3-step wizard.** `qor-website`'s
- * `app/recuperar-senha/page.tsx` has a separate `verifyPasswordResetCode` call that exchanges the
- * OTP for a real reset token before the password step. `shared`'s [ResetPassword] only exposes
- * `requestReset`/`confirmReset` — there is no code-verification step that returns an intermediate
- * token — so this screen collapses code entry and the new password into a single step and passes
- * the OTP the fan typed directly as `confirmReset`'s `token` parameter. If a future `shared` task
- * adds the intermediate verify call, this screen should be split to match `qor-website` exactly.
+ * **Step 2 — code verification.** [onSubmitCode] calls [ResetPassword.verifyResetCode]. On
+ * [VerifyResetCodeResult.Success] the returned token is stashed on [PasswordRecoveryStep.NewPassword]
+ * and the wizard advances; on [VerifyResetCodeResult.Failure] the server's pt-BR message is shown
+ * inline (`submitError`) and the fan stays on [PasswordRecoveryStep.VerifyCode] to retry.
+ *
+ * **Step 3 — new password.** [onSubmitNewPassword] calls [ResetPassword.confirmReset] with the
+ * *token* obtained in step 2 (never the raw OTP code the fan typed) — matches `qor-website`'s
+ * `app/recuperar-senha/page.tsx` 3-step wizard exactly (A21 retrofits A10's collapsed 2-step
+ * stopgap to this shape).
  */
 class PasswordRecoveryViewModel(private val resetPassword: ResetPassword) : ViewModel() {
 
@@ -108,23 +114,55 @@ class PasswordRecoveryViewModel(private val resetPassword: ResetPassword) : View
         viewModelScope.launch {
             resetPassword.requestReset(state.email)
             _uiState.update {
-                it.copy(isLoading = false, step = PasswordRecoveryStep.ConfirmReset(state.email))
+                it.copy(isLoading = false, step = PasswordRecoveryStep.VerifyCode(state.email))
             }
         }
     }
 
-    fun onSubmitReset() {
+    fun onSubmitCode() {
         val state = _uiState.value
+        val step = state.step
+        if (step !is PasswordRecoveryStep.VerifyCode) return
+
         val codeError = validateCode(state.code)
-        val passwordError = validateNewPassword(state.newPassword)
-        if (codeError != null || passwordError != null) {
-            _uiState.update { it.copy(codeError = codeError, newPasswordError = passwordError) }
+        if (codeError != null) {
+            _uiState.update { it.copy(codeError = codeError) }
             return
         }
 
         _uiState.update { it.copy(isLoading = true, submitError = null) }
         viewModelScope.launch {
-            when (val result = resetPassword.confirmReset(state.code, state.newPassword)) {
+            when (val result = resetPassword.verifyResetCode(step.email, state.code)) {
+                is VerifyResetCodeResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            step = PasswordRecoveryStep.NewPassword(step.email, result.token),
+                        )
+                    }
+                }
+
+                is VerifyResetCodeResult.Failure -> {
+                    _uiState.update { it.copy(isLoading = false, submitError = result.message) }
+                }
+            }
+        }
+    }
+
+    fun onSubmitNewPassword() {
+        val state = _uiState.value
+        val step = state.step
+        if (step !is PasswordRecoveryStep.NewPassword) return
+
+        val passwordError = validateNewPassword(state.newPassword)
+        if (passwordError != null) {
+            _uiState.update { it.copy(newPasswordError = passwordError) }
+            return
+        }
+
+        _uiState.update { it.copy(isLoading = true, submitError = null) }
+        viewModelScope.launch {
+            when (val result = resetPassword.confirmReset(step.email, step.token, state.newPassword)) {
                 is ConfirmResetResult.Success -> {
                     _uiState.update { it.copy(isLoading = false) }
                     _events.send(PasswordRecoveryEvent.ResetSuccess)
