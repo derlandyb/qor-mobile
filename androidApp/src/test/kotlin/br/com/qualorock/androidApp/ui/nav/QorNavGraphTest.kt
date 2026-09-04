@@ -85,7 +85,10 @@ private class FakeUserRepository(
 
     override suspend fun requestPasswordReset(email: String) = Unit
 
-    override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult =
+    override suspend fun verifyResetCode(email: String, code: String): domain.user.VerifyResetCodeResult =
+        domain.user.VerifyResetCodeResult.Failure("not used in this test")
+
+    override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult =
         ConfirmResetResult.Failure("not used in this test")
 
     override suspend fun resendVerification(email: String) = Unit

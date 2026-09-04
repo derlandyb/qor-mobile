@@ -54,7 +54,10 @@ private class FakeVerifyEmailUserRepository(private val verifyResult: VerifyEmai
 
     override suspend fun requestPasswordReset(email: String) = Unit
 
-    override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult =
+    override suspend fun verifyResetCode(email: String, code: String): domain.user.VerifyResetCodeResult =
+        error("not used by EmailVerificationViewModelTest")
+
+    override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult =
         error("not used by EmailVerificationViewModelTest")
 
     override suspend fun resendVerification(email: String) {
