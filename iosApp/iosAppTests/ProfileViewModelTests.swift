@@ -6,7 +6,7 @@ import shared
 final class ProfileViewModelTests: XCTestCase {
     private func makeUser(name: String = "Ana Souza", email: String = "ana@example.com", phone: String? = "27999998888") -> User {
         User(
-            id: "user-1",
+            id: 1,
             name: name,
             email: email,
             emailVerifiedAt: "2026-01-01T00:00:00Z",
