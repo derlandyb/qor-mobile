@@ -210,6 +210,106 @@
           }
         }
       }
+    },
+    "login_title" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bem-vindo de volta"
+          }
+        }
+      }
+    },
+    "login_error_email_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe seu e-mail."
+          }
+        }
+      }
+    },
+    "login_error_email_invalid" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail inválido."
+          }
+        }
+      }
+    },
+    "login_error_password_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe sua senha."
+          }
+        }
+      }
+    },
+    "login_error_invalid_credentials" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credenciais inválidas"
+          }
+        }
+      }
+    },
+    "login_error_unverified_account" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirme seu e-mail para continuar"
+          }
+        }
+      }
+    },
+    "cta_entrar" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrar"
+          }
+        }
+      }
+    },
+    "cta_entrar_com_google" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrar com Google"
+          }
+        }
+      }
+    },
+    "login_link_password_recovery" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esqueci minha senha"
+          }
+        }
+      }
+    },
+    "login_link_signup" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda não tem conta? Cadastre-se"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
