@@ -26,6 +26,7 @@ import domain.user.RegisterResult
 import domain.user.User
 import domain.user.UserRepository
 import domain.user.VerifyEmailResult
+import domain.user.VerifyResetCodeResult
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -85,8 +86,8 @@ private class FakeUserRepository(
 
     override suspend fun requestPasswordReset(email: String) = Unit
 
-    override suspend fun verifyResetCode(email: String, code: String): domain.user.VerifyResetCodeResult =
-        domain.user.VerifyResetCodeResult.Failure("not used in this test")
+    override suspend fun verifyResetCode(email: String, code: String): VerifyResetCodeResult =
+        VerifyResetCodeResult.Failure("not used in this test")
 
     override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult =
         ConfirmResetResult.Failure("not used in this test")
