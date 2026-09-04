@@ -691,6 +691,16 @@
         }
       }
     },
+    "nav_startup_loading": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carregando..."
+          }
+        }
+      }
+    },
     "password_recovery_error_code_invalid_length": {
       "localizations": {
         "pt-BR": {
