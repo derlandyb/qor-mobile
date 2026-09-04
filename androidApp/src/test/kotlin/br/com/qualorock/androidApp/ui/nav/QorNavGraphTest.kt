@@ -8,7 +8,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import br.com.qualorock.androidApp.di.appModule
+import br.com.qualorock.androidApp.di.viewModelModule
+import di.sharedModule
 import data.SecureTokenStorage
 import data.SessionStore
 import domain.enum.City
@@ -41,7 +42,7 @@ import org.robolectric.annotation.Config
  * Home tab behind [br.com.qualorock.androidApp.ui.components.BottomNav]. Unlike per-screen tests
  * (e.g. `LoginScreenTest`), this graph is only reachable through production screens' default
  * `koinViewModel()`, so it needs a real (test-scoped) Koin container rather than a
- * Koin-independent fake ViewModel — this test starts Koin with [appModule] plus fake
+ * Koin-independent fake ViewModel — this test starts Koin with [sharedModule]/[viewModelModule] plus fake
  * repository/token-storage overrides so no real network/Keystore calls happen.
  *
  * Also covers `.specs/tasks/mobile.md` A14's own "Done when" bar: an instrumented test for the
@@ -147,7 +148,8 @@ class QorNavGraphTest {
     ): SessionStore {
         val koinApp = startKoin {
             modules(
-                appModule,
+                sharedModule,
+                viewModelModule,
                 module {
                     single<UserRepository> { userRepository }
                     single<EventRepository> { eventRepository }

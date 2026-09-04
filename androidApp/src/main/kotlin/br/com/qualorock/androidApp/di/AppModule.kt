@@ -8,60 +8,15 @@ import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.PasswordRecoveryViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.ProfileViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.SignupViewModel
-import data.EventRepositoryImpl
-import data.SessionStore
-import data.UserRepositoryImpl
-import data.createAuthenticatedHttpClient
-import data.createQorHttpClient
-import data.createSecureTokenStorage
-import domain.event.EventRepository
-import domain.event.PollingCoordinator
-import domain.event.usecase.GetEventDetails
-import domain.event.usecase.ListUpcomingEvents
-import domain.user.UserRepository
-import domain.user.usecase.AuthenticateFan
-import domain.user.usecase.ExerciseDataRight
-import domain.user.usecase.RegisterFan
-import domain.user.usecase.ResetPassword
-import domain.user.usecase.SessionWriter
-import domain.user.usecase.UpdateProfile
-import domain.user.usecase.VerifyEmail
 import org.koin.core.module.dsl.viewModel
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 /**
- * A1 — wires `shared`'s repositories/use cases into Koin so Android UI code (screens/ViewModels
- * built in later A-tasks) can `get()`/`koinInject()` them instead of constructing this graph by
- * hand per screen. A7 adds the first ViewModel registration (`LoginViewModel`).
+ * A1 — Android-only half of the Koin graph: ViewModels, layered on top of `shared`'s
+ * `di.sharedModule` (I1 — moved there so Android and iOS resolve the same repository/use-case
+ * instances instead of each platform redeclaring the same bindings).
  */
-val appModule = module {
-    single { createSecureTokenStorage() }
-    single { createAuthenticatedHttpClient(createQorHttpClient(), get()) }
-
-    single<EventRepository> { EventRepositoryImpl(get()) }
-    single<UserRepository> { UserRepositoryImpl(get()) }
-
-    single { SessionStore(get(), get()) } bind SessionWriter::class
-
-    single { ListUpcomingEvents(get()) }
-    single { GetEventDetails(get()) }
-
-    // A12 — `factory`, not `single`: `HomeFeedViewModel` and `ExploreViewModel` are separate
-    // BottomNav destinations that can both be alive at once (separate back-stack entries), each
-    // calling `PollingCoordinator.start` with its own city/genre pair. A shared singleton instance
-    // would have the two screens fight over the same `lastCity`/`lastGenre` and cancel each
-    // other's poll loop; a fresh instance per ViewModel construction (still wrapping the shared
-    // `ListUpcomingEvents` singleton) keeps their polling independent.
-    factory { PollingCoordinator(get()) }
-
-    single { AuthenticateFan(get(), get()) }
-    single { RegisterFan(get()) }
-    single { ResetPassword(get()) }
-    single { VerifyEmail(get()) }
-    single { UpdateProfile(get()) }
-    single { ExerciseDataRight(get()) }
-
+val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { SignupViewModel(get()) }
     viewModel { EmailVerificationViewModel(get()) }
