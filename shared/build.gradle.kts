@@ -92,6 +92,14 @@ detekt {
  * "Gate: build-verified only... needs an Android runtime", since `commonTest` runs on the jvm()
  * target and can't instantiate `EncryptedSharedPreferences`/App Startup. `InMemorySecureTokenStorage`
  * (jvmMain) is the same category — dev/test scaffolding, not exercised via a unit test.
+ *
+ * `di.PollingEventsWatcher` (I7-I14) joins the same category: its logic is a thin `StateFlow`-to-
+ * Swift-closure bridge whose only meaningful behavior is coroutine subscribe/cancel timing —
+ * exercising that honestly needs `runTest`/`TestScope` ceremony around a real `PollingCoordinator`
+ * for a bridge with no branching logic of its own, so it's build-verified via `xcodebuild test`
+ * instead (I11/I12's screens exercise it indirectly through 121 passing XCTest assertions).
+ * `di.IosDependencies`, the sibling I7 DI-accessor object, is NOT excluded — see
+ * `IosDependenciesTest`, which resolves every accessor against a real Koin graph.
  */
 kover {
     reports {
@@ -103,6 +111,7 @@ kover {
                     "data.InMemorySecureTokenStorage",
                     "data.HttpClientEngineFactory_*Kt",
                     "data.SecureTokenStorage_*Kt",
+                    "di.PollingEventsWatcher",
                 )
             }
         }

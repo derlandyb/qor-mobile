@@ -76,7 +76,7 @@ private class FakeProfileUserRepository(private val updateResult: Result<User>) 
 }
 
 private fun sampleUser() = User(
-    id = "u1",
+    id = 1,
     name = "Ana",
     email = "ana@example.com",
     emailVerifiedAt = "2026-01-01T00:00:00Z",

@@ -43,7 +43,7 @@ class UserRepositoryImplTest {
     @Test
     fun `GIVEN valid credentials WHEN login is called THEN it builds a POST to auth login and maps the session`() = runTest {
         val (client, requests) = clientWith { request ->
-            HttpStatusCode.OK to """{"data":{"id":"u1","name":"Ana","email":"ana@example.com","email_verified_at":"2026-01-01T00:00:00Z","birthdate":"1990-01-01"},"token":"tok-123"}"""
+            HttpStatusCode.OK to """{"data":{"id":1,"name":"Ana","email":"ana@example.com","email_verified_at":"2026-01-01T00:00:00Z","birthdate":"1990-01-01"},"token":"tok-123"}"""
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
@@ -106,7 +106,7 @@ class UserRepositoryImplTest {
     @Test
     fun `GIVEN a known token WHEN getProfile is called THEN it builds a GET to profile and maps the user`() = runTest {
         val (client, requests) = clientWith {
-            HttpStatusCode.OK to """{"data":{"id":"u1","name":"Ana","email":"ana@example.com","birthdate":"1990-01-01"}}"""
+            HttpStatusCode.OK to """{"data":{"id":1,"name":"Ana","email":"ana@example.com","birthdate":"1990-01-01"}}"""
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
@@ -119,7 +119,7 @@ class UserRepositoryImplTest {
     @Test
     fun `GIVEN updated fields WHEN updateProfile is called THEN it builds a PATCH and maps the updated user`() = runTest {
         val (client, requests) = clientWith {
-            HttpStatusCode.OK to """{"data":{"id":"u1","name":"Ana Paula","email":"ana@example.com","birthdate":"1990-01-01"}}"""
+            HttpStatusCode.OK to """{"data":{"id":1,"name":"Ana Paula","email":"ana@example.com","birthdate":"1990-01-01"}}"""
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
@@ -187,7 +187,7 @@ class UserRepositoryImplTest {
     @Test
     fun `GIVEN a new fan WHEN register succeeds THEN it maps the created user`() = runTest {
         val (client, requests) = clientWith {
-            HttpStatusCode.Created to """{"data":{"id":"u1","name":"Ana","email":"ana@example.com","birthdate":"1990-01-01"}}"""
+            HttpStatusCode.Created to """{"data":{"id":1,"name":"Ana","email":"ana@example.com","birthdate":"1990-01-01"}}"""
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
@@ -207,7 +207,7 @@ class UserRepositoryImplTest {
     @Test
     fun `GIVEN a Google ID token WHEN loginWithGoogle is called THEN it builds a POST to auth google and maps the session`() = runTest {
         val (client, requests) = clientWith {
-            HttpStatusCode.OK to """{"data":{"id":"u1","name":"Ana","email":"ana@example.com","birthdate":"1990-01-01"},"token":"tok-456"}"""
+            HttpStatusCode.OK to """{"data":{"id":1,"name":"Ana","email":"ana@example.com","birthdate":"1990-01-01"},"token":"tok-456"}"""
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
@@ -255,7 +255,7 @@ class UserRepositoryImplTest {
     @Test
     fun `GIVEN a valid unexpired code WHEN verifyEmailCode is called THEN it builds a POST to auth email verify-code and maps the verified user`() = runTest {
         val (client, requests) = clientWith {
-            HttpStatusCode.OK to """{"data":{"id":"u1","name":"Ana","email":"ana@example.com","email_verified_at":"2026-01-01T00:00:00Z","birthdate":"1990-01-01"}}"""
+            HttpStatusCode.OK to """{"data":{"id":1,"name":"Ana","email":"ana@example.com","email_verified_at":"2026-01-01T00:00:00Z","birthdate":"1990-01-01"}}"""
         }
         val repository = UserRepositoryImpl(client, baseUrl = "http://test.local")
 
