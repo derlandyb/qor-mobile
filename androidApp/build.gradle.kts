@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,21 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.detekt)
 }
+
+// A22 — this module's local-only API-key convention (none existed before A22). Read the same
+// way Android projects conventionally read `sdk.dir` from `local.properties`: a gitignored,
+// per-checkout file (verified via `git check-ignore`) rather than anything committed. Missing the
+// file/property yields an empty string, not a build failure — `EventDetailScreen`'s `GoogleMap`
+// handles a missing/invalid key at runtime via its own state (see `EventMapState.Failed`), it
+// does not assume a real key is present in this environment.
+val mapsApiKeyPropertyName = "MAPS_API_KEY"
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+val mapsApiKey: String = localProperties.getProperty(mapsApiKeyPropertyName, "")
 
 android {
     namespace = "br.com.qualorock.androidApp"
@@ -16,6 +33,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+        manifestPlaceholders[mapsApiKeyPropertyName] = mapsApiKey
     }
 
     compileOptions {
@@ -65,6 +83,10 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
     implementation(libs.androidx.navigation.compose)
+    // A22 — embedded event-detail map (`maps-compose`'s Compose wrapper over `play-services-maps`,
+    // added explicitly since this module doesn't otherwise depend on Play Services).
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     // `shared` declares this as `implementation`, not `api` — needed here directly since

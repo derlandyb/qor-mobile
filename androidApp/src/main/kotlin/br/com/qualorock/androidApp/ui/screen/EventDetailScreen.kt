@@ -2,6 +2,7 @@ package br.com.qualorock.androidApp.ui.screen
 
 import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,8 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,11 +48,20 @@ import br.com.qualorock.androidApp.ui.components.formatDateBadge
 import br.com.qualorock.androidApp.ui.components.formatEventTime
 import br.com.qualorock.androidApp.ui.viewmodel.EventDetailUiState
 import br.com.qualorock.androidApp.ui.viewmodel.EventDetailViewModel
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 import design.QualORockThemeTokens
 import domain.event.Event
 import domain.event.EventDetail
 import domain.event.EventPromoterContact
+import java.util.Locale
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.compose.koinViewModel
 
 /**
@@ -58,11 +71,12 @@ import org.koin.androidx.compose.koinViewModel
  * free/paid indicator, a ticket-link button (paid only, DISC-08/09), an "abrir no mapa" button,
  * a per-promoter contact list (DISC-11), and a native share action (DISC-12).
  *
- * **Map handling (DISC-10):** no Maps SDK dependency exists anywhere in this app yet
- * (`androidApp/build.gradle.kts` has none), and adding one is out of this task's scope. Rather
- * than embedding a real map view, "abrir no mapa" opens [Event.address] in the device's default
- * maps app via an implicit `geo:` [Intent] — no new dependency, and the fan still gets turn-by-turn
- * navigation, which is arguably more useful than a static embedded map for this use case.
+ * **Map handling (DISC-10, A22):** [ActiveEventContent] geocodes [Event.address] client-side
+ * (`android.location.Geocoder`, mirroring `qor-website`'s `GoogleMap.tsx`) and renders an inline
+ * `maps-compose` `GoogleMap` as the primary UI — no lat/lng is added to [Event]/[EventDetail],
+ * matching the website's "no lat/lng stored anywhere" approach. "Abrir no mapa" (the pre-A22
+ * `geo:` [Intent] shortcut) is kept as a fallback affordance for when geocoding is still running,
+ * fails, or returns no result, rather than showing a blank/broken map.
  *
  * **DISC-13 (accessibility info/event rules/notes) is skipped.** Neither [Event] nor
  * [EventDetail] exposes any such field (see `shared/src/commonMain/kotlin/domain/event/Event.kt`)
@@ -142,6 +156,30 @@ fun EventDetailScreen(
     }
 }
 
+/** A22 — embedded-map dimensions; no magic numbers per ARCHITECTURE §14. */
+private const val EventMapHeightDp = 200
+private const val EventMapZoomLevel = 15f
+
+/**
+ * A22 — geocodes [address] into [GeoPoint]s, off the main thread. `minSdk` here is 26
+ * (`androidApp/build.gradle.kts`), below the API-33 floor for `Geocoder`'s async
+ * `getFromLocationName(String, Int, GeocodeListener)` overload, so the synchronous overload is
+ * used instead, wrapped in [Dispatchers.IO] rather than left to block the caller's thread.
+ * Returns `null` (mapped to [EventMapState.Failed] by [toEventMapState]) on any failure —
+ * `Geocoder` is a live network call and can throw `IOException` when the backend is unreachable.
+ */
+@Suppress("DEPRECATION", "TooGenericExceptionCaught", "SwallowedException")
+private suspend fun geocodeAddress(context: Context, address: String): List<GeoPoint>? =
+    withContext(Dispatchers.IO) {
+        try {
+            Geocoder(context, Locale.getDefault())
+                .getFromLocationName(address, 1)
+                ?.map { GeoPoint(latitude = it.latitude, longitude = it.longitude) }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 @Suppress("TooGenericExceptionCaught", "SwallowedException")
 private fun runSilently(block: () -> Unit) {
     try {
@@ -199,6 +237,12 @@ private fun ActiveEventContent(
     val timeLabel = formatEventTime(event.startsAt)
     val shareText = stringResource(R.string.event_detail_share_text, event.title, event.address)
 
+    val context = LocalContext.current
+    var mapState by remember(event.address) { mutableStateOf<EventMapState>(EventMapState.Loading) }
+    LaunchedEffect(event.address) {
+        mapState = toEventMapState(geocodeAddress(context, event.address))
+    }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(QualORockThemeTokens.Space4Dp.dp),
         modifier = modifier
@@ -240,11 +284,28 @@ private fun ActiveEventContent(
             fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
         )
 
-        SecondaryButton(
-            text = stringResource(R.string.cta_abrir_no_mapa),
-            onClick = { onOpenMap(event.address) },
-            modifier = Modifier.fillMaxWidth(),
-        )
+        when (val state = mapState) {
+            is EventMapState.Located -> {
+                val position = LatLng(state.point.latitude, state.point.longitude)
+                GoogleMap(
+                    modifier = Modifier.fillMaxWidth().height(EventMapHeightDp.dp),
+                    cameraPositionState = rememberCameraPositionState {
+                        this.position = CameraPosition.fromLatLngZoom(position, EventMapZoomLevel)
+                    },
+                ) {
+                    val markerState = remember(position) { MarkerState(position = position) }
+                    Marker(state = markerState)
+                }
+            }
+            // Loading and Failed both fall back to the "abrir no mapa" geo-intent link — Loading
+            // because the map has nothing to render yet, Failed per this composable's own
+            // DISC-10/A22 fallback contract (see class-level KDoc).
+            EventMapState.Loading, EventMapState.Failed -> SecondaryButton(
+                text = stringResource(R.string.cta_abrir_no_mapa),
+                onClick = { onOpenMap(event.address) },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
 
         Text(
             text = event.description,
