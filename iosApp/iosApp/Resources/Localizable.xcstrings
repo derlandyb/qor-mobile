@@ -261,6 +261,16 @@
         }
       }
     },
+    "cta_voltar": {
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar"
+          }
+        }
+      }
+    },
     "email_verification_error_code_invalid_length": {
       "localizations": {
         "pt-BR": {

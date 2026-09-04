@@ -169,13 +169,15 @@ final class EmailVerificationViewModel: ObservableObject {
         }
     }
 
+    #if DEBUG
     /// Test-only escape hatch so `onResend`'s cooldown-gated path is unit-testable without a
     /// real `Task.sleep` wait — mirrors Android's `EmailVerificationViewModelTest` using a fake
-    /// clock/dispatcher instead.
+    /// clock/dispatcher instead. `#if DEBUG`-gated so this never ships in a release binary.
     func forceCooldownElapsedForTesting() {
         cooldownTask?.cancel()
         uiState.cooldown = VerificationCooldown(remainingSeconds: 0)
     }
+    #endif
 
     private static func validate(code: String) -> EmailVerificationCodeFieldError? {
         if code.isEmpty { return .required }

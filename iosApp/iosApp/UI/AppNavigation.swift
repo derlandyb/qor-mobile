@@ -96,10 +96,6 @@ struct AppNavigation: View {
                 onEventClick: { eventId in mainPath.append(AuthenticatedDestination.eventDetail(eventId)) },
                 onEmailChangePending: { email in
                     mainPath.append(AuthenticatedDestination.emailVerificationFromProfile(email: email))
-                },
-                onLogout: {
-                    restoreState = .unauthenticated
-                    mainPath = NavigationPath()
                 }
             )
             .navigationDestination(for: AuthenticatedDestination.self) { destination in
@@ -154,20 +150,17 @@ private struct StartupLoadingView: View {
 struct MainTabRootView: View {
     let onEventClick: (String) -> Void
     let onEmailChangePending: (String) -> Void
-    let onLogout: () -> Void
 
     @State private var current: BottomNavDestination
 
     init(
         initialTab: BottomNavDestination = .inicio,
         onEventClick: @escaping (String) -> Void,
-        onEmailChangePending: @escaping (String) -> Void,
-        onLogout: @escaping () -> Void
+        onEmailChangePending: @escaping (String) -> Void
     ) {
         _current = State(initialValue: initialTab)
         self.onEventClick = onEventClick
         self.onEmailChangePending = onEmailChangePending
-        self.onLogout = onLogout
     }
 
     var body: some View {

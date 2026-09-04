@@ -33,7 +33,7 @@ final class AppNavigationTests: XCTestCase {
 
     @MainActor
     func test_GIVEN_theMainTabRoot_WHEN_freshlyRendered_THEN_homeFeedIsTheDefaultTab() throws {
-        let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in }, onLogout: {})
+        let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in })
 
         XCTAssertNoThrow(try sut.inspect().find(HomeFeedView.self))
     }
@@ -48,7 +48,7 @@ final class AppNavigationTests: XCTestCase {
     @MainActor
     func test_GIVEN_theMainTabRoot_WHEN_startingOnExplorar_THEN_exploreViewIsShown() throws {
         let sut = MainTabRootView(
-            initialTab: .explorar, onEventClick: { _ in }, onEmailChangePending: { _ in }, onLogout: {}
+            initialTab: .explorar, onEventClick: { _ in }, onEmailChangePending: { _ in }
         )
 
         XCTAssertNoThrow(try sut.inspect().find(ExploreView.self))
@@ -57,7 +57,7 @@ final class AppNavigationTests: XCTestCase {
     @MainActor
     func test_GIVEN_theMainTabRoot_WHEN_startingOnPerfil_THEN_profileViewIsShown() throws {
         let sut = MainTabRootView(
-            initialTab: .perfil, onEventClick: { _ in }, onEmailChangePending: { _ in }, onLogout: {}
+            initialTab: .perfil, onEventClick: { _ in }, onEmailChangePending: { _ in }
         )
 
         XCTAssertNoThrow(try sut.inspect().find(ProfileView.self))
@@ -65,7 +65,7 @@ final class AppNavigationTests: XCTestCase {
 
     @MainActor
     func test_GIVEN_bottomNavsOnSelect_WHEN_calledWithAnEnabledDestination_THEN_itIsCallable() throws {
-        let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in }, onLogout: {})
+        let sut = MainTabRootView(onEventClick: { _ in }, onEmailChangePending: { _ in })
 
         let bottomNav = try sut.inspect().find(BottomNav.self).actualView()
 

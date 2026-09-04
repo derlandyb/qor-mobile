@@ -154,6 +154,7 @@ struct EventDetailView: View {
                         .foregroundStyle(QorColor.textPrimary)
                 }
                 .accessibilityIdentifier("event_detail_back")
+                .accessibilityLabel(String(localized: "cta_voltar"))
             }
         }
         .task(id: eventId) {
