@@ -3,33 +3,25 @@ package br.com.qualorock.androidApp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-
-private const val HomeRoute = "home"
+import br.com.qualorock.androidApp.ui.nav.QorNavGraph
+import br.com.qualorock.androidApp.ui.theme.QorTheme
+import data.SessionStore
+import org.koin.compose.koinInject
 
 /**
- * A1 — app entry point wired for Compose Navigation. The real `NavHost` graph (every MVP Core
- * screen, `BottomNav` integration) is A14's job; this single placeholder route only proves the
- * `androidx.navigation:navigation-compose` wiring compiles and runs.
+ * A1/A14 — app entry point. The real `NavHost` graph (every MVP Core screen, `BottomNav`
+ * integration, startup session restore) lives in [QorNavGraph]; this Activity only wires the
+ * themed root and hands the graph its [SessionStore] via Koin.
  */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            QorTheme {
                 Surface {
-                    val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = HomeRoute) {
-                        composable(HomeRoute) {
-                            Text(stringResource(R.string.app_name))
-                        }
-                    }
+                    val sessionStore = koinInject<SessionStore>()
+                    QorNavGraph(sessionStore = sessionStore)
                 }
             }
         }

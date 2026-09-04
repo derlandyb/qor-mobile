@@ -124,4 +124,7 @@
     <string name="profile_picture_change_unavailable">Ainda não é possível alterar a foto do perfil por aqui.</string>
     <string name="profile_save_error">Não foi possível salvar. Tente novamente.</string>
     <string name="profile_email_change_pending">Confirme seu novo e-mail para concluir a alteração.</string>
+
+    <!-- Navigation (A14) -->
+    <string name="nav_startup_loading">Carregando…</string>
 </resources>
