@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0EF2EBE855CC891D7831C1F6 /* LivePulseBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ADA2BEC6E019FB92A4423BD /* LivePulseBadge.swift */; };
+		1C0C706080EFC7F2A1F54B0A /* EmailVerificationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E881CB9548A0B21AD340B119 /* EmailVerificationViewModelTests.swift */; };
 		1DC36DA4896087859B87657F /* EventCardMotionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95772703A2F4FC57B7258A6B /* EventCardMotionTests.swift */; };
 		2FABBAD8F8D38A8B2354A021 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767F98392C7AC9620D8168B /* ColorTokens.swift */; };
 		34418654AA070FE15A967D60 /* ConsentCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A35C47F879790663D83EAF /* ConsentCapture.swift */; };
@@ -15,6 +16,7 @@
 		3C798605A2A9E1A2F9692C8C /* CtaButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64B699BA5404384A84E9160 /* CtaButtons.swift */; };
 		442F5C5BCD832B27AEF06590 /* CityFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A64284B050A8AD3B4D37F1 /* CityFilterBar.swift */; };
 		44D2D375FFC73DB086C66DE5 /* CtaButtonMotionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859550D2AE689447624298E0 /* CtaButtonMotionTests.swift */; };
+		5CA1502BA5599FFC06402BA0 /* EmailVerificationViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79A69658B4C2C1162FAAB26 /* EmailVerificationViewTests.swift */; };
 		692E26574F77B90A5CDA37FB /* BottomNavDestinationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF463822DA61AF7A7CD14446 /* BottomNavDestinationTests.swift */; };
 		69C3F7CC4E027B6C03DC60F4 /* EntranceStaggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BBCDFEA8E40D419A30397F /* EntranceStaggerTests.swift */; };
 		6A30034C409F854949C38C1C /* GenreTagColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94E3E45974C55DE44C230 /* GenreTagColorsTests.swift */; };
@@ -25,7 +27,9 @@
 		898EEAEC11D8191CB7666ED5 /* iosAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B41F95B4FD2A9CA6D615B /* iosAppTests.swift */; };
 		962187F1D90C61B9FB47362C /* EventDateBadgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DBF960FE47E5FFBD580953 /* EventDateBadgeTests.swift */; };
 		A119A8CE46766B32FC14DE5C /* BottomNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C8047226B9A556453107D /* BottomNav.swift */; };
+		B3E6A2AEA8FF8B4E18BBF9F8 /* EmailVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C8F4D6B2A4C35DB741949 /* EmailVerificationView.swift */; };
 		BEB34CEBDDAC870450DF5EF3 /* CityFilterColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6D48E4DB58C84ED6420C62 /* CityFilterColorsTests.swift */; };
+		C405D3EE2BD0A6D8164E26E4 /* EmailVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5CBE23916D621D58A5E399 /* EmailVerificationViewModel.swift */; };
 		C5A3F07F9DA8DA197CEC0E71 /* FormFieldsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F96BDC6F05D575212AD03A /* FormFieldsTests.swift */; };
 		C9DFA1AB011F6456B9582C18 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D0229E760BD6239C5968DD13 /* Localizable.xcstrings */; };
 		CFE8629BAC9983B6D7D94114 /* EventDateBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67EF727BCD91EAEA60483FC /* EventDateBadge.swift */; };
@@ -54,6 +58,7 @@
 		2ADA2BEC6E019FB92A4423BD /* LivePulseBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePulseBadge.swift; sourceTree = "<group>"; };
 		3B3826969802FC9D075A9826 /* GenreTagSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTagSet.swift; sourceTree = "<group>"; };
 		404608725152C3067E7030FA /* iosAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppApp.swift; sourceTree = "<group>"; };
+		4D8C8F4D6B2A4C35DB741949 /* EmailVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationView.swift; sourceTree = "<group>"; };
 		56583BC252B5F01ED9DEA19D /* iosAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E5C6BE11DAAEC1D75FE4D5B /* PlaceholderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImage.swift; sourceTree = "<group>"; };
 		6F5F97CF8808042B65E34058 /* FormFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFields.swift; sourceTree = "<group>"; };
@@ -63,13 +68,16 @@
 		95772703A2F4FC57B7258A6B /* EventCardMotionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardMotionTests.swift; sourceTree = "<group>"; };
 		989B41F95B4FD2A9CA6D615B /* iosAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosAppTests.swift; sourceTree = "<group>"; };
 		9A27CBD1B1A01DCEE0376024 /* EmptyStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateTests.swift; sourceTree = "<group>"; };
+		9F5CBE23916D621D58A5E399 /* EmailVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewModel.swift; sourceTree = "<group>"; };
 		AB6D48E4DB58C84ED6420C62 /* CityFilterColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityFilterColorsTests.swift; sourceTree = "<group>"; };
 		B3BBCDFEA8E40D419A30397F /* EntranceStaggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceStaggerTests.swift; sourceTree = "<group>"; };
 		B767F98392C7AC9620D8168B /* ColorTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTokens.swift; sourceTree = "<group>"; };
 		C117AD187833E2513BD2F553 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C79A69658B4C2C1162FAAB26 /* EmailVerificationViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewTests.swift; sourceTree = "<group>"; };
 		C7A64284B050A8AD3B4D37F1 /* CityFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityFilterBar.swift; sourceTree = "<group>"; };
 		D0229E760BD6239C5968DD13 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D67EF727BCD91EAEA60483FC /* EventDateBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDateBadge.swift; sourceTree = "<group>"; };
+		E881CB9548A0B21AD340B119 /* EmailVerificationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewModelTests.swift; sourceTree = "<group>"; };
 		E9DBF960FE47E5FFBD580953 /* EventDateBadgeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDateBadgeTests.swift; sourceTree = "<group>"; };
 		F64B699BA5404384A84E9160 /* CtaButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtaButtons.swift; sourceTree = "<group>"; };
 		FC880FE7D8D68D8C6C50F34E /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
@@ -107,6 +115,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		22DA66006A8BD3B93FD7D03A /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				4D8C8F4D6B2A4C35DB741949 /* EmailVerificationView.swift */,
+				9F5CBE23916D621D58A5E399 /* EmailVerificationViewModel.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		38B69C3F79CD97858CF7B609 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +139,8 @@
 				FF463822DA61AF7A7CD14446 /* BottomNavDestinationTests.swift */,
 				AB6D48E4DB58C84ED6420C62 /* CityFilterColorsTests.swift */,
 				859550D2AE689447624298E0 /* CtaButtonMotionTests.swift */,
+				E881CB9548A0B21AD340B119 /* EmailVerificationViewModelTests.swift */,
+				C79A69658B4C2C1162FAAB26 /* EmailVerificationViewTests.swift */,
 				9A27CBD1B1A01DCEE0376024 /* EmptyStateTests.swift */,
 				B3BBCDFEA8E40D419A30397F /* EntranceStaggerTests.swift */,
 				95772703A2F4FC57B7258A6B /* EventCardMotionTests.swift */,
@@ -156,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				60D7064BEF598414D446346D /* Components */,
+				22DA66006A8BD3B93FD7D03A /* Screens */,
 				E2CD3FAA318F0F5A28DA40FE /* Theme */,
 			);
 			path = UI;
@@ -232,6 +252,9 @@
 					78B53CC79860CBFC2F5543C6 = {
 						ProvisioningStyle = Automatic;
 					};
+					EDDC9037D014CD9DDCA653AC = {
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = FF7CA1CA754D017066F1822F /* Build configuration list for PBXProject "iosApp" */;
@@ -301,6 +324,8 @@
 				2FABBAD8F8D38A8B2354A021 /* ColorTokens.swift in Sources */,
 				34418654AA070FE15A967D60 /* ConsentCapture.swift in Sources */,
 				3C798605A2A9E1A2F9692C8C /* CtaButtons.swift in Sources */,
+				B3E6A2AEA8FF8B4E18BBF9F8 /* EmailVerificationView.swift in Sources */,
+				C405D3EE2BD0A6D8164E26E4 /* EmailVerificationViewModel.swift in Sources */,
 				701DB10C0A26285D95B1F6DA /* EmptyState.swift in Sources */,
 				73D657A9DD7C1150A7F69895 /* EntranceStagger.swift in Sources */,
 				D3359A04F3CEB6CFF921DFC5 /* EventCard.swift in Sources */,
@@ -320,6 +345,8 @@
 				692E26574F77B90A5CDA37FB /* BottomNavDestinationTests.swift in Sources */,
 				BEB34CEBDDAC870450DF5EF3 /* CityFilterColorsTests.swift in Sources */,
 				44D2D375FFC73DB086C66DE5 /* CtaButtonMotionTests.swift in Sources */,
+				1C0C706080EFC7F2A1F54B0A /* EmailVerificationViewModelTests.swift in Sources */,
+				5CA1502BA5599FFC06402BA0 /* EmailVerificationViewTests.swift in Sources */,
 				885AB069FE0AAE423DEB685F /* EmptyStateTests.swift in Sources */,
 				69C3F7CC4E027B6C03DC60F4 /* EntranceStaggerTests.swift in Sources */,
 				1DC36DA4896087859B87657F /* EventCardMotionTests.swift in Sources */,
@@ -401,6 +428,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -417,6 +447,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
