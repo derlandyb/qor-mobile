@@ -1,0 +1,136 @@
+{
+  "sourceLanguage" : "pt-BR",
+  "strings" : {
+    "city_vitoria" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vitória"
+          }
+        }
+      }
+    },
+    "city_vila_velha" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vila Velha"
+          }
+        }
+      }
+    },
+    "city_serra" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serra"
+          }
+        }
+      }
+    },
+    "city_cariacica" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cariacica"
+          }
+        }
+      }
+    },
+    "cta_ver_no_mapa" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver no Mapa"
+          }
+        }
+      }
+    },
+    "cta_ver_instagram" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver Instagram"
+          }
+        }
+      }
+    },
+    "content_description_genre" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gênero: %@"
+          }
+        }
+      }
+    },
+    "live_pulse_label" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao vivo"
+          }
+        }
+      }
+    },
+    "content_description_live_now" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao vivo agora"
+          }
+        }
+      }
+    },
+    "empty_state_no_events" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum evento encontrado"
+          }
+        }
+      }
+    },
+    "consent_capture_label" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Li e aceito os Termos de Uso e a Política de Privacidade"
+          }
+        }
+      }
+    },
+    "form_field_error_required" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo obrigatório"
+          }
+        }
+      }
+    },
+    "form_field_error_invalid_email" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail inválido"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
