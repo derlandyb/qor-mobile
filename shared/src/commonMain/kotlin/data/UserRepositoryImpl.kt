@@ -9,6 +9,7 @@ import domain.user.RegisterResult
 import domain.user.User
 import domain.user.UserRepository
 import domain.user.VerifyEmailResult
+import domain.user.VerifyResetCodeResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -46,7 +47,14 @@ private data class GoogleLoginRequestDto(@SerialName("id_token") val idToken: St
 private data class RequestResetRequestDto(val email: String)
 
 @Serializable
-private data class ConfirmResetRequestDto(val token: String, @SerialName("new_password") val newPassword: String)
+private data class VerifyResetCodeRequestDto(val email: String, val code: String)
+
+@Serializable
+private data class ConfirmResetRequestDto(
+    val email: String,
+    val token: String,
+    @SerialName("new_password") val newPassword: String,
+)
 
 @Serializable
 private data class ResendVerificationRequestDto(val email: String)
@@ -130,10 +138,22 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult {
+    override suspend fun verifyResetCode(email: String, code: String): VerifyResetCodeResult {
+        val response = httpClient.post("$authBase/password/verify-code") {
+            contentType(ContentType.Application.Json)
+            setBody(VerifyResetCodeRequestDto(email, code))
+        }
+        return if (response.status.isSuccess()) {
+            VerifyResetCodeResult.Success(response.body<VerifyResetCodeResponseDto>().data.token)
+        } else {
+            VerifyResetCodeResult.Failure(response.body<ErrorResponseDto>().message)
+        }
+    }
+
+    override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult {
         val response = httpClient.post("$authBase/password/reset") {
             contentType(ContentType.Application.Json)
-            setBody(ConfirmResetRequestDto(token, newPassword))
+            setBody(ConfirmResetRequestDto(email, token, newPassword))
         }
         return if (response.status.isSuccess()) {
             ConfirmResetResult.Success

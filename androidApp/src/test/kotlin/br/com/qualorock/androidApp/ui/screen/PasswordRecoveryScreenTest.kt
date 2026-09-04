@@ -16,6 +16,7 @@ import domain.user.RegisterResult
 import domain.user.User
 import domain.user.UserRepository
 import domain.user.VerifyEmailResult
+import domain.user.VerifyResetCodeResult
 import domain.user.usecase.ResetPassword
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,6 +33,7 @@ import org.robolectric.annotation.Config
 
 /** In-file fake, same shape as `EmailVerificationScreenTest`'s — keeps this render test independent of Koin. */
 private class FakePasswordRecoveryUserRepository(
+    private val verifyResult: VerifyResetCodeResult,
     private val confirmResult: ConfirmResetResult,
 ) : UserRepository {
     override suspend fun register(
@@ -52,7 +54,9 @@ private class FakePasswordRecoveryUserRepository(
 
     override suspend fun requestPasswordReset(email: String) = Unit
 
-    override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult = confirmResult
+    override suspend fun verifyResetCode(email: String, code: String): VerifyResetCodeResult = verifyResult
+
+    override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult = confirmResult
 
     override suspend fun resendVerification(email: String) = Unit
 
@@ -71,8 +75,11 @@ private class FakePasswordRecoveryUserRepository(
         error("not used by PasswordRecoveryScreenTest")
 }
 
-private fun viewModel(confirmResult: ConfirmResetResult): PasswordRecoveryViewModel =
-    PasswordRecoveryViewModel(ResetPassword(FakePasswordRecoveryUserRepository(confirmResult)))
+private fun viewModel(
+    verifyResult: VerifyResetCodeResult = VerifyResetCodeResult.Failure("n/a"),
+    confirmResult: ConfirmResetResult = ConfirmResetResult.Failure("n/a"),
+): PasswordRecoveryViewModel =
+    PasswordRecoveryViewModel(ResetPassword(FakePasswordRecoveryUserRepository(verifyResult, confirmResult)))
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
@@ -98,7 +105,7 @@ class PasswordRecoveryScreenTest {
             PasswordRecoveryScreen(
                 onResetSuccess = {},
                 onNavigateToLogin = {},
-                viewModel = viewModel(ConfirmResetResult.Failure("n/a")),
+                viewModel = viewModel(),
             )
         }
 
@@ -113,7 +120,7 @@ class PasswordRecoveryScreenTest {
             PasswordRecoveryScreen(
                 onResetSuccess = {},
                 onNavigateToLogin = {},
-                viewModel = viewModel(ConfirmResetResult.Failure("n/a")),
+                viewModel = viewModel(),
             )
         }
 
@@ -123,12 +130,12 @@ class PasswordRecoveryScreenTest {
     }
 
     @Test
-    fun `GIVEN a valid email WHEN submit is pressed THEN the generic confirmation and step 2 fields are shown`() {
+    fun `GIVEN a valid email WHEN submit is pressed THEN the generic confirmation and step 2 code field are shown`() {
         composeTestRule.setContent {
             PasswordRecoveryScreen(
                 onResetSuccess = {},
                 onNavigateToLogin = {},
-                viewModel = viewModel(ConfirmResetResult.Failure("n/a")),
+                viewModel = viewModel(),
             )
         }
 
@@ -139,23 +146,65 @@ class PasswordRecoveryScreenTest {
             "Se este e-mail existir, você receberá um código de redefinição.",
         ).assertExists()
         composeTestRule.onNodeWithText("Código de verificação").assertExists()
-        composeTestRule.onNodeWithText("Senha").assertExists()
-        composeTestRule.onNodeWithText("Redefinir senha").assertExists()
+        composeTestRule.onNodeWithText("Verificar código").assertExists()
     }
 
     @Test
-    fun `GIVEN step 2 WHEN the use case fails THEN the server pt-BR message is shown inline`() {
+    fun `GIVEN step 2 WHEN verifyResetCode fails THEN the server pt-BR message is shown inline and step 2 stays`() {
         composeTestRule.setContent {
             PasswordRecoveryScreen(
                 onResetSuccess = {},
                 onNavigateToLogin = {},
-                viewModel = viewModel(ConfirmResetResult.Failure("Link expirado ou já utilizado.")),
+                viewModel = viewModel(verifyResult = VerifyResetCodeResult.Failure("Código inválido ou expirado.")),
             )
         }
 
         composeTestRule.onNodeWithText("E-mail").performTextInput("ana@example.com")
         composeTestRule.onNodeWithText("Enviar link de recuperação").performClick()
         composeTestRule.onNodeWithText("Código de verificação").performTextInput("123456")
+        composeTestRule.onNodeWithText("Verificar código").performClick()
+
+        composeTestRule.onAllNodesWithText("Código inválido ou expirado.")[0].assertExists()
+        composeTestRule.onNodeWithText("Código de verificação").assertExists()
+    }
+
+    @Test
+    fun `GIVEN step 2 succeeds WHEN step 3 renders THEN the new-password field and CTA are shown`() {
+        composeTestRule.setContent {
+            PasswordRecoveryScreen(
+                onResetSuccess = {},
+                onNavigateToLogin = {},
+                viewModel = viewModel(verifyResult = VerifyResetCodeResult.Success(token = "real-token-123")),
+            )
+        }
+
+        composeTestRule.onNodeWithText("E-mail").performTextInput("ana@example.com")
+        composeTestRule.onNodeWithText("Enviar link de recuperação").performClick()
+        composeTestRule.onNodeWithText("Código de verificação").performTextInput("123456")
+        composeTestRule.onNodeWithText("Verificar código").performClick()
+
+        composeTestRule.onNodeWithText("Crie uma nova senha para sua conta.").assertExists()
+        composeTestRule.onNodeWithText("Senha").assertExists()
+        composeTestRule.onNodeWithText("Redefinir senha").assertExists()
+    }
+
+    @Test
+    fun `GIVEN step 3 WHEN confirmReset fails THEN the server pt-BR message is shown inline`() {
+        composeTestRule.setContent {
+            PasswordRecoveryScreen(
+                onResetSuccess = {},
+                onNavigateToLogin = {},
+                viewModel = viewModel(
+                    verifyResult = VerifyResetCodeResult.Success(token = "real-token-123"),
+                    confirmResult = ConfirmResetResult.Failure("Link expirado ou já utilizado."),
+                ),
+            )
+        }
+
+        composeTestRule.onNodeWithText("E-mail").performTextInput("ana@example.com")
+        composeTestRule.onNodeWithText("Enviar link de recuperação").performClick()
+        composeTestRule.onNodeWithText("Código de verificação").performTextInput("123456")
+        composeTestRule.onNodeWithText("Verificar código").performClick()
         composeTestRule.onNodeWithText("Senha").performTextInput("supersenha123")
         composeTestRule.onNodeWithText("Redefinir senha").performClick()
 
@@ -163,19 +212,23 @@ class PasswordRecoveryScreenTest {
     }
 
     @Test
-    fun `GIVEN step 2 WHEN the use case succeeds THEN onResetSuccess fires`() {
+    fun `GIVEN step 3 WHEN confirmReset succeeds THEN onResetSuccess fires`() {
         var succeeded = false
         composeTestRule.setContent {
             PasswordRecoveryScreen(
                 onResetSuccess = { succeeded = true },
                 onNavigateToLogin = {},
-                viewModel = viewModel(ConfirmResetResult.Success),
+                viewModel = viewModel(
+                    verifyResult = VerifyResetCodeResult.Success(token = "real-token-123"),
+                    confirmResult = ConfirmResetResult.Success,
+                ),
             )
         }
 
         composeTestRule.onNodeWithText("E-mail").performTextInput("ana@example.com")
         composeTestRule.onNodeWithText("Enviar link de recuperação").performClick()
         composeTestRule.onNodeWithText("Código de verificação").performTextInput("123456")
+        composeTestRule.onNodeWithText("Verificar código").performClick()
         composeTestRule.onNodeWithText("Senha").performTextInput("supersenha123")
         composeTestRule.onNodeWithText("Redefinir senha").performClick()
 
@@ -189,7 +242,7 @@ class PasswordRecoveryScreenTest {
             PasswordRecoveryScreen(
                 onResetSuccess = {},
                 onNavigateToLogin = { navigated = true },
-                viewModel = viewModel(ConfirmResetResult.Failure("n/a")),
+                viewModel = viewModel(),
             )
         }
 

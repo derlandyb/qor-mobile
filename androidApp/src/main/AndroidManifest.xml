@@ -5,6 +5,14 @@
         android:label="@string/app_name"
         android:allowBackup="false"
         android:theme="@android:style/Theme.Material.NoActionBar">
+        <!-- A22 — Google Maps SDK key, sourced from local.properties (gitignored, per-checkout
+             convention set up in this task) via the MAPS_API_KEY manifest placeholder in
+             androidApp/build.gradle.kts. Empty in this environment: the Maps SDK does not crash
+             on an empty/invalid key, it just fails to render tiles — EventDetailScreen's own
+             EventMapState.Failed fallback covers the geocoding side of that gracefully. -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

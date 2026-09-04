@@ -9,10 +9,12 @@ import domain.user.RegisterResult
 import domain.user.User
 import domain.user.UserRepository
 import domain.user.VerifyEmailResult
+import domain.user.VerifyResetCodeResult
 
 class FakeUserRepository(
     private val loginResult: LoginResult = LoginResult.InvalidCredentials("nao configurado"),
     private val registerResult: RegisterResult = RegisterResult.Failure("nao configurado"),
+    private val verifyResetCodeResult: VerifyResetCodeResult = VerifyResetCodeResult.Failure("nao configurado"),
     private val confirmResetResult: ConfirmResetResult = ConfirmResetResult.Failure("nao configurado"),
     private val verifyEmailResult: VerifyEmailResult = VerifyEmailResult.Failure("nao configurado"),
     private val updateProfileResult: User? = null,
@@ -41,7 +43,10 @@ class FakeUserRepository(
         requestedResetEmail = email
     }
 
-    override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult = confirmResetResult
+    override suspend fun verifyResetCode(email: String, code: String): VerifyResetCodeResult = verifyResetCodeResult
+
+    override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult =
+        confirmResetResult
 
     override suspend fun resendVerification(email: String) {
         resendVerificationEmail = email

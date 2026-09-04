@@ -28,6 +28,12 @@ internal data class SessionResponseDto(
 internal data class VerifyEmailResponseDto(val data: UserDto? = null)
 
 @Serializable
+internal data class VerifyResetCodeDataDto(val token: String)
+
+@Serializable
+internal data class VerifyResetCodeResponseDto(val data: VerifyResetCodeDataDto)
+
+@Serializable
 internal data class ErrorResponseDto(
     val message: String,
     val errors: Map<String, List<String>> = emptyMap(),

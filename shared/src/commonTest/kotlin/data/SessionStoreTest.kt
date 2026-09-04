@@ -30,7 +30,8 @@ private class FakeUserRepository(private val profile: User) : UserRepository {
     override suspend fun loginWithGoogle(googleIdToken: String): LoginResult = error("not used")
     override suspend fun logout() = Unit
     override suspend fun requestPasswordReset(email: String) = Unit
-    override suspend fun confirmPasswordReset(token: String, newPassword: String): ConfirmResetResult = error("not used")
+    override suspend fun verifyResetCode(email: String, code: String): domain.user.VerifyResetCodeResult = error("not used")
+    override suspend fun confirmPasswordReset(email: String, token: String, newPassword: String): ConfirmResetResult = error("not used")
     override suspend fun resendVerification(email: String) = Unit
     override suspend fun verifyEmailCode(email: String, code: String): domain.user.VerifyEmailResult = error("not used")
     override suspend fun getProfile(): User = profile

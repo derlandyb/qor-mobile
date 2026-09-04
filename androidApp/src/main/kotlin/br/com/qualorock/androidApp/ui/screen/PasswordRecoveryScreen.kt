@@ -31,11 +31,11 @@ import design.QualORockThemeTokens
 import org.koin.androidx.compose.koinViewModel
 
 /**
- * A10 — password recovery, a 2-step wizard (email -> OTP code + new password; auth-fan-profile
- * AUTH-13–AUTH-16). Mirrors `qor-website`'s `app/recuperar-senha/page.tsx` UX, collapsed to 2
- * steps instead of 3 — see [PasswordRecoveryViewModel]'s KDoc for why. Owns only form + submit
- * UI: on success it calls [onResetSuccess] — actually navigating to Login is A14's job, not this
- * screen's.
+ * A10/A21 — password recovery, a 3-step wizard (email -> OTP code -> new password;
+ * auth-fan-profile AUTH-13–AUTH-16). Mirrors `qor-website`'s `app/recuperar-senha/page.tsx` UX
+ * exactly — see [PasswordRecoveryViewModel]'s KDoc for the per-step orchestration. Owns only
+ * form + submit UI: on success it calls [onResetSuccess] — actually navigating to Login is A14's
+ * job, not this screen's.
  */
 @Composable
 fun PasswordRecoveryScreen(
@@ -88,7 +88,7 @@ fun PasswordRecoveryScreen(
                 )
             }
 
-            is PasswordRecoveryStep.ConfirmReset -> {
+            is PasswordRecoveryStep.VerifyCode -> {
                 Text(
                     text = stringResource(R.string.password_recovery_generic_confirmation),
                     color = Color(QualORockThemeTokens.ColorTextSecondary),
@@ -99,6 +99,28 @@ fun PasswordRecoveryScreen(
                     value = uiState.code,
                     onValueChange = viewModel::onCodeChange,
                     errorMessage = uiState.codeError?.let { stringResource(it.messageRes()) },
+                )
+
+                uiState.submitError?.let { message ->
+                    Text(
+                        text = message,
+                        color = Color(QualORockThemeTokens.ColorDanger),
+                        fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
+                    )
+                }
+
+                PrimaryButton(
+                    text = stringResource(R.string.cta_verificar_codigo),
+                    onClick = viewModel::onSubmitCode,
+                    isLoading = uiState.isLoading,
+                )
+            }
+
+            is PasswordRecoveryStep.NewPassword -> {
+                Text(
+                    text = stringResource(R.string.password_recovery_new_password_instructions),
+                    color = Color(QualORockThemeTokens.ColorTextSecondary),
+                    fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
                 )
 
                 PasswordField(
@@ -117,7 +139,7 @@ fun PasswordRecoveryScreen(
 
                 PrimaryButton(
                     text = stringResource(R.string.cta_redefinir_senha),
-                    onClick = viewModel::onSubmitReset,
+                    onClick = viewModel::onSubmitNewPassword,
                     isLoading = uiState.isLoading,
                 )
             }
