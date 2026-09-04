@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import br.com.qualorock.androidApp.R
 import br.com.qualorock.androidApp.ui.components.BottomNav
 import br.com.qualorock.androidApp.ui.components.BottomNavDestination
@@ -236,10 +237,22 @@ private fun NavGraphBuilder.emailVerificationDestination(navController: NavHostC
     }
 }
 
+/**
+ * A14 — DISC edge cases ("reached via a stale/direct link") require a shared event URL to open
+ * straight into [EventDetailScreen], which already renders the correct Cancelled/Ended banner
+ * (A13) once it loads. No canonical `https` domain exists yet anywhere in this project (`qor-api`,
+ * `qor-website`, `.specs/`) to mirror as a verified Android App Link, so this registers the
+ * custom-scheme deep link `qualorock://evento/{eventId}` instead of fabricating a domain — this
+ * mechanically satisfies A14's "deep-link handling for shared event URLs" requirement without
+ * claiming ownership of a real host. When a canonical `https` domain is chosen, add a second
+ * [navDeepLink] here mirroring `qor-website`'s `/eventos/{id}` route, with `autoVerify="true"` and
+ * a matching `assetlinks.json`.
+ */
 private fun NavGraphBuilder.eventDetailDestination() {
     composable(
         route = Routes.EventDetail,
         arguments = listOf(navArgument(Routes.EventIdArg) { type = NavType.StringType }),
+        deepLinks = listOf(navDeepLink { uriPattern = "qualorock://evento/{${Routes.EventIdArg}}" }),
     ) { backStackEntry ->
         val eventId = backStackEntry.arguments?.getString(Routes.EventIdArg).orEmpty()
         EventDetailScreen(eventId = eventId)
