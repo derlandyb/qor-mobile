@@ -11,6 +11,7 @@
 		1DC36DA4896087859B87657F /* EventCardMotionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95772703A2F4FC57B7258A6B /* EventCardMotionTests.swift */; };
 		2FABBAD8F8D38A8B2354A021 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767F98392C7AC9620D8168B /* ColorTokens.swift */; };
 		34418654AA070FE15A967D60 /* ConsentCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A35C47F879790663D83EAF /* ConsentCapture.swift */; };
+		36E5AA829FB4EC77B708348E /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = EC9CEAB90B09506A7CBD4DF5 /* ViewInspector */; };
 		3C798605A2A9E1A2F9692C8C /* CtaButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64B699BA5404384A84E9160 /* CtaButtons.swift */; };
 		442F5C5BCD832B27AEF06590 /* CityFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A64284B050A8AD3B4D37F1 /* CityFilterBar.swift */; };
 		44D2D375FFC73DB086C66DE5 /* CtaButtonMotionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859550D2AE689447624298E0 /* CtaButtonMotionTests.swift */; };
@@ -74,6 +75,17 @@
 		FC880FE7D8D68D8C6C50F34E /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
 		FF463822DA61AF7A7CD14446 /* BottomNavDestinationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavDestinationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2FA9B8B888649C03AE70AEC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36E5AA829FB4EC77B708348E /* ViewInspector in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1DB4B685CAEE8BEFEBBAEF94 /* iosApp */ = {
@@ -193,6 +205,7 @@
 			buildConfigurationList = D61171475B3FE2835E331C49 /* Build configuration list for PBXNativeTarget "iosAppTests" */;
 			buildPhases = (
 				3CB0F17B3E63CC78541E1D6D /* Sources */,
+				2FA9B8B888649C03AE70AEC0 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,6 +214,7 @@
 			);
 			name = iosAppTests;
 			packageProductDependencies = (
+				EC9CEAB90B09506A7CBD4DF5 /* ViewInspector */,
 			);
 			productName = iosAppTests;
 			productReference = 56583BC252B5F01ED9DEA19D /* iosAppTests.xctest */;
@@ -230,6 +244,9 @@
 			);
 			mainGroup = 38B69C3F79CD97858CF7B609;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				56A040E9BD0D4C3E9E37B07A /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 94C98B8B3A2BFC1966447269 /* Products */;
 			projectDirPath = "";
@@ -544,6 +561,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		56A040E9BD0D4C3E9E37B07A /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EC9CEAB90B09506A7CBD4DF5 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56A040E9BD0D4C3E9E37B07A /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 242FB5348943441C388468CE /* Project object */;
 }
