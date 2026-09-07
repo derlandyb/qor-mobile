@@ -110,8 +110,7 @@ struct SignupView: View {
             }
             .padding(QorSpace.space4)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(QorColor.bgDeep.ignoresSafeArea())
+        .authScreenBackground()
     }
 }
 

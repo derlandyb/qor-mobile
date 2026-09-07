@@ -47,4 +47,14 @@ final class SignupViewTests: XCTestCase {
         let button = try sut.inspect().find(viewWithAccessibilityIdentifier: "signup_google_button")
         XCTAssertTrue(try button.button().isDisabled())
     }
+
+    func test_GIVEN_theSignupScreen_WHEN_itRenders_THEN_itHasAFullBleedTopAnchoredBackground() throws {
+        let sut = makeSut()
+
+        let frame = try sut.inspect().scrollView().flexFrame()
+        XCTAssertEqual(frame.maxHeight, .infinity)
+        XCTAssertEqual(frame.alignment, .top)
+
+        XCTAssertNoThrow(try sut.inspect().scrollView().background())
+    }
 }

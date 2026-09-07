@@ -34,4 +34,14 @@ final class EmailVerificationViewTests: XCTestCase {
 
         XCTAssertThrowsError(try view.inspect().find(text: "Código inválido ou expirado."))
     }
+
+    func test_GIVEN_theEmailVerificationScreen_WHEN_itRenders_THEN_itHasAFullBleedTopAnchoredBackground() throws {
+        let view = makeView()
+
+        let frame = try view.inspect().vStack().flexFrame()
+        XCTAssertEqual(frame.maxHeight, .infinity)
+        XCTAssertEqual(frame.alignment, .top)
+
+        XCTAssertNoThrow(try view.inspect().vStack().background())
+    }
 }
