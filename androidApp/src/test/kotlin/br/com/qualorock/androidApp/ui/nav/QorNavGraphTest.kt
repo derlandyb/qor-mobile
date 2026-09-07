@@ -41,6 +41,7 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 /**
  * A14 — verifies [QorNavGraph]'s startup-restore decision (AUTH-12): an unauthenticated
@@ -198,9 +199,8 @@ class QorNavGraphTest {
         val authWidth = authBounds.right - authBounds.left
         val authHeight = authBounds.bottom - authBounds.top
 
-        assert(authWidth == rootWidth && authHeight == rootHeight) {
-            "Expected the auth screen to fill the root window ($rootBounds) but it measured $authBounds"
-        }
+        assertEquals(rootWidth, authWidth)
+        assertEquals(rootHeight, authHeight)
     }
 
     @Test
