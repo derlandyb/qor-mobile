@@ -110,6 +110,7 @@ struct SignupView: View {
             }
             .padding(QorSpace.space4)
         }
+        .authScreenBackground()
     }
 }
 

@@ -78,3 +78,15 @@ enum QorMotion {
         )
     }()
 }
+
+extension View {
+    /// Pins content to the top of its `NavigationStack` and bleeds `QorColor.bgDeep` under the
+    /// status bar/home indicator — the auth screens' (Login/Signup/PasswordRecovery/
+    /// EmailVerification) shared full-bleed background, factored out so the pattern used by all
+    /// four doesn't drift into a per-screen variant the way it had before this fix.
+    func authScreenBackground() -> some View {
+        self
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(QorColor.bgDeep.ignoresSafeArea())
+    }
+}

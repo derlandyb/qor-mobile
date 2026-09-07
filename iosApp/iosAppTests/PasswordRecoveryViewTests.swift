@@ -99,4 +99,14 @@ final class PasswordRecoveryViewTests: XCTestCase {
 
         XCTAssertTrue(navigated)
     }
+
+    func test_GIVEN_theRecoveryScreen_WHEN_itRenders_THEN_itHasAFullBleedTopAnchoredBackground() throws {
+        let (view, _) = makeView()
+
+        let frame = try view.inspect().scrollView().flexFrame()
+        XCTAssertEqual(frame.maxHeight, .infinity)
+        XCTAssertEqual(frame.alignment, .top)
+
+        XCTAssertNoThrow(try view.inspect().scrollView().background())
+    }
 }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
@@ -141,38 +142,47 @@ private enum class EmailVerificationReturnTo { Login, Profile }
 
 private fun NavGraphBuilder.unauthenticatedGraph(navController: NavHostController) {
     composable(Routes.Login) {
-        LoginScreen(
-            onLoginSuccess = {
-                navController.navigate(Routes.Home) {
-                    popUpTo(navController.graph.id) { inclusive = true }
-                }
-            },
-            onNavigateToVerifyEmail = { email ->
-                navController.navigate(Routes.emailVerification(email, EmailVerificationReturnTo.Login))
-            },
-            onNavigateToSignup = { navController.navigate(Routes.Signup) },
-            onNavigateToPasswordRecovery = { navController.navigate(Routes.PasswordRecovery) },
-        )
+        AuthScaffold { padding ->
+            LoginScreen(
+                modifier = Modifier.padding(padding),
+                onLoginSuccess = {
+                    navController.navigate(Routes.Home) {
+                        popUpTo(navController.graph.id) { inclusive = true }
+                    }
+                },
+                onNavigateToVerifyEmail = { email ->
+                    navController.navigate(Routes.emailVerification(email, EmailVerificationReturnTo.Login))
+                },
+                onNavigateToSignup = { navController.navigate(Routes.Signup) },
+                onNavigateToPasswordRecovery = { navController.navigate(Routes.PasswordRecovery) },
+            )
+        }
     }
 
     composable(Routes.Signup) {
-        SignupScreen(
-            onSignupSuccess = { email ->
-                navController.navigate(Routes.emailVerification(email, EmailVerificationReturnTo.Login))
-            },
-            onNavigateToLogin = { navController.navigate(Routes.Login) },
-        )
+        AuthScaffold { padding ->
+            SignupScreen(
+                modifier = Modifier.padding(padding),
+                onSignupSuccess = { email ->
+                    navController.navigate(Routes.emailVerification(email, EmailVerificationReturnTo.Login))
+                },
+                onNavigateToLogin = { navController.navigate(Routes.Login) },
+            )
+        }
     }
 
     composable(Routes.PasswordRecovery) {
-        PasswordRecoveryScreen(
-            onResetSuccess = {
-                navController.navigate(Routes.Login) {
-                    popUpTo(Routes.PasswordRecovery) { inclusive = true }
-                }
-            },
-            onNavigateToLogin = { navController.navigate(Routes.Login) },
-        )
+        AuthScaffold { padding ->
+            PasswordRecoveryScreen(
+                modifier = Modifier.padding(padding),
+                onResetSuccess = {
+                    navController.navigate(Routes.Login) {
+                        popUpTo(Routes.PasswordRecovery) { inclusive = true }
+                    }
+                },
+                onNavigateToLogin = { navController.navigate(Routes.Login) },
+            )
+        }
     }
 }
 
@@ -220,20 +230,23 @@ private fun NavGraphBuilder.emailVerificationDestination(navController: NavHostC
             backStackEntry.arguments?.getString(Routes.ReturnToArg) ?: EmailVerificationReturnTo.Login.name,
         )
 
-        EmailVerificationScreen(
-            email = email,
-            onVerified = {
-                when (returnTo) {
-                    EmailVerificationReturnTo.Profile -> navController.navigate(Routes.Profile) {
-                        popUpTo(Routes.Profile) { inclusive = true }
-                    }
+        AuthScaffold { padding ->
+            EmailVerificationScreen(
+                modifier = Modifier.padding(padding),
+                email = email,
+                onVerified = {
+                    when (returnTo) {
+                        EmailVerificationReturnTo.Profile -> navController.navigate(Routes.Profile) {
+                            popUpTo(Routes.Profile) { inclusive = true }
+                        }
 
-                    EmailVerificationReturnTo.Login -> navController.navigate(Routes.Login) {
-                        popUpTo(Routes.Login) { inclusive = true }
+                        EmailVerificationReturnTo.Login -> navController.navigate(Routes.Login) {
+                            popUpTo(Routes.Login) { inclusive = true }
+                        }
                     }
-                }
-            },
-        )
+                },
+            )
+        }
     }
 }
 
@@ -257,6 +270,23 @@ private fun NavGraphBuilder.eventDetailDestination() {
         val eventId = backStackEntry.arguments?.getString(Routes.EventIdArg).orEmpty()
         EventDetailScreen(eventId = eventId)
     }
+}
+
+/**
+ * Full-size, bar-less `Scaffold` wrapper for the unauthenticated destinations (Login/Signup/
+ * PasswordRecovery) and the shared `EmailVerification` destination. Without this, those screens'
+ * own bare `Column`s neither fill the window nor consume system-bar insets — `Scaffold`'s default
+ * `containerColor` (`colorScheme.background`, NIGHTLIFE-GV's near-black) and safe-drawing content
+ * padding give the correct full-bleed background and status-bar clearance for free, the same way
+ * [BottomNavScaffold] already does for Home/Explore/Profile.
+ */
+@Composable
+private fun AuthScaffold(content: @Composable (PaddingValues) -> Unit) {
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(stringResource(R.string.test_tag_auth_scaffold)),
+    ) { padding -> content(padding) }
 }
 
 /**

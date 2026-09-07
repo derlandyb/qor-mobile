@@ -89,6 +89,7 @@ struct LoginView: View {
                 .id("login_link_signup")
         }
         .padding(QorSpace.space4)
+        .authScreenBackground()
     }
 }
 

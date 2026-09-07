@@ -31,6 +31,16 @@ private func makeView(
 
 @MainActor
 final class LoginViewTests: XCTestCase {
+    func test_GIVEN_theLoginScreen_WHEN_itRenders_THEN_itHasAFullBleedTopAnchoredBackground() throws {
+        let view = makeView()
+
+        let frame = try view.inspect().vStack().flexFrame()
+        XCTAssertEqual(frame.maxHeight, .infinity)
+        XCTAssertEqual(frame.alignment, .top)
+
+        XCTAssertNoThrow(try view.inspect().vStack().background())
+    }
+
     func test_GIVEN_theLoginScreen_WHEN_itRenders_THEN_theGoogleStubButtonIsDisabled() throws {
         let view = makeView()
 

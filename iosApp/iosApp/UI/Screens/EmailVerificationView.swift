@@ -82,5 +82,6 @@ struct EmailVerificationView: View {
             }
         }
         .padding(QorSpace.space4)
+        .authScreenBackground()
     }
 }

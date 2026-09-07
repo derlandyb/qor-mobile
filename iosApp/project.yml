@@ -28,6 +28,8 @@ targets:
       properties:
         UILaunchScreen: {}
         CFBundleDisplayName: Qual o Rock?
+        CFBundleDevelopmentRegion: pt-BR
+        CFBundleLocalizations: [pt-BR]
     prebuildScripts:
       - name: Compile Kotlin Framework (shared)
         script: |

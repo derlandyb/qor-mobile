@@ -236,6 +236,7 @@ struct PasswordRecoveryView: View {
             }
             .padding(QorSpace.space4)
         }
+        .authScreenBackground()
     }
 
     @ViewBuilder
