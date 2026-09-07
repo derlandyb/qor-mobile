@@ -2,12 +2,17 @@ package br.com.qualorock.androidApp.ui.nav
 
 import android.app.Application
 import android.net.Uri
+import androidx.compose.ui.test.getBoundsInRoot
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.test.core.app.ApplicationProvider
+import br.com.qualorock.androidApp.R
 import br.com.qualorock.androidApp.di.viewModelModule
 import di.sharedModule
 import data.SecureTokenStorage
@@ -140,6 +145,8 @@ class QorNavGraphTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val context = ApplicationProvider.getApplicationContext<Application>()
+
     @After
     fun tearDown() {
         stopKoin()
@@ -172,6 +179,28 @@ class QorNavGraphTest {
         composeTestRule.waitForIdle()
 
         composeTestRule.onNodeWithText("Bem-vindo de volta").assertExists()
+    }
+
+    @Test
+    fun `GIVEN the Login screen WHEN it renders THEN its container fills the full available window size`() {
+        val sessionStore = startTestKoin(userRepository = FakeUserRepository(profile = null), tokenStorage = FakeTokenStorage(token = null))
+
+        composeTestRule.setContent { QorNavGraph(sessionStore = sessionStore) }
+        composeTestRule.waitForIdle()
+
+        val rootBounds = composeTestRule.onRoot().getBoundsInRoot()
+        val authBounds = composeTestRule
+            .onNodeWithTag(context.getString(R.string.test_tag_auth_scaffold))
+            .getBoundsInRoot()
+
+        val rootWidth = rootBounds.right - rootBounds.left
+        val rootHeight = rootBounds.bottom - rootBounds.top
+        val authWidth = authBounds.right - authBounds.left
+        val authHeight = authBounds.bottom - authBounds.top
+
+        assert(authWidth == rootWidth && authHeight == rootHeight) {
+            "Expected the auth screen to fill the root window ($rootBounds) but it measured $authBounds"
+        }
     }
 
     @Test

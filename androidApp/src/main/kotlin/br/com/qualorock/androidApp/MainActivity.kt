@@ -3,7 +3,9 @@ package br.com.qualorock.androidApp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import br.com.qualorock.androidApp.ui.nav.QorNavGraph
 import br.com.qualorock.androidApp.ui.theme.QorTheme
 import data.SessionStore
@@ -19,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QorTheme {
-                Surface {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     val sessionStore = koinInject<SessionStore>()
                     QorNavGraph(sessionStore = sessionStore)
                 }
