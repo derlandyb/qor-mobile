@@ -9,6 +9,6 @@ package data
  * this file per environment.
  */
 object ApiConfig {
-    const val BaseUrl: String = "http://localhost:8000"
+    const val BaseUrl: String = "http://10.0.2.2:8000"
     const val ApiV1Prefix: String = "/api/v1"
 }

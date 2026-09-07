@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name=".QorApplication"
+        android:label="@string/app_name"
+        android:allowBackup="false"
+        android:usesCleartextTraffic="true">
+
+    </application>
+
+</manifest>
