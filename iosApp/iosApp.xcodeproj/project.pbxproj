@@ -64,6 +64,7 @@
 		DBF2178339A7B6A37F096AF1 /* iosAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404608725152C3067E7030FA /* iosAppApp.swift */; };
 		EAFD87C96FFCD67E1DCADF66 /* GenreTagSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3826969802FC9D075A9826 /* GenreTagSet.swift */; };
 		F12721B5076D4030ED150FE6 /* SignupViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A7160E4EBC67E06BE4B84 /* SignupViewModelTests.swift */; };
+		F37C79CBB7F769982DC16FA3 /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23915034BA99646816242B3F /* LocalizationTests.swift */; };
 		F9DBB33A7EE44430020E8307 /* PlaceholderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5C6BE11DAAEC1D75FE4D5B /* PlaceholderImage.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		13CF8D138E75DABCE5B3D180 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		16A94E3E45974C55DE44C230 /* GenreTagColorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTagColorsTests.swift; sourceTree = "<group>"; };
 		1A6C8047226B9A556453107D /* BottomNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNav.swift; sourceTree = "<group>"; };
+		23915034BA99646816242B3F /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		267442C81CB2AB1C75774CAD /* EntranceStagger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntranceStagger.swift; sourceTree = "<group>"; };
 		2ADA2BEC6E019FB92A4423BD /* LivePulseBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePulseBadge.swift; sourceTree = "<group>"; };
 		2B0789A93268814B476871D5 /* EventMapState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMapState.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				53EC04A3800F11E0A8396FE6 /* HomeFeedViewModelTests.swift */,
 				B717C415E59994E1341200A2 /* HomeFeedViewTests.swift */,
 				989B41F95B4FD2A9CA6D615B /* iosAppTests.swift */,
+				23915034BA99646816242B3F /* LocalizationTests.swift */,
 				627992D9854E89908FEB56DA /* LoginViewModelTests.swift */,
 				BEDE2BABDDAE719F28043580 /* LoginViewTests.swift */,
 				BAD30230AE0E4BAE2EC3D559 /* PasswordRecoveryViewModelTests.swift */,
@@ -465,6 +468,7 @@
 				6A30034C409F854949C38C1C /* GenreTagColorsTests.swift in Sources */,
 				3C927DE8E2F6314E799F6D44 /* HomeFeedViewModelTests.swift in Sources */,
 				976F7B2003BAF0AFDAA5517C /* HomeFeedViewTests.swift in Sources */,
+				F37C79CBB7F769982DC16FA3 /* LocalizationTests.swift in Sources */,
 				1B1C6774C9C8D7DE5D9A2276 /* LoginViewModelTests.swift in Sources */,
 				B3AFAECB79BD51F48D23B380 /* LoginViewTests.swift in Sources */,
 				A6EE41EFAB2E3804BB138A4B /* PasswordRecoveryViewModelTests.swift in Sources */,
