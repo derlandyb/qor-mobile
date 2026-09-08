@@ -16,7 +16,7 @@ class QorApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@QorApplication)
-            modules(sharedModule, viewModelModule)
+            modules(sharedModule(isDebug = BuildConfig.DEBUG), viewModelModule)
         }
     }
 }

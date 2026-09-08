@@ -160,7 +160,7 @@ class QorNavGraphTest {
     ): SessionStore {
         val koinApp = startKoin {
             modules(
-                sharedModule,
+                sharedModule(isDebug = false),
                 viewModelModule,
                 module {
                     single<UserRepository> { userRepository }
