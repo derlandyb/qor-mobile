@@ -17,7 +17,7 @@ import org.koin.core.context.stopKoin
 class IosDependenciesTest {
     @BeforeTest
     fun setUp() {
-        startKoin { modules(sharedModule) }
+        startKoin { modules(sharedModule(isDebug = false)) }
     }
 
     @AfterTest
