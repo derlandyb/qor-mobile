@@ -11,10 +11,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Text
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Explore
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.semantics
@@ -29,11 +36,11 @@ import design.QualORockThemeTokens
  * mobile.md's A3 scope note: the favoriting action itself is Milestone 2 (Social &
  * Notifications, A20) — the tab exists here only for nav-shell completeness.
  */
-enum class BottomNavDestination(@param:StringRes val labelRes: Int, val enabled: Boolean) {
-    Inicio(R.string.nav_inicio, enabled = true),
-    Explorar(R.string.nav_explorar, enabled = true),
-    Favoritos(R.string.nav_favoritos, enabled = false),
-    Perfil(R.string.nav_perfil, enabled = true),
+enum class BottomNavDestination(@param:StringRes val labelRes: Int, val icon: ImageVector, val enabled: Boolean) {
+    Inicio(R.string.nav_inicio, Icons.Outlined.Home, enabled = true),
+    Explorar(R.string.nav_explorar, Icons.Outlined.Explore, enabled = true),
+    Favoritos(R.string.nav_favoritos, Icons.Outlined.FavoriteBorder, enabled = false),
+    Perfil(R.string.nav_perfil, Icons.Outlined.Person, enabled = true),
 }
 
 private const val UnderlineHeightDp = 2
@@ -44,10 +51,11 @@ fun BottomNav(current: BottomNavDestination, onSelect: (BottomNavDestination) ->
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color(QualORockThemeTokens.ColorSurfaceCard)),
+            .background(Color(QualORockThemeTokens.ColorSurfaceCard))
+            .padding(bottom = QualORockThemeTokens.Space6Dp.dp),
     ) {
         BottomNavDestination.entries.forEach { destination ->
-            BottomNavItem(destination = destination, isSelected = destination == current, onSelect = onSelect)
+            BottomNavItem(destination = destination, icon = destination.icon, isSelected = destination == current, onSelect = onSelect)
         }
     }
 }
@@ -58,7 +66,7 @@ fun BottomNav(current: BottomNavDestination, onSelect: (BottomNavDestination) ->
  * Compose Row-measurement pitfall, caught by `BottomNavTest`'s click-on-a-later-item case).
  */
 @Composable
-private fun RowScope.BottomNavItem(destination: BottomNavDestination, isSelected: Boolean, onSelect: (BottomNavDestination) -> Unit) {
+private fun RowScope.BottomNavItem(destination: BottomNavDestination, icon: ImageVector,  isSelected: Boolean, onSelect: (BottomNavDestination) -> Unit) {
     val accent = Color(QualORockThemeTokens.AccentPink)
     val textColor = when {
         !destination.enabled -> Color(QualORockThemeTokens.ColorTextTertiary)
@@ -78,6 +86,8 @@ private fun RowScope.BottomNavItem(destination: BottomNavDestination, isSelected
             )
             .semantics { if (!destination.enabled) disabled() },
     ) {
+
+        Icon(icon, contentDescription = stringResource(destination.labelRes), tint = if (isSelected) accent else textColor)
         Text(
             text = stringResource(destination.labelRes),
             color = textColor,

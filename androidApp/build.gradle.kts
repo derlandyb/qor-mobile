@@ -81,8 +81,10 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
     // A22 — embedded event-detail map (`maps-compose`'s Compose wrapper over `play-services-maps`,
     // added explicitly since this module doesn't otherwise depend on Play Services).
