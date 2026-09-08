@@ -21,14 +21,14 @@ internal data class EventDetailResponseDto(
 
 @Serializable
 internal data class EventDto(
-    val id: String,
+    val id: Int,
     val title: String,
     val description: String,
     @SerialName("cover_image_url") val coverImageUrl: String? = null,
     @SerialName("starts_at") val startsAt: String,
     val city: City,
     val genre: String,
-    val address: String,
+    val address: String?,
     @SerialName("is_free") val isFree: Boolean,
     @SerialName("ticket_url") val ticketUrl: String? = null,
     val status: String,
@@ -45,14 +45,14 @@ internal data class EventPromoterDto(
 )
 
 internal fun EventDto.toDomain(): Event = Event(
-    id = id,
+    id = id.toString(),
     title = title,
     description = description,
     coverImageUrl = coverImageUrl,
     startsAt = startsAt,
     city = city,
     genre = genre,
-    address = address,
+    address = address.orEmpty(),
     isFree = isFree,
     ticketUrl = ticketUrl,
 )
