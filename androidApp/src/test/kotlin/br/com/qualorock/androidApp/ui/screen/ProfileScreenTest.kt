@@ -136,6 +136,18 @@ class ProfileScreenTest {
     }
 
     @Test
+    fun `GIVEN it is rendered THEN the name field sits above the birthdate row, matching the Stitch mock`() {
+        composeTestRule.setContent {
+            ProfileScreen(viewModel = viewModel(), onEmailChangePending = {})
+        }
+
+        val nameFieldTop = composeTestRule.onNodeWithText("Nome completo").fetchSemanticsNode().positionInRoot.y
+        val birthdateLabelTop = composeTestRule.onNodeWithText("Data de nascimento:").fetchSemanticsNode().positionInRoot.y
+
+        assert(nameFieldTop < birthdateLabelTop)
+    }
+
+    @Test
     fun `GIVEN a change picture button WHEN rendered THEN it is shown but disabled`() {
         composeTestRule.setContent {
             ProfileScreen(viewModel = viewModel(), onEmailChangePending = {})

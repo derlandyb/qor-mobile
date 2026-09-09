@@ -50,6 +50,13 @@ import org.koin.androidx.compose.koinViewModel
  *
  * P2 concerns (address/location, favorite genres/radius, notification prefs, LGPD data-rights UI)
  * are explicitly out of scope — see mobile.md A13.
+ *
+ * nightlife-gv-stitch-refresh T29 restyled per Stitch mobile screen
+ * `77fe8354badb43ae9cd4a20d964cfd3d`, "Meu Perfil (Mobile)" — the name field now sits directly
+ * under the avatar/photo block, matching the mock's "name right under the avatar" order. The
+ * mock's location badge, activity level, like/saved/hub counters, genre/venue preferences, and
+ * account-settings list have no backing data model on this screen (`ProfileViewModel`/`User`
+ * expose none of it) and stay out of scope (REFRESH-04).
  */
 @Composable
 fun ProfileScreen(
@@ -95,20 +102,6 @@ fun ProfileScreen(
             fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
         )
 
-        Row(horizontalArrangement = Arrangement.spacedBy(QualORockThemeTokens.Space1Dp.dp)) {
-            Text(
-                text = stringResource(R.string.field_label_birthdate) + ":",
-                color = Color(QualORockThemeTokens.ColorTextTertiary),
-                fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
-            )
-            Text(
-                text = uiState.user?.birthdate.orEmpty(),
-                color = Color(QualORockThemeTokens.ColorTextSecondary),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
-            )
-        }
-
         Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(QualORockThemeTokens.Space2Dp.dp)) {
             QorTextField(
                 value = uiState.nameInput,
@@ -121,6 +114,20 @@ fun ProfileScreen(
                 text = stringResource(R.string.cta_salvar),
                 onClick = viewModel::onSaveName,
                 isLoading = uiState.isSavingName,
+            )
+        }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(QualORockThemeTokens.Space1Dp.dp)) {
+            Text(
+                text = stringResource(R.string.field_label_birthdate) + ":",
+                color = Color(QualORockThemeTokens.ColorTextTertiary),
+                fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
+            )
+            Text(
+                text = uiState.user?.birthdate.orEmpty(),
+                color = Color(QualORockThemeTokens.ColorTextSecondary),
+                fontWeight = FontWeight.SemiBold,
+                fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
             )
         }
 
