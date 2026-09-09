@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
 import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -88,6 +89,14 @@ import org.koin.androidx.compose.koinViewModel
  * parameter (default: the real `context.startActivity(intent)`) lets tests exercise the
  * ticket-link failure path (DISC-08's "don't crash" requirement) deterministically, without
  * relying on Robolectric's shadow `ActivityManager` to reproduce a real `ActivityNotFoundException`.
+ *
+ * nightlife-gv-stitch-refresh T28 restyled per Stitch mobile screen
+ * `bebdbc615b0b4d82988d0b2b35701c1f`, "Detalhes do Evento (Mobile)" — adds the mock's back-button
+ * header row. [onBackClick] defaults to a no-op: this file owns only the screen's own UI, not the
+ * nav graph — wiring it to `navController.popBackStack()` is A14/`QorNavGraph.kt`'s job, same
+ * injectable-seam pattern as [launchIntent]. The mock's "Outros rocks rolando" related-events
+ * section has no backing data source (`EventDetail` carries no related-events field) and is out
+ * of this refresh's scope (REFRESH-04).
  */
 @Suppress("TooGenericExceptionCaught", "SwallowedException")
 @Composable
@@ -96,6 +105,7 @@ fun EventDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: EventDetailViewModel = koinViewModel(),
     launchIntent: (Context, Intent) -> Unit = { context, intent -> context.startActivity(intent) },
+    onBackClick: () -> Unit = {},
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -110,6 +120,16 @@ fun EventDetailScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = Color(QualORockThemeTokens.ColorBgDeep),
+        topBar = {
+            Text(
+                text = stringResource(R.string.cta_voltar),
+                color = Color(QualORockThemeTokens.ColorTextSecondary),
+                fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
+                modifier = Modifier
+                    .padding(QualORockThemeTokens.Space4Dp.dp)
+                    .clickable(onClick = onBackClick),
+            )
+        },
         modifier = modifier,
     ) { paddingValues ->
         when (val state = uiState) {

@@ -87,6 +87,22 @@ class EventDetailScreenTest {
     }
 
     @Test
+    fun `GIVEN it is rendered WHEN the back link is tapped THEN onBackClick fires`() {
+        var backClicked = false
+        composeTestRule.setContent {
+            EventDetailScreen(
+                eventId = "e1",
+                viewModel = viewModel(EventDetail.Active(sampleEvent(isFree = true))),
+                onBackClick = { backClicked = true },
+            )
+        }
+
+        composeTestRule.onNodeWithText("‹ Voltar").performClick()
+
+        assertEquals(true, backClicked)
+    }
+
+    @Test
     fun `GIVEN a Cancelled event WHEN rendered THEN only the cancelled banner is shown`() {
         composeTestRule.setContent {
             EventDetailScreen(eventId = "e1", viewModel = viewModel(EventDetail.Cancelled(sampleEvent())))
