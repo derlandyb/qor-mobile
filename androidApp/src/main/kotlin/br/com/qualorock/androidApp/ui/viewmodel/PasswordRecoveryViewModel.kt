@@ -34,6 +34,14 @@ sealed class PasswordRecoveryStep {
 
     /** [email] and the [token] returned by [ResetPassword.verifyResetCode] are carried into step 3. */
     data class NewPassword(val email: String, val token: String) : PasswordRecoveryStep()
+
+    /**
+     * PWDR-04 — shown after [ResetPassword.confirmReset] succeeds, matching Stitch's "Sucesso
+     * Envio de Link" mock. The fan must acknowledge this step ([PasswordRecoveryViewModel.onSuccessContinue])
+     * before [PasswordRecoveryEvent.ResetSuccess] fires and navigation to Login happens — success
+     * is shown, not skipped straight to navigation.
+     */
+    data object Success : PasswordRecoveryStep()
 }
 
 /** Client-side validation failure for the new-password field (AUTH-13/AUTH-16). */
@@ -81,6 +89,11 @@ data class PasswordRecoveryUiState(
  * *token* obtained in step 2 (never the raw OTP code the fan typed) — matches `qor-website`'s
  * `app/recuperar-senha/page.tsx` 3-step wizard exactly (A21 retrofits A10's collapsed 2-step
  * stopgap to this shape).
+ *
+ * **Success confirmation (PWDR-04, T30).** On [ConfirmResetResult.Success] the wizard advances to
+ * [PasswordRecoveryStep.Success] rather than firing [PasswordRecoveryEvent.ResetSuccess]
+ * immediately — the fan sees Stitch's "Sucesso Envio de Link" confirmation and must tap through
+ * ([onSuccessContinue]) before navigation to Login happens.
  */
 class PasswordRecoveryViewModel(private val resetPassword: ResetPassword) : ViewModel() {
 
@@ -164,14 +177,20 @@ class PasswordRecoveryViewModel(private val resetPassword: ResetPassword) : View
         viewModelScope.launch {
             when (val result = resetPassword.confirmReset(step.email, step.token, state.newPassword)) {
                 is ConfirmResetResult.Success -> {
-                    _uiState.update { it.copy(isLoading = false) }
-                    _events.send(PasswordRecoveryEvent.ResetSuccess)
+                    _uiState.update { it.copy(isLoading = false, step = PasswordRecoveryStep.Success) }
                 }
 
                 is ConfirmResetResult.Failure -> {
                     _uiState.update { it.copy(isLoading = false, submitError = result.message) }
                 }
             }
+        }
+    }
+
+    /** PWDR-04 — the fan acknowledges the [PasswordRecoveryStep.Success] screen; only then does navigation fire. */
+    fun onSuccessContinue() {
+        viewModelScope.launch {
+            _events.send(PasswordRecoveryEvent.ResetSuccess)
         }
     }
 

@@ -94,6 +94,9 @@
     <string name="password_recovery_error_password_too_short">A senha deve ter pelo menos 8 caracteres.</string>
     <string name="cta_enviar_link_recuperacao">Enviar link de recuperação</string>
     <string name="cta_redefinir_senha">Redefinir senha</string>
+    <string name="password_recovery_success_title">Senha redefinida!</string>
+    <string name="password_recovery_success_message">Sua senha foi alterada com sucesso. Você já pode fazer login com a nova senha.</string>
+    <string name="cta_voltar_para_login">Voltar para o login</string>
     <string name="password_recovery_link_login">Lembrou da senha? Fazer login</string>
 
     <!-- HomeFeedScreen (A11) -->

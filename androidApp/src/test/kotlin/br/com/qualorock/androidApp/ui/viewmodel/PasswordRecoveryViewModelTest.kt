@@ -287,7 +287,7 @@ class PasswordRecoveryViewModelTest {
         }
 
     @Test
-    fun `GIVEN step 3 WHEN confirmReset returns Success THEN a ResetSuccess event is emitted using the step-2 token`() =
+    fun `GIVEN step 3 WHEN confirmReset returns Success THEN step 4 (success) advances using the step-2 token, without emitting ResetSuccess yet`() =
         runTest {
             val (vm, repository) = viewModel(
                 verifyResult = VerifyResetCodeResult.Success(token = "real-token-123"),
@@ -304,12 +304,50 @@ class PasswordRecoveryViewModelTest {
             vm.onSubmitNewPassword()
             dispatcher.scheduler.advanceUntilIdle()
 
-            assertEquals(PasswordRecoveryEvent.ResetSuccess, vm.events.first())
+            assertIs<PasswordRecoveryStep.Success>(vm.uiState.value.step)
             assertEquals("ana@example.com", repository.lastConfirmEmail)
             assertEquals("real-token-123", repository.lastConfirmToken)
             assertEquals("supersenha123", repository.lastConfirmPassword)
             assertFalse(vm.uiState.value.isLoading)
             assertNull(vm.uiState.value.submitError)
+        }
+
+    @Test
+    fun `GIVEN step 4 (success) WHEN onSuccessContinue is called THEN a ResetSuccess event is emitted`() = runTest {
+        val (vm, _) = viewModel(
+            verifyResult = VerifyResetCodeResult.Success(token = "real-token-123"),
+            confirmResult = ConfirmResetResult.Success,
+        )
+        vm.onEmailChange("ana@example.com")
+        vm.onSubmitEmail()
+        dispatcher.scheduler.advanceUntilIdle()
+        vm.onCodeChange("123456")
+        vm.onSubmitCode()
+        dispatcher.scheduler.advanceUntilIdle()
+        vm.onNewPasswordChange("supersenha123")
+        vm.onSubmitNewPassword()
+        dispatcher.scheduler.advanceUntilIdle()
+
+        vm.onSuccessContinue()
+        dispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(PasswordRecoveryEvent.ResetSuccess, vm.events.first())
+    }
+
+    @Test
+    fun `GIVEN step 2 was reached WHEN the flow is abandoned and a fresh instance is created THEN it starts back at step 1`() =
+        runTest {
+            val (abandoned, _) = viewModel()
+            abandoned.onEmailChange("ana@example.com")
+            abandoned.onSubmitEmail()
+            dispatcher.scheduler.advanceUntilIdle()
+            assertIs<PasswordRecoveryStep.VerifyCode>(abandoned.uiState.value.step)
+
+            // spec.md edge case: no persisted partial-recovery state — a fresh instance (as if
+            // the app were backgrounded/closed and reopened) has no memory of the abandoned one's step.
+            val (restarted, _) = viewModel()
+
+            assertIs<PasswordRecoveryStep.RequestEmail>(restarted.uiState.value.step)
         }
 
     @Test

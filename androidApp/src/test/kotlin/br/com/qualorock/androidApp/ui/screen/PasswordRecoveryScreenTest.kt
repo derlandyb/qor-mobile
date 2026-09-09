@@ -212,7 +212,7 @@ class PasswordRecoveryScreenTest {
     }
 
     @Test
-    fun `GIVEN step 3 WHEN confirmReset succeeds THEN onResetSuccess fires`() {
+    fun `GIVEN step 3 WHEN confirmReset succeeds THEN the success screen renders instead of navigating immediately`() {
         var succeeded = false
         composeTestRule.setContent {
             PasswordRecoveryScreen(
@@ -232,7 +232,55 @@ class PasswordRecoveryScreenTest {
         composeTestRule.onNodeWithText("Senha").performTextInput("supersenha123")
         composeTestRule.onNodeWithText("Redefinir senha").performClick()
 
+        composeTestRule.onNodeWithText("Senha redefinida!").assertExists()
+        composeTestRule.onNodeWithText(
+            "Sua senha foi alterada com sucesso. Você já pode fazer login com a nova senha.",
+        ).assertExists()
+        composeTestRule.onNodeWithText("Voltar para o login").assertExists()
+        assert(!succeeded)
+    }
+
+    @Test
+    fun `GIVEN the success screen WHEN the CTA is tapped THEN onResetSuccess fires`() {
+        var succeeded = false
+        composeTestRule.setContent {
+            PasswordRecoveryScreen(
+                onResetSuccess = { succeeded = true },
+                onNavigateToLogin = {},
+                viewModel = viewModel(
+                    verifyResult = VerifyResetCodeResult.Success(token = "real-token-123"),
+                    confirmResult = ConfirmResetResult.Success,
+                ),
+            )
+        }
+
+        composeTestRule.onNodeWithText("E-mail").performTextInput("ana@example.com")
+        composeTestRule.onNodeWithText("Enviar link de recuperação").performClick()
+        composeTestRule.onNodeWithText("Código de verificação").performTextInput("123456")
+        composeTestRule.onNodeWithText("Verificar código").performClick()
+        composeTestRule.onNodeWithText("Senha").performTextInput("supersenha123")
+        composeTestRule.onNodeWithText("Redefinir senha").performClick()
+        composeTestRule.onNodeWithText("Voltar para o login").performClick()
+
         assert(succeeded)
+    }
+
+    @Test
+    fun `GIVEN a fresh instance is rendered THEN it starts at the email step, matching the no-persisted-partial-state edge case`() {
+        // spec.md edge case: an abandoned mid-flow verify-code step requires restarting from the
+        // email step, since no partial-recovery state is persisted. This screen-level render
+        // proves a fresh instance always renders step 1; `PasswordRecoveryViewModelTest` covers
+        // the state-level guarantee that an abandoned instance's step never leaks into a new one.
+        composeTestRule.setContent {
+            PasswordRecoveryScreen(
+                onResetSuccess = {},
+                onNavigateToLogin = {},
+                viewModel = viewModel(),
+            )
+        }
+
+        composeTestRule.onNodeWithText("E-mail").assertExists()
+        composeTestRule.onNodeWithText("Enviar link de recuperação").assertExists()
     }
 
     @Test

@@ -36,6 +36,11 @@ import org.koin.androidx.compose.koinViewModel
  * exactly — see [PasswordRecoveryViewModel]'s KDoc for the per-step orchestration. Owns only
  * form + submit UI: on success it calls [onResetSuccess] — actually navigating to Login is A14's
  * job, not this screen's.
+ *
+ * nightlife-gv-stitch-refresh T30 rebuilds this to the real 3-step flow, styled per Stitch mobile
+ * screens `60ef3ae32e464261917a57daf8dc6da9` ("Esqueci Minha Senha"), `9132fa493be1491a9ce7ddccc6c380e7`
+ * ("Redefinir Nova Senha"), and `c1785ad96bd14305a9028b5d99558f38` ("Sucesso Envio de Link") — the
+ * last of which is [PasswordRecoveryStep.Success], rendered here before [onResetSuccess] fires.
  */
 @Composable
 fun PasswordRecoveryScreen(
@@ -143,16 +148,39 @@ fun PasswordRecoveryScreen(
                     isLoading = uiState.isLoading,
                 )
             }
+
+            PasswordRecoveryStep.Success -> {
+                Text(
+                    text = stringResource(R.string.password_recovery_success_title),
+                    color = Color(QualORockThemeTokens.ColorTextPrimary),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = QualORockThemeTokens.TextEventTitleLg.SizeSp.sp,
+                )
+
+                Text(
+                    text = stringResource(R.string.password_recovery_success_message),
+                    color = Color(QualORockThemeTokens.ColorTextSecondary),
+                    fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
+                )
+
+                PrimaryButton(
+                    text = stringResource(R.string.cta_voltar_para_login),
+                    onClick = viewModel::onSuccessContinue,
+                )
+            }
         }
 
-        Text(
-            text = stringResource(R.string.password_recovery_link_login),
-            color = Color(QualORockThemeTokens.AccentBlue),
-            fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
-            modifier = Modifier
-                .padding(top = QualORockThemeTokens.Space1Dp.dp)
-                .clickable(onClick = onNavigateToLogin),
-        )
+        // PWDR-04 — the Success step has its own CTA back to Login; the footer link is redundant there.
+        if (uiState.step !is PasswordRecoveryStep.Success) {
+            Text(
+                text = stringResource(R.string.password_recovery_link_login),
+                color = Color(QualORockThemeTokens.AccentBlue),
+                fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
+                modifier = Modifier
+                    .padding(top = QualORockThemeTokens.Space1Dp.dp)
+                    .clickable(onClick = onNavigateToLogin),
+            )
+        }
     }
 }
 
