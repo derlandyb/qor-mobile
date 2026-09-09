@@ -10,6 +10,7 @@ import domain.event.Event
 import domain.event.EventDetail
 import domain.event.EventPage
 import domain.event.EventRepository
+import domain.event.MapBounds
 import domain.event.PollingCoordinator
 import domain.event.usecase.ListUpcomingEvents
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,9 @@ private class FakeExploreScreenEventRepository(
     }
 
     override suspend fun findById(id: String): EventDetail = error("not used by ExploreScreenTest")
+
+    override suspend fun getMapEvents(city: City?, bounds: MapBounds?): List<Event> =
+        error("not used by ExploreScreenTest")
 }
 
 private fun sampleEvent(id: String, title: String, city: City = City.Vitoria) = Event(

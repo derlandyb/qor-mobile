@@ -1,9 +1,11 @@
 package data
 
 import domain.enum.City
+import domain.event.Event
 import domain.event.EventDetail
 import domain.event.EventPage
 import domain.event.EventRepository
+import domain.event.MapBounds
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -30,6 +32,19 @@ class EventRepositoryImpl(
     override suspend fun findById(id: String): EventDetail {
         val response = httpClient.get("$baseUrl${ApiConfig.ApiV1Prefix}/events/$id")
         return response.body<EventDetailResponseDto>().data.toEventDetail()
+    }
+
+    override suspend fun getMapEvents(city: City?, bounds: MapBounds?): List<Event> {
+        val response = httpClient.get("$baseUrl${ApiConfig.ApiV1Prefix}/events/map") {
+            city?.let { parameter("city", it.wireValue()) }
+            bounds?.let {
+                parameter("north", it.north)
+                parameter("south", it.south)
+                parameter("east", it.east)
+                parameter("west", it.west)
+            }
+        }
+        return response.body<EventListResponseDto>().toDomain().events
     }
 }
 

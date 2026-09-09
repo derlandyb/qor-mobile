@@ -19,6 +19,9 @@ data class Event(
     val address: String,
     val isFree: Boolean,
     val ticketUrl: String?,
+    /** Geocoded coordinates (MAPGEO-01/04) — null until the address is successfully geocoded. */
+    val latitude: Double? = null,
+    val longitude: Double? = null,
 )
 
 /** One cursor-paginated page of [Event]s, per `api.md` T25's cursor-pagination contract. */

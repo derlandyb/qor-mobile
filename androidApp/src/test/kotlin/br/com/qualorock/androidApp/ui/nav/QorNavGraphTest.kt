@@ -124,6 +124,9 @@ private class FakeEventRepository(
 
     override suspend fun findById(id: String): EventDetail =
         detailById[id] ?: error("no detail configured for event $id in this test")
+
+    override suspend fun getMapEvents(city: City?, bounds: domain.event.MapBounds?): List<Event> =
+        error("not used in this test")
 }
 
 private fun sampleEvent(id: String = "42", title: String = "Show de Rock") = Event(

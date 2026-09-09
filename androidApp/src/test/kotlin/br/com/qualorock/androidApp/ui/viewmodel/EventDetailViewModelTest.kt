@@ -6,6 +6,7 @@ import domain.event.EventDetail
 import domain.event.EventPromoterContact
 import domain.event.EventRepository
 import domain.event.EventPage
+import domain.event.MapBounds
 import domain.event.usecase.GetEventDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,6 +36,9 @@ private class FakeEventDetailRepository(
         lastRequestedId = id
         return result.getOrThrow()
     }
+
+    override suspend fun getMapEvents(city: City?, bounds: MapBounds?): List<Event> =
+        error("not used by EventDetailViewModelTest")
 }
 
 private fun sampleEvent(id: String = "e1") = Event(

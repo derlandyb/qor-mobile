@@ -32,6 +32,9 @@ internal data class EventDto(
     // instead) — without a default, decoding a favorites-list response throws.
     val genre: String = "",
     val address: String,
+    // MAPGEO-01/04: nullable, absent from real responses for un-geocoded events.
+    val latitude: Double? = null,
+    val longitude: Double? = null,
     @SerialName("is_free") val isFree: Boolean,
     @SerialName("ticket_url") val ticketUrl: String? = null,
     val status: String,
@@ -58,6 +61,8 @@ internal fun EventDto.toDomain(): Event = Event(
     address = address,
     isFree = isFree,
     ticketUrl = ticketUrl,
+    latitude = latitude,
+    longitude = longitude,
 )
 
 internal fun EventListResponseDto.toDomain(): EventPage = EventPage(

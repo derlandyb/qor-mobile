@@ -13,6 +13,7 @@ import domain.event.EventDetail
 import domain.event.EventPage
 import domain.event.EventPromoterContact
 import domain.event.EventRepository
+import domain.event.MapBounds
 import domain.event.usecase.GetEventDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,6 +35,9 @@ private class FakeEventDetailRepository(private val result: Result<EventDetail>)
         error("not used by EventDetailScreenTest")
 
     override suspend fun findById(id: String): EventDetail = result.getOrThrow()
+
+    override suspend fun getMapEvents(city: City?, bounds: MapBounds?): List<Event> =
+        error("not used by EventDetailScreenTest")
 }
 
 private fun sampleEvent(isFree: Boolean = true, ticketUrl: String? = null) = Event(
