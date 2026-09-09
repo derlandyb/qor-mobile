@@ -37,6 +37,11 @@ import org.koin.androidx.compose.koinViewModel
  *
  * [email] is nav-graph state (passed in by A14's destination args), not owned by this
  * composable's `ViewModel` — see [EmailVerificationViewModel]'s KDoc for why.
+ *
+ * nightlife-gv-stitch-refresh T26 restyled per Stitch mobile screen
+ * `8feb1affeb7b4468af1f87c9c2479a1e`, "Verificação de E-mail OTP (Mobile)" — this screen's
+ * existing title/instructions/OTP-field/submit/resend order already matched the mock; the one
+ * structural addition is the mock's trust-footer line.
  */
 @Composable
 fun EmailVerificationScreen(
@@ -127,6 +132,12 @@ fun EmailVerificationScreen(
                 fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
             )
         }
+
+        Text(
+            text = stringResource(R.string.email_verification_security_footer),
+            color = Color(QualORockThemeTokens.ColorTextTertiary),
+            fontSize = QualORockThemeTokens.TextBadge.SizeSp.sp,
+        )
     }
 }
 

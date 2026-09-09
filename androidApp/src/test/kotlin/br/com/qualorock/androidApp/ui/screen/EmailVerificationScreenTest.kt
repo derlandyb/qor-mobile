@@ -151,6 +151,19 @@ class EmailVerificationScreenTest {
     }
 
     @Test
+    fun `GIVEN it is rendered THEN the security trust footer is shown`() {
+        composeTestRule.setContent {
+            EmailVerificationScreen(
+                email = "ana@example.com",
+                onVerified = {},
+                viewModel = viewModel(VerifyEmailResult.Failure("n/a")),
+            )
+        }
+
+        composeTestRule.onNodeWithText("Ambiente seguro Qual o Rock?").assertExists()
+    }
+
+    @Test
     fun `GIVEN a valid code WHEN the use case fails THEN the server pt-BR message is shown inline`() {
         composeTestRule.setContent {
             EmailVerificationScreen(

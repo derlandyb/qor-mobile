@@ -78,6 +78,7 @@
     <string name="email_verification_resend_countdown">Reenviar em %1$ds</string>
     <string name="cta_reenviar">Reenviar</string>
     <string name="email_verification_resend_confirmation">Código reenviado.</string>
+    <string name="email_verification_security_footer">Ambiente seguro Qual o Rock?</string>
     <string name="signup_link_login">Já tem conta? Entrar</string>
 
     <!-- PasswordRecoveryScreen (A10/A21) -->
