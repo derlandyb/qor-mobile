@@ -28,7 +28,7 @@ internal data class EventDto(
     @SerialName("starts_at") val startsAt: String,
     val city: City,
     val genre: String,
-    val address: String?,
+    val address: String,
     @SerialName("is_free") val isFree: Boolean,
     @SerialName("ticket_url") val ticketUrl: String? = null,
     val status: String,

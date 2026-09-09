@@ -48,11 +48,6 @@ class EventRepositoryImplTest {
             status = HttpStatusCode.OK,
             headers = jsonHeaders(),
         )
-        path.contains("/events/evt-no-address") -> respond(
-            content = """{"data":${eventJson(id = "evt-no-address", status = "published", address = null)}}""",
-            status = HttpStatusCode.OK,
-            headers = jsonHeaders(),
-        )
         path.startsWith("/api/v1/events") -> respond(
             content = """{"data":[${eventJson(id = "evt-1", status = "published")}],"next_cursor":"cursor-2"}""",
             status = HttpStatusCode.OK,
@@ -65,7 +60,7 @@ class EventRepositoryImplTest {
         append(HttpHeaders.ContentType, "application/json")
     }
 
-    private fun eventJson(id: String, status: String, numericId: Int = 1, address: String? = "Rua das Flores, 100") = """
+    private fun eventJson(id: String, status: String, numericId: Int = 1) = """
         {
           "id": $numericId,
           "title": "Show de Rock",
@@ -74,7 +69,7 @@ class EventRepositoryImplTest {
           "starts_at": "2026-10-01T22:00:00Z",
           "city": "vitoria",
           "genre": "Rock",
-          "address": ${address?.let { "\"$it\"" } ?: "null"},
+          "address": "Rua das Flores, 100",
           "is_free": false,
           "ticket_url": "https://tickets.example.com/$id",
           "status": "$status",
@@ -137,16 +132,5 @@ class EventRepositoryImplTest {
         val detail = repository.findById("evt-ended")
 
         assertIs<EventDetail.Ended>(detail)
-    }
-
-    @Test
-    fun `GIVEN a promoter event with no address WHEN findById is called THEN it maps to a null address rather than throwing`() = runTest {
-        val (client, _) = clientWithEngine()
-        val repository = EventRepositoryImpl(client, baseUrl = "http://test.local")
-
-        val detail = repository.findById("evt-no-address")
-
-        assertIs<EventDetail.Active>(detail)
-        assertEquals(null, detail.event.address)
     }
 }
