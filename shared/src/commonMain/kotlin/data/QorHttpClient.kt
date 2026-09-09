@@ -1,5 +1,6 @@
 package data
 
+import co.touchlab.kermit.Logger as KermitLogger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
@@ -9,7 +10,6 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import co.touchlab.kermit.Logger as KermitLogger
 
 /** Request timeout — named constant, never an inline literal at a call site (ARCHITECTURE §14). */
 private const val RequestTimeoutMs = 15_000L
@@ -41,8 +41,11 @@ fun createQorHttpClient(engine: HttpClientEngine = createHttpClientEngine(), isD
                 }
             }
 
-            level = if(isDebugEnvironment) {
-                LogLevel.ALL
+            // BODY (not ALL): ALL also logs headers, which would put the bearer token
+            // (ARCHITECTURE §2) into Logcat/console on every debug build, including ones
+            // handed to QA/testers whose device logs can end up in bug reports.
+            level = if (isDebugEnvironment) {
+                LogLevel.BODY
             } else {
                 LogLevel.NONE
             }

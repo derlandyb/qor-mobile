@@ -16,7 +16,7 @@ data class Event(
     val startsAt: String,
     val city: City,
     val genre: String,
-    val address: String,
+    val address: String?,
     val isFree: Boolean,
     val ticketUrl: String?,
 )

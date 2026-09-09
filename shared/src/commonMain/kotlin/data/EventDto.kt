@@ -52,7 +52,7 @@ internal fun EventDto.toDomain(): Event = Event(
     startsAt = startsAt,
     city = city,
     genre = genre,
-    address = address.orEmpty(),
+    address = address,
     isFree = isFree,
     ticketUrl = ticketUrl,
 )
