@@ -59,11 +59,7 @@ final class EventDetailViewModel: ObservableObject {
             let detail = try await fetchDetail(eventId)
             loadState = .content(detail)
             if let active = detail as? EventDetail.Active {
-                if let address = active.event.address {
-                    mapState = toEventMapState(await geocode(address))
-                } else {
-                    mapState = .failed
-                }
+                mapState = toEventMapState(await geocode(active.event.address))
             }
         } catch {
             loadState = .error
@@ -185,20 +181,15 @@ struct EventDetailView: View {
         let event = detail.event
         let dateLabel = formatDateBadge(isoStartsAt: event.startsAt)
         let timeLabel = formatEventTime(isoStartsAt: event.startsAt)
-        let addressLabel = event.address ?? String(localized: "event_address_unconfirmed")
-        let shareText = String(format: String(localized: "event_detail_share_text"), event.title, addressLabel)
+        let shareText = String(format: String(localized: "event_detail_share_text"), event.title, event.address)
 
         VStack(alignment: .leading, spacing: QorSpace.space4) {
             PlaceholderImage()
                 .frame(height: eventMapHeight)
 
-            eventHeader(event: event, dateLabel: dateLabel, timeLabel: timeLabel, addressLabel: addressLabel)
+            eventHeader(event: event, dateLabel: dateLabel, timeLabel: timeLabel)
 
-            // No map/"abrir no mapa" section when there's no address to geocode or open — a
-            // promoter-created event can legitimately have none (mirrors Android's EventDetailScreen).
-            if let address = event.address {
-                mapSection(address: address)
-            }
+            mapSection(address: event.address)
 
             Text(event.description)
                 .font(.system(size: CGFloat(QualORockThemeTokens.TextBody.shared.SizeSp)))
@@ -227,7 +218,7 @@ struct EventDetailView: View {
     }
 
     @ViewBuilder
-    private func eventHeader(event: Event, dateLabel: DateBadgeLabel, timeLabel: String, addressLabel: String) -> some View {
+    private func eventHeader(event: Event, dateLabel: DateBadgeLabel, timeLabel: String) -> some View {
         Text(event.title)
             .font(.system(size: CGFloat(QualORockThemeTokens.TextEventTitleLg.shared.SizeSp), weight: .bold))
             .foregroundStyle(QorColor.textPrimary)
@@ -244,7 +235,7 @@ struct EventDetailView: View {
             .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
             .foregroundStyle(QorColor.textSecondary)
 
-        Text(addressLabel)
+        Text(event.address)
             .font(.system(size: CGFloat(QualORockThemeTokens.TextBody.shared.SizeSp), weight: .semibold))
             .foregroundStyle(QorColor.textPrimary)
             .accessibilityIdentifier("event_detail_address")

@@ -413,17 +413,6 @@
         }
       }
     },
-    "event_address_unconfirmed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Local a confirmar"
-          }
-        }
-      }
-    },
     "event_detail_contacts_title" : {
       "extractionState" : "stale",
       "localizations" : {

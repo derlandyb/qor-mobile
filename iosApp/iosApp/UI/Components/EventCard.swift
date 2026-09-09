@@ -99,7 +99,7 @@ struct EventCard: View {
 
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(event.address ?? String(localized: "event_address_unconfirmed"))
+                    Text(event.address)
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(QorColor.textPrimary)
                     Text(timeLabel)
