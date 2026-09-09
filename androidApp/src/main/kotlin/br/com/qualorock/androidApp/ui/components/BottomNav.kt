@@ -66,7 +66,12 @@ fun BottomNav(current: BottomNavDestination, onSelect: (BottomNavDestination) ->
  * Compose Row-measurement pitfall, caught by `BottomNavTest`'s click-on-a-later-item case).
  */
 @Composable
-private fun RowScope.BottomNavItem(destination: BottomNavDestination, icon: ImageVector,  isSelected: Boolean, onSelect: (BottomNavDestination) -> Unit) {
+private fun RowScope.BottomNavItem(
+    destination: BottomNavDestination,
+    icon: ImageVector,
+    isSelected: Boolean,
+    onSelect: (BottomNavDestination) -> Unit,
+) {
     val accent = Color(QualORockThemeTokens.AccentPink)
     val textColor = when {
         !destination.enabled -> Color(QualORockThemeTokens.ColorTextTertiary)
@@ -86,8 +91,9 @@ private fun RowScope.BottomNavItem(destination: BottomNavDestination, icon: Imag
             )
             .semantics { if (!destination.enabled) disabled() },
     ) {
-
-        Icon(icon, contentDescription = stringResource(destination.labelRes), tint = if (isSelected) accent else textColor)
+        // contentDescription null: decorative, the label is already carried by the Text
+        // below — a non-null description here would make TalkBack announce it twice.
+        Icon(icon, contentDescription = null, tint = if (isSelected) accent else textColor)
         Text(
             text = stringResource(destination.labelRes),
             color = textColor,

@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.qualorock.androidApp.R
 import design.QualORockThemeTokens
 import domain.event.Event
 
@@ -133,7 +134,7 @@ fun EventCard(event: Event, onClick: () -> Unit, onMapClick: () -> Unit, modifie
                 ) {
                     Column {
                         Text(
-                            event.address,
+                            event.address ?: stringResource(R.string.event_address_unconfirmed),
                             color = Color(QualORockThemeTokens.ColorTextPrimary),
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 15.sp,
