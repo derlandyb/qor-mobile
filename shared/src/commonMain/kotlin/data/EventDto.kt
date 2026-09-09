@@ -27,7 +27,10 @@ internal data class EventDto(
     @SerialName("cover_image_url") val coverImageUrl: String? = null,
     @SerialName("starts_at") val startsAt: String,
     val city: City,
-    val genre: String,
+    // SPEC_DEVIATION: defaults to "" because `FavoriteController::eventToArray` (the only
+    // consumer of `GET /profile/favorites`, T9) omits `genre` entirely (it returns `genre_id`
+    // instead) — without a default, decoding a favorites-list response throws.
+    val genre: String = "",
     val address: String,
     @SerialName("is_free") val isFree: Boolean,
     @SerialName("ticket_url") val ticketUrl: String? = null,
