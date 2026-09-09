@@ -7,7 +7,12 @@ import shared
 @main
 struct IosAppApp: App {
     init() {
-        KoinHelperKt.doInitKoin()
+        #if DEBUG
+        let isDebugBuild = true
+        #else
+        let isDebugBuild = false
+        #endif
+        KoinHelperKt.doInitKoin(isDebug: isDebugBuild)
     }
 
     var body: some Scene {

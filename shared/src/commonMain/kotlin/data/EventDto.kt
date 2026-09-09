@@ -21,7 +21,7 @@ internal data class EventDetailResponseDto(
 
 @Serializable
 internal data class EventDto(
-    val id: String,
+    val id: Int,
     val title: String,
     val description: String,
     @SerialName("cover_image_url") val coverImageUrl: String? = null,
@@ -45,7 +45,7 @@ internal data class EventPromoterDto(
 )
 
 internal fun EventDto.toDomain(): Event = Event(
-    id = id,
+    id = id.toString(),
     title = title,
     description = description,
     coverImageUrl = coverImageUrl,

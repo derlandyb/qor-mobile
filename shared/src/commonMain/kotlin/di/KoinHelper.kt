@@ -13,14 +13,14 @@ import org.koin.dsl.KoinAppDeclaration
  * `shared` framework (`KoinHelperKt.doInitKoin()`) — Kotlin default-parameter values don't
  * survive Objective-C/Swift interop.
  */
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
+fun initKoin(isDebug: Boolean, appDeclaration: KoinAppDeclaration = {}) {
     startKoin {
         appDeclaration()
-        modules(sharedModule)
+        modules(sharedModule(isDebug))
     }
 }
 
 /** Swift-callable entry point — see [initKoin]. */
-fun doInitKoin() {
-    initKoin()
+fun doInitKoin(isDebug: Boolean) {
+    initKoin(isDebug)
 }

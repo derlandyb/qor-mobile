@@ -28,9 +28,9 @@ import org.koin.dsl.module
  * same bindings. Each platform's own module (Android's `viewModelModule`, iOS's future
  * equivalent) only adds its UI-layer bindings (ViewModels) on top of this one.
  */
-val sharedModule = module {
+fun sharedModule(isDebug: Boolean) = module {
     single { createSecureTokenStorage() }
-    single { createAuthenticatedHttpClient(createQorHttpClient(), get()) }
+    single { createAuthenticatedHttpClient(createQorHttpClient(isDebugEnvironment = isDebug), get()) }
 
     single<EventRepository> { EventRepositoryImpl(get()) }
     single<UserRepository> { UserRepositoryImpl(get()) }

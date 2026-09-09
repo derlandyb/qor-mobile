@@ -60,9 +60,9 @@ class EventRepositoryImplTest {
         append(HttpHeaders.ContentType, "application/json")
     }
 
-    private fun eventJson(id: String, status: String) = """
+    private fun eventJson(id: String, status: String, numericId: Int = 1) = """
         {
-          "id": "$id",
+          "id": $numericId,
           "title": "Show de Rock",
           "description": "Uma noite de rock",
           "cover_image_url": "https://cdn.example.com/$id.jpg",
@@ -98,7 +98,7 @@ class EventRepositoryImplTest {
         val page = repository.findUpcoming()
 
         assertEquals(1, page.events.size)
-        assertEquals("evt-1", page.events.first().id)
+        assertEquals("1", page.events.first().id)
         assertEquals("Show de Rock", page.events.first().title)
         assertEquals(City.Vitoria, page.events.first().city)
         assertEquals("cursor-2", page.nextCursor)
