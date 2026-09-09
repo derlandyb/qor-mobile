@@ -43,6 +43,10 @@ import org.koin.androidx.compose.koinViewModel
  * **"Cadastrar com Google" is a disabled stub.** No Google Sign-In SDK is wired into `androidApp`
  * yet (confirmed during A7) — this button renders per the design system but is inert
  * (`enabled = false`, no-op `onClick`) rather than fabricating an OAuth flow.
+ *
+ * nightlife-gv-stitch-refresh T25 restyled per Stitch mobile screen
+ * `df8d81469baf4dcdae89916edfd70d85`, "Criar Conta (Registro Dark)" — the Google CTA + "OU"
+ * divider now lead the form, matching the mock's field order.
  */
 @Composable
 fun SignupScreen(
@@ -73,6 +77,18 @@ fun SignupScreen(
             color = Color(QualORockThemeTokens.ColorTextPrimary),
             fontWeight = FontWeight.Bold,
             fontSize = QualORockThemeTokens.TextEventTitleLg.SizeSp.sp,
+        )
+
+        SecondaryButton(
+            text = stringResource(R.string.cta_cadastrar_com_google),
+            onClick = {},
+            enabled = false,
+        )
+
+        Text(
+            text = stringResource(R.string.auth_divider_or),
+            color = Color(QualORockThemeTokens.ColorTextTertiary),
+            fontSize = QualORockThemeTokens.TextBadge.SizeSp.sp,
         )
 
         QorTextField(
@@ -126,12 +142,6 @@ fun SignupScreen(
             text = stringResource(R.string.cta_cadastrar),
             onClick = viewModel::onSubmit,
             isLoading = uiState.isLoading,
-        )
-
-        SecondaryButton(
-            text = stringResource(R.string.cta_cadastrar_com_google),
-            onClick = {},
-            enabled = false,
         )
 
         Text(
