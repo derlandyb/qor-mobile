@@ -39,6 +39,9 @@
     <string name="password_toggle_show">Mostrar senha</string>
     <string name="password_toggle_hide">Ocultar senha</string>
 
+    <!-- Shared — Stitch "Entrar (Login Dark)"/"Criar Conta (Registro Dark)" OU divider (T24/T25) -->
+    <string name="auth_divider_or">OU</string>
+
     <!-- LoginScreen (A7) -->
     <string name="login_title">Bem-vindo de volta</string>
     <string name="login_error_email_required">Informe seu e-mail.</string>

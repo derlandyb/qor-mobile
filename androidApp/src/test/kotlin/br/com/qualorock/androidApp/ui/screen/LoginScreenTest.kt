@@ -198,6 +198,21 @@ class LoginScreenTest {
     }
 
     @Test
+    fun `GIVEN it is rendered THEN the OU divider between the Google CTA and the form fields is shown`() {
+        composeTestRule.setContent {
+            LoginScreen(
+                viewModel = viewModel(LoginResult.InvalidCredentials("n/a")),
+                onLoginSuccess = {},
+                onNavigateToVerifyEmail = {},
+                onNavigateToSignup = {},
+                onNavigateToPasswordRecovery = {},
+            )
+        }
+
+        composeTestRule.onNodeWithText("OU").assertExists()
+    }
+
+    @Test
     fun `GIVEN it is rendered THEN the Google button is disabled and does nothing when tapped`() {
         composeTestRule.setContent {
             LoginScreen(

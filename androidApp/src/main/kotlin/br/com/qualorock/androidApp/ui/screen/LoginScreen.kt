@@ -30,8 +30,10 @@ import design.QualORockThemeTokens
 import org.koin.androidx.compose.koinViewModel
 
 /**
- * A7 — returning-fan login (auth-fan-profile AUTH-09–AUTH-12; Stitch screen
- * `cfa5690fed3d487897d65de249ad7f1d`). Owns only form + submit UI: on success it calls
+ * A7 — returning-fan login (auth-fan-profile AUTH-09–AUTH-12; nightlife-gv-stitch-refresh T24
+ * restyled per Stitch mobile screen `6db9034da7f249969df938f5a05f40d3`, "Entrar (Login Dark)" —
+ * Google CTA + "OU" divider now lead the form, matching the mock's field order). Owns only
+ * form + submit UI: on success it calls
  * [onLoginSuccess], on an unverified account it calls [onNavigateToVerifyEmail] with the
  * submitted email — actually pushing a destination is A14's nav-graph job, not this screen's.
  *
@@ -73,6 +75,18 @@ fun LoginScreen(
             fontSize = QualORockThemeTokens.TextEventTitleLg.SizeSp.sp,
         )
 
+        SecondaryButton(
+            text = stringResource(R.string.cta_entrar_com_google),
+            onClick = {},
+            enabled = false,
+        )
+
+        Text(
+            text = stringResource(R.string.auth_divider_or),
+            color = Color(QualORockThemeTokens.ColorTextTertiary),
+            fontSize = QualORockThemeTokens.TextBadge.SizeSp.sp,
+        )
+
         EmailField(
             value = uiState.email,
             onValueChange = viewModel::onEmailChange,
@@ -93,25 +107,17 @@ fun LoginScreen(
             )
         }
 
-        PrimaryButton(
-            text = stringResource(R.string.cta_entrar),
-            onClick = viewModel::onSubmit,
-            isLoading = uiState.isLoading,
-        )
-
-        SecondaryButton(
-            text = stringResource(R.string.cta_entrar_com_google),
-            onClick = {},
-            enabled = false,
-        )
-
         Text(
             text = stringResource(R.string.login_link_password_recovery),
             color = Color(QualORockThemeTokens.AccentBlue),
             fontSize = QualORockThemeTokens.TextMetadata.SizeSp.sp,
-            modifier = Modifier
-                .padding(top = QualORockThemeTokens.Space1Dp.dp)
-                .clickable(onClick = onNavigateToPasswordRecovery),
+            modifier = Modifier.clickable(onClick = onNavigateToPasswordRecovery),
+        )
+
+        PrimaryButton(
+            text = stringResource(R.string.cta_entrar),
+            onClick = viewModel::onSubmit,
+            isLoading = uiState.isLoading,
         )
 
         Text(
