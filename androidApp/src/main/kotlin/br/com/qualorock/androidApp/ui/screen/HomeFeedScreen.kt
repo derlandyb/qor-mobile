@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +48,12 @@ private const val LoadMoreThresholdItems = 3
  * [onMapClick] defaults to a no-op: `EventCard` requires a map-CTA callback (design-system.md
  * §4.1's "Ver no Mapa"), but building the actual maps deep link from [Event.address] is left to
  * whoever wires this screen into the nav graph (A14), not this screen's own concern.
+ *
+ * nightlife-gv-stitch-refresh T27 restyled per Stitch mobile screen
+ * `921f7cd5342f444ea0f27def28ef6b33`, "Mobile App Homepage" — adds the mock's "Eventos em
+ * Destaque" section heading above the card list. The mock's city-filter chips and its Hubs/Mapa/
+ * Salvos bottom-nav tabs belong to the not-yet-built Explore/Hub/Map/Favoritos screens (separate
+ * tasks — T31-T33), not this task's refresh scope.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,6 +100,15 @@ fun HomeFeedScreen(
                     .fillMaxSize()
                     .padding(QualORockThemeTokens.Space4Dp.dp),
             ) {
+                item {
+                    Text(
+                        text = stringResource(R.string.home_feed_section_title),
+                        color = Color(QualORockThemeTokens.ColorTextPrimary),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = QualORockThemeTokens.TextEventTitle.SizeSp.sp,
+                    )
+                }
+
                 items(state.events, key = { it.id }) { event ->
                     EventCard(
                         event = event,

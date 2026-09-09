@@ -97,6 +97,7 @@
     <string name="password_recovery_link_login">Lembrou da senha? Fazer login</string>
 
     <!-- HomeFeedScreen (A11) -->
+    <string name="home_feed_section_title">Eventos em Destaque</string>
     <string name="home_feed_error_message">Não foi possível carregar os eventos. Tente novamente.</string>
     <string name="home_feed_cta_tentar_novamente">Tentar novamente</string>
 

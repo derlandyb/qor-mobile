@@ -89,6 +89,16 @@ class HomeFeedScreenTest {
     }
 
     @Test
+    fun `GIVEN events are loaded THEN the Eventos em Destaque section heading is shown`() {
+        val page = EventPage(listOf(sampleEvent("e1", "Show da Banda X")), nextCursor = null)
+        composeTestRule.setContent {
+            HomeFeedScreen(onEventClick = {}, viewModel = viewModel(listOf(Result.success(page))))
+        }
+
+        composeTestRule.onNodeWithText("Eventos em Destaque").assertExists()
+    }
+
+    @Test
     fun `GIVEN a loaded event WHEN its card is tapped THEN onEventClick fires with its id`() {
         val page = EventPage(listOf(sampleEvent("e1", "Show da Banda X")), nextCursor = null)
         var clickedId: String? = null
