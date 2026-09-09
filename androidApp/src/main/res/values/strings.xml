@@ -101,7 +101,6 @@
     <string name="explore_cta_limpar_filtros">Limpar filtros</string>
 
     <!-- EventDetailScreen (A13) -->
-    <string name="event_address_unconfirmed">Local a confirmar</string>
     <string name="event_detail_error_message">Não foi possível carregar o evento. Tente novamente.</string>
     <string name="event_detail_cta_tentar_novamente">Tentar novamente</string>
     <string name="event_detail_status_cancelled">Evento cancelado</string>

@@ -235,14 +235,12 @@ private fun ActiveEventContent(
     val event = detail.event
     val dateLabel = formatDateBadge(event.startsAt)
     val timeLabel = formatEventTime(event.startsAt)
-    val addressLabel = event.address ?: stringResource(R.string.event_address_unconfirmed)
-    val shareText = stringResource(R.string.event_detail_share_text, event.title, addressLabel)
+    val shareText = stringResource(R.string.event_detail_share_text, event.title, event.address)
 
     val context = LocalContext.current
     var mapState by remember(event.address) { mutableStateOf<EventMapState>(EventMapState.Loading) }
     LaunchedEffect(event.address) {
-        val address = event.address
-        mapState = if (address != null) toEventMapState(geocodeAddress(context, address)) else EventMapState.Failed
+        mapState = toEventMapState(geocodeAddress(context, event.address))
     }
 
     Column(
@@ -280,39 +278,33 @@ private fun ActiveEventContent(
         )
 
         Text(
-            text = addressLabel,
+            text = event.address,
             color = Color(QualORockThemeTokens.ColorTextPrimary),
             fontWeight = FontWeight.SemiBold,
             fontSize = QualORockThemeTokens.TextBody.SizeSp.sp,
         )
 
-        // No map/"abrir no mapa" section when there's no address to geocode or open —
-        // a promoter-created event (ARCHITECTURE §4: address is Venue-only-required) can
-        // legitimately have none.
-        val address = event.address
-        if (address != null) {
-            when (val state = mapState) {
-                is EventMapState.Located -> {
-                    val position = LatLng(state.point.latitude, state.point.longitude)
-                    GoogleMap(
-                        modifier = Modifier.fillMaxWidth().height(EventMapHeightDp.dp),
-                        cameraPositionState = rememberCameraPositionState {
-                            this.position = CameraPosition.fromLatLngZoom(position, EventMapZoomLevel)
-                        },
-                    ) {
-                        val markerState = remember(position) { MarkerState(position = position) }
-                        Marker(state = markerState)
-                    }
+        when (val state = mapState) {
+            is EventMapState.Located -> {
+                val position = LatLng(state.point.latitude, state.point.longitude)
+                GoogleMap(
+                    modifier = Modifier.fillMaxWidth().height(EventMapHeightDp.dp),
+                    cameraPositionState = rememberCameraPositionState {
+                        this.position = CameraPosition.fromLatLngZoom(position, EventMapZoomLevel)
+                    },
+                ) {
+                    val markerState = remember(position) { MarkerState(position = position) }
+                    Marker(state = markerState)
                 }
-                // Loading and Failed both fall back to the "abrir no mapa" geo-intent link — Loading
-                // because the map has nothing to render yet, Failed per this composable's own
-                // DISC-10/A22 fallback contract (see class-level KDoc).
-                EventMapState.Loading, EventMapState.Failed -> SecondaryButton(
-                    text = stringResource(R.string.cta_abrir_no_mapa),
-                    onClick = { onOpenMap(address) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
             }
+            // Loading and Failed both fall back to the "abrir no mapa" geo-intent link — Loading
+            // because the map has nothing to render yet, Failed per this composable's own
+            // DISC-10/A22 fallback contract (see class-level KDoc).
+            EventMapState.Loading, EventMapState.Failed -> SecondaryButton(
+                text = stringResource(R.string.cta_abrir_no_mapa),
+                onClick = { onOpenMap(event.address) },
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
 
         Text(
