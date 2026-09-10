@@ -165,6 +165,13 @@ final class ProfileViewModel: ObservableObject {
 /// Birthdate has no edit UI (no field on [ProfileUpdateFields]'s contract to change). Profile-
 /// picture editing is stubbed, not wired — no image-picker/upload flow exists anywhere in this
 /// app yet, same gap Android's `ProfileScreen` documents; "Alterar foto" renders disabled.
+///
+/// nightlife-gv-stitch-refresh T39 (mirrors Android's T29): the editable name field now sits
+/// directly under the avatar/"Alterar foto" block (above the read-only birthdate row), matching
+/// Stitch mobile screen `77fe8354badb43ae9cd4a20d964cfd3d`, "Meu Perfil (Mobile)"'s "name right
+/// under the avatar" order. The mock's location badge, activity level, like/saved/hub counters,
+/// genre/venue preferences, and account-settings list have no backing data on
+/// [ProfileViewModel]/[User] and stay out of scope (REFRESH-04), same call as Android's T29.
 struct ProfileView: View {
     var onEmailChangePending: (String) -> Void
 
@@ -196,6 +203,14 @@ struct ProfileView: View {
                     .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
                     .foregroundStyle(QorColor.textTertiary)
 
+                fieldRow(FieldRowConfig(
+                    value: Binding(get: { viewModel.nameInput }, set: viewModel.onNameChange),
+                    label: String(localized: "field_label_name"),
+                    hasError: viewModel.nameError,
+                    isSaving: viewModel.isSavingName,
+                    accessibilityId: "profile_name_field"
+                ), onSave: { Task { await viewModel.saveName() } })
+
                 HStack(spacing: QorSpace.space1) {
                     Text("\(String(localized: "field_label_birthdate")):")
                         .font(.system(size: CGFloat(QualORockThemeTokens.TextBody.shared.SizeSp)))
@@ -205,14 +220,6 @@ struct ProfileView: View {
                         .foregroundStyle(QorColor.textSecondary)
                         .accessibilityIdentifier("profile_birthdate")
                 }
-
-                fieldRow(FieldRowConfig(
-                    value: Binding(get: { viewModel.nameInput }, set: viewModel.onNameChange),
-                    label: String(localized: "field_label_name"),
-                    hasError: viewModel.nameError,
-                    isSaving: viewModel.isSavingName,
-                    accessibilityId: "profile_name_field"
-                ), onSave: { Task { await viewModel.saveName() } })
 
                 fieldRow(FieldRowConfig(
                     value: Binding(get: { viewModel.phoneInput }, set: viewModel.onPhoneChange),

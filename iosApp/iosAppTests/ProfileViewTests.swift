@@ -38,6 +38,27 @@ final class ProfileViewTests: XCTestCase {
         XCTAssertEqual(birthdate, user.birthdate)
     }
 
+    func test_GIVEN_currentUser_WHEN_rendered_THEN_theNameFieldSitsAboveTheBirthdateRow() throws {
+        let user = makeUser()
+        let viewModel = ProfileViewModel(
+            loadCurrentUser: { user },
+            saveProfile: { _ in user },
+            applySessionUser: { _ in }
+        )
+        let view = ProfileView(viewModel: viewModel)
+
+        var seenIdentifiers: [String] = []
+        _ = try? view.inspect().findAll(where: { candidate in
+            if let id = try? candidate.accessibilityIdentifier(),
+               id == "profile_name_field" || id == "profile_birthdate" {
+                seenIdentifiers.append(id)
+            }
+            return false
+        })
+
+        XCTAssertEqual(seenIdentifiers, ["profile_name_field", "profile_birthdate"])
+    }
+
     func test_GIVEN_changePhotoButton_THEN_isDisabled() throws {
         let user = makeUser()
         let viewModel = ProfileViewModel(
