@@ -49,6 +49,14 @@ final class LoginViewTests: XCTestCase {
         XCTAssertTrue(try button.isDisabled())
     }
 
+    func test_GIVEN_theLoginScreen_WHEN_itRenders_THEN_theOrDividerIsPresent() throws {
+        let view = makeView()
+
+        let divider = try view.inspect().find(viewWithId: "login_divider_or")
+
+        XCTAssertEqual(try divider.text().string(), String(localized: "auth_divider_or"))
+    }
+
     func test_GIVEN_theLoginScreen_WHEN_emptyFieldsAreSubmitted_THEN_validationErrorTextAppears() throws {
         let view = makeView()
 

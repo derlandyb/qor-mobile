@@ -1,8 +1,11 @@
 import SwiftUI
 import shared
 
-/// I7 — returning-fan login (auth-fan-profile AUTH-06–AUTH-12; Stitch screen
-/// `cfa5690fed3d487897d65de249ad7f1d`). Owns only form + submit UI: on success it calls
+/// I7 — returning-fan login (auth-fan-profile AUTH-06–AUTH-12; nightlife-gv-stitch-refresh T34
+/// restyled per Stitch mobile screen `6db9034da7f249969df938f5a05f40d3`, "Entrar (Login Dark)" —
+/// mirrors Android's T24: the (disabled-stub) Google CTA and an "OU" divider now lead the form,
+/// ahead of the email/password fields, and the "Esqueci minha senha" link sits directly under
+/// the password field, above the submit button, per the mock's field order). Owns only
 /// `onLoginSuccess`, on an unverified account it calls `onNavigateToVerifyEmail` with the
 /// submitted email, on the forgot-password link it calls `onNavigateToPasswordRecovery`, and on
 /// the signup link it calls `onNavigateToSignup` — actually pushing a navigation destination is
@@ -39,6 +42,18 @@ struct LoginView: View {
                 .font(.system(size: CGFloat(QualORockThemeTokens.TextEventTitleLg.shared.SizeSp), weight: .bold))
                 .foregroundStyle(QorColor.textPrimary)
 
+            SecondaryButton(
+                text: String(localized: "cta_entrar_com_google"),
+                onClick: {},
+                enabled: false
+            )
+            .id("login_google_stub")
+
+            Text(String(localized: "auth_divider_or"))
+                .font(.system(size: CGFloat(QualORockThemeTokens.TextBadge.shared.SizeSp)))
+                .foregroundStyle(QorColor.textTertiary)
+                .id("login_divider_or")
+
             EmailField(
                 value: Binding(
                     get: { viewModel.uiState.email },
@@ -62,25 +77,18 @@ struct LoginView: View {
                     .id("login_submit_error")
             }
 
-            PrimaryButton(
-                text: String(localized: "cta_entrar"),
-                onClick: { viewModel.onSubmit() },
-                isLoading: viewModel.uiState.isLoading
-            )
-
-            SecondaryButton(
-                text: String(localized: "cta_entrar_com_google"),
-                onClick: {},
-                enabled: false
-            )
-            .id("login_google_stub")
-
             Text(String(localized: "login_link_password_recovery"))
                 .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
                 .foregroundStyle(QorColor.accentBlue)
                 .padding(.top, QorSpace.space1)
                 .onTapGesture(perform: onNavigateToPasswordRecovery)
                 .id("login_link_password_recovery")
+
+            PrimaryButton(
+                text: String(localized: "cta_entrar"),
+                onClick: { viewModel.onSubmit() },
+                isLoading: viewModel.uiState.isLoading
+            )
 
             Text(String(localized: "login_link_signup"))
                 .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
