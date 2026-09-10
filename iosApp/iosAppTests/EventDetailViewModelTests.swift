@@ -15,7 +15,9 @@ final class EventDetailViewModelTests: XCTestCase {
             genre: "Rock",
             address: address,
             isFree: true,
-            ticketUrl: nil
+            ticketUrl: nil,
+            latitude: nil,
+            longitude: nil
         )
     }
 

@@ -67,7 +67,9 @@ private func makeEvent(id: String = "1") -> Event {
         genre: "rock",
         address: "Rua X, 100",
         isFree: false,
-        ticketUrl: nil
+        ticketUrl: nil,
+        latitude: nil,
+        longitude: nil
     )
 }
 

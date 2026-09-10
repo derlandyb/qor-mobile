@@ -21,7 +21,9 @@ final class EventDetailViewTests: XCTestCase {
             genre: "Rock",
             address: "Rua Barão de Monjardim, 100",
             isFree: true,
-            ticketUrl: nil
+            ticketUrl: nil,
+            latitude: nil,
+            longitude: nil
         )
     }
 
