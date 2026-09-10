@@ -10,6 +10,7 @@ import data.createSecureTokenStorage
 import domain.event.EventRepository
 import domain.event.PollingCoordinator
 import domain.event.usecase.GetEventDetails
+import domain.event.usecase.GetMapEvents
 import domain.event.usecase.ListUpcomingEvents
 import domain.favorite.FavoriteRepository
 import domain.favorite.usecase.ListFavorites
@@ -44,6 +45,7 @@ fun sharedModule(isDebug: Boolean) = module {
 
     single { ListUpcomingEvents(get()) }
     single { GetEventDetails(get()) }
+    single { GetMapEvents(get()) }
     single { ToggleFavorite(get()) }
     single { ListFavorites(get()) }
 
