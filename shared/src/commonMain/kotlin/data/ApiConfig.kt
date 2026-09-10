@@ -6,9 +6,10 @@ package data
  *
  * `BaseUrl` is a build-time default for local development against `qor-api`'s Docker Compose
  * stack; a release build overrides it via build-config/environment injection, not by editing
- * this file per environment.
+ * this file per environment. The host differs per platform's loopback convention — see
+ * [platformBaseUrl].
  */
 object ApiConfig {
-    const val BaseUrl: String = "http://10.0.2.2:8000"
+    val BaseUrl: String = platformBaseUrl
     const val ApiV1Prefix: String = "/api/v1"
 }
