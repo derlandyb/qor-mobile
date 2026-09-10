@@ -48,6 +48,14 @@ final class SignupViewTests: XCTestCase {
         XCTAssertTrue(try button.button().isDisabled())
     }
 
+    func test_GIVEN_theSignupScreen_WHEN_itRenders_THEN_theOrDividerIsPresent() throws {
+        let sut = makeSut()
+
+        let divider = try sut.inspect().find(viewWithAccessibilityIdentifier: "signup_divider_or")
+
+        XCTAssertEqual(try divider.text().string(), String(localized: "auth_divider_or"))
+    }
+
     func test_GIVEN_theSignupScreen_WHEN_itRenders_THEN_itHasAFullBleedTopAnchoredBackground() throws {
         let sut = makeSut()
 

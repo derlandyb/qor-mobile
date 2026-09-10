@@ -11,6 +11,10 @@ import shared
  *
  * **"Cadastrar com Google" is a disabled stub**, same reasoning as Android's A8: no Google
  * Sign-In SDK is wired into `iosApp` yet — the button renders per the design system but is inert.
+ *
+ * nightlife-gv-stitch-refresh T35 restyled per Stitch mobile screen
+ * `df8d81469baf4dcdae89916edfd70d85`, "Criar Conta (Registro Dark)" — mirrors Android's T25: the
+ * Google CTA and the "OU" divider now lead the form, ahead of name/email/password/birthdate.
  */
 struct SignupView: View {
     @StateObject private var viewModel: SignupViewModel
@@ -37,6 +41,18 @@ struct SignupView: View {
                 Text(String(localized: "signup_title"))
                     .font(.system(size: CGFloat(QualORockThemeTokens.TextEventTitleLg.shared.SizeSp), weight: .bold))
                     .foregroundStyle(QorColor.textPrimary)
+
+                SecondaryButton(
+                    text: String(localized: "cta_cadastrar_com_google"),
+                    onClick: {},
+                    enabled: false
+                )
+                .accessibilityIdentifier("signup_google_button")
+
+                Text(String(localized: "auth_divider_or"))
+                    .font(.system(size: CGFloat(QualORockThemeTokens.TextBadge.shared.SizeSp)))
+                    .foregroundStyle(QorColor.textTertiary)
+                    .accessibilityIdentifier("signup_divider_or")
 
                 QorTextField(
                     value: Binding(get: { viewModel.uiState.name }, set: viewModel.onNameChange),
@@ -93,13 +109,6 @@ struct SignupView: View {
                     isLoading: viewModel.uiState.isLoading
                 )
                 .accessibilityIdentifier("signup_submit_button")
-
-                SecondaryButton(
-                    text: String(localized: "cta_cadastrar_com_google"),
-                    onClick: {},
-                    enabled: false
-                )
-                .accessibilityIdentifier("signup_google_button")
 
                 Text(String(localized: "signup_link_login"))
                     .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
