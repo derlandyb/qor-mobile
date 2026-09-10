@@ -198,6 +198,14 @@ final class PasswordRecoveryViewModel: ObservableObject {
 /// `PasswordRecoveryScreen`/`qor-website`'s `app/recuperar-senha/page.tsx` UX. Owns only form +
 /// submit UI: this view never pushes navigation itself — ``onResetSuccess`` (tapped from the
 /// success screen) and ``onNavigateToLogin`` (the "Lembrou da senha?" link) are wired up by I14.
+///
+/// nightlife-gv-stitch-refresh T40 audit (mirrors Android's T30): unlike Android's original A10,
+/// which shipped a collapsed 2-step stopgap needing T30 to retrofit real 3-step parity, this
+/// view was already built here as a real 3-step wizard with PWDR-04's success screen requiring
+/// an explicit ``onResetSuccess`` tap (not an immediate auto-navigate) — no 2-step legacy code
+/// or tests ever existed to replace. Styled per Stitch mobile screens
+/// `60ef3ae32e464261917a57daf8dc6da9` ("Esqueci Minha Senha"), `9132fa493be1491a9ce7ddccc6c380e7`
+/// ("Redefinir Nova Senha"), and `c1785ad96bd14305a9028b5d99558f38` ("Sucesso Envio de Link").
 @MainActor
 struct PasswordRecoveryView: View {
     @StateObject private var viewModel: PasswordRecoveryViewModel
