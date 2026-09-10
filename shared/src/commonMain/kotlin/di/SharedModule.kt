@@ -1,6 +1,7 @@
 package di
 
 import data.EventRepositoryImpl
+import data.FavoriteRepositoryImpl
 import data.SessionStore
 import data.UserRepositoryImpl
 import data.createAuthenticatedHttpClient
@@ -10,6 +11,9 @@ import domain.event.EventRepository
 import domain.event.PollingCoordinator
 import domain.event.usecase.GetEventDetails
 import domain.event.usecase.ListUpcomingEvents
+import domain.favorite.FavoriteRepository
+import domain.favorite.usecase.ListFavorites
+import domain.favorite.usecase.ToggleFavorite
 import domain.user.UserRepository
 import domain.user.usecase.AuthenticateFan
 import domain.user.usecase.ExerciseDataRight
@@ -34,11 +38,14 @@ fun sharedModule(isDebug: Boolean) = module {
 
     single<EventRepository> { EventRepositoryImpl(get()) }
     single<UserRepository> { UserRepositoryImpl(get()) }
+    single<FavoriteRepository> { FavoriteRepositoryImpl(get()) }
 
     single { SessionStore(get(), get()) } bind SessionWriter::class
 
     single { ListUpcomingEvents(get()) }
     single { GetEventDetails(get()) }
+    single { ToggleFavorite(get()) }
+    single { ListFavorites(get()) }
 
     // `factory`, not `single`: Home and Explore are separate BottomNav destinations that can
     // both be alive at once, each calling `PollingCoordinator.start` with its own city/genre
