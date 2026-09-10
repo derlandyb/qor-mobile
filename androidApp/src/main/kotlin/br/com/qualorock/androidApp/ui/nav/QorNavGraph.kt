@@ -36,6 +36,7 @@ import br.com.qualorock.androidApp.ui.screen.EventDetailScreen
 import br.com.qualorock.androidApp.ui.screen.ExploreScreen
 import br.com.qualorock.androidApp.ui.screen.FavoritesScreen
 import br.com.qualorock.androidApp.ui.screen.HomeFeedScreen
+import br.com.qualorock.androidApp.ui.screen.HubScreen
 import br.com.qualorock.androidApp.ui.screen.LoginScreen
 import br.com.qualorock.androidApp.ui.screen.MapScreen
 import br.com.qualorock.androidApp.ui.screen.PasswordRecoveryScreen
@@ -43,6 +44,7 @@ import br.com.qualorock.androidApp.ui.screen.ProfileScreen
 import br.com.qualorock.androidApp.ui.screen.SignupScreen
 import data.SessionStore
 import design.QualORockThemeTokens
+import domain.enum.City
 
 /**
  * A14 — the full MVP Core route table, wiring together every screen built in A7-A13 behind one
@@ -85,6 +87,7 @@ fun QorNavGraph(sessionStore: SessionStore, navController: NavHostController = r
             emailVerificationDestination(navController)
             eventDetailDestination()
             mapDestination(navController)
+            hubDestination(navController)
         }
     }
 }
@@ -134,6 +137,11 @@ private object Routes {
     const val EventDetail = "event_detail/{$EventIdArg}"
 
     fun eventDetail(eventId: String) = "event_detail/${Uri.encode(eventId)}"
+
+    const val CityArg = "city"
+    const val Hub = "hub/{$CityArg}"
+
+    fun hub(city: City) = "hub/${city.name}"
 }
 
 /**
@@ -196,6 +204,7 @@ private fun NavGraphBuilder.authenticatedGraph(navController: NavHostController)
         BottomNavScaffold(current = BottomNavDestination.Inicio, navController = navController) { padding ->
             HomeFeedScreen(
                 onEventClick = { eventId -> navController.navigate(Routes.eventDetail(eventId)) },
+                onHubClick = { city -> navController.navigate(Routes.hub(city)) },
                 modifier = Modifier.padding(padding),
             )
         }
@@ -293,6 +302,24 @@ private fun NavGraphBuilder.eventDetailDestination() {
 private fun NavGraphBuilder.mapDestination(navController: NavHostController) {
     composable(Routes.Map) {
         MapScreen(onEventClick = { eventId -> navController.navigate(Routes.eventDetail(eventId)) })
+    }
+}
+
+/**
+ * T33 — new nav-graph route for [HubScreen] (HUB-01..04), one per [City] via the `city` route arg.
+ * Per the spec's Edge Case ("a Hub deep-link with no stored City preference still renders that
+ * city"), the city comes only from this route arg, never from any stored/session preference.
+ */
+private fun NavGraphBuilder.hubDestination(navController: NavHostController) {
+    composable(
+        route = Routes.Hub,
+        arguments = listOf(navArgument(Routes.CityArg) { type = NavType.StringType }),
+    ) { backStackEntry ->
+        val city = backStackEntry.arguments?.getString(Routes.CityArg)?.let { City.valueOf(it) } ?: City.Vitoria
+        HubScreen(
+            city = city,
+            onEventClick = { eventId -> navController.navigate(Routes.eventDetail(eventId)) },
+        )
     }
 }
 

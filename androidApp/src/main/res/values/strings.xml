@@ -150,4 +150,9 @@
     <string name="map_empty_state">Nenhum evento com localização disponível nesta área.</string>
     <string name="map_error_message">Não foi possível carregar o mapa. Tente novamente.</string>
     <string name="map_cta_tentar_novamente">Tentar novamente</string>
+
+    <!-- HubScreen (T33) -->
+    <string name="hub_section_title">Hubs da Grande Vitória</string>
+    <string name="hub_error_message">Não foi possível carregar os eventos deste hub. Tente novamente.</string>
+    <string name="hub_cta_tentar_novamente">Tentar novamente</string>
 </resources>
