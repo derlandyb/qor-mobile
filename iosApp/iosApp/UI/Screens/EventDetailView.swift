@@ -113,6 +113,15 @@ private let eventMapSpanDegrees: CLLocationDegrees = 0.01
 /// I14 wires: [onBack] for a back affordance, [onOpenURL] for every external-URL action (ticket
 /// link, "Abrir no mapa" fallback, and promoter phone/email/Instagram/TikTok links), defaulting
 /// to `UIApplication.shared.open(_:)` so the screen is usable stand-alone before I14 lands.
+///
+/// nightlife-gv-stitch-refresh T38 audit (mirrors Android's T28) against Stitch mobile screen
+/// `bebdbc615b0b4d82988d0b2b35701c1f`, "Detalhes do Evento (Mobile)": this screen's section order
+/// (hero, title/badges, date/venue, embedded map, description, ticket CTA, promoter contacts,
+/// share) and its `.toolbar` back affordance already matched the mock — no structural gap like
+/// Android's T28 found (Android's `EventDetailScreen` had no back control at all before its
+/// refresh; iOS's `.toolbar` chevron already served that role). The mock's "Outros rocks
+/// rolando" related-events section has no backing `EventDetail` field and stays out of scope
+/// (REFRESH-04), same call as Android's T28.
 struct EventDetailView: View {
     let eventId: String
     var onBack: () -> Void
