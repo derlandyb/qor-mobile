@@ -391,6 +391,17 @@
         }
       }
     },
+    "email_verification_security_footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ambiente seguro Qual o Rock?"
+          }
+        }
+      }
+    },
     "email_verification_title": {
       "extractionState": "stale",
       "localizations": {

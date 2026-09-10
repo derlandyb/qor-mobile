@@ -6,6 +6,11 @@ import shared
 /// submit + resend UI; it never pushes navigation itself — see
 /// `EmailVerificationViewModel`'s doc for why `onVerifiedForSignup`/`onVerifiedForEmailChange`
 /// are two distinct closures instead of one generic "success" callback.
+///
+/// nightlife-gv-stitch-refresh T36 (mirrors Android's T26): the existing title/instructions/
+/// OTP-field/submit/resend order already matched Stitch mobile screen
+/// `8feb1affeb7b4468af1f87c9c2479a1e`, "Verificação de E-mail OTP (Mobile)" — the one structural
+/// gap was the mock's trust-footer line, added below as `email_verification_security_footer`.
 struct EmailVerificationView: View {
     let email: String
     @StateObject private var viewModel: EmailVerificationViewModel
@@ -80,6 +85,11 @@ struct EmailVerificationView: View {
                     .font(.system(size: CGFloat(QualORockThemeTokens.TextMetadata.shared.SizeSp)))
                     .foregroundStyle(QorColor.textSecondary)
             }
+
+            Text(String(localized: "email_verification_security_footer"))
+                .font(.system(size: CGFloat(QualORockThemeTokens.TextBadge.shared.SizeSp)))
+                .foregroundStyle(QorColor.textTertiary)
+                .accessibilityIdentifier("email_verification_security_footer")
         }
         .padding(QorSpace.space4)
         .authScreenBackground()

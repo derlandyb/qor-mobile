@@ -35,6 +35,14 @@ final class EmailVerificationViewTests: XCTestCase {
         XCTAssertThrowsError(try view.inspect().find(text: "Código inválido ou expirado."))
     }
 
+    func test_GIVEN_theInitialState_WHEN_rendered_THEN_theSecurityFooterIsShown() throws {
+        let view = makeView()
+
+        let footer = try view.inspect().find(viewWithAccessibilityIdentifier: "email_verification_security_footer")
+
+        XCTAssertEqual(try footer.text().string(), String(localized: "email_verification_security_footer"))
+    }
+
     func test_GIVEN_theEmailVerificationScreen_WHEN_itRenders_THEN_itHasAFullBleedTopAnchoredBackground() throws {
         let view = makeView()
 
