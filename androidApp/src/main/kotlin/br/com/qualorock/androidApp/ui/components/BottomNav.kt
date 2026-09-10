@@ -32,14 +32,15 @@ import br.com.qualorock.androidApp.R
 import design.QualORockThemeTokens
 
 /**
- * A3 — MVP Core's bottom-nav destinations. `Favoritos` renders as a disabled stub per
- * mobile.md's A3 scope note: the favoriting action itself is Milestone 2 (Social &
- * Notifications, A20) — the tab exists here only for nav-shell completeness.
+ * A3 — MVP Core's bottom-nav destinations. `Favoritos` was a disabled stub per mobile.md's A3
+ * scope note (the favoriting action itself was Milestone 2 work); T31 (nightlife-gv-stitch-refresh,
+ * FAVUI-05) wires it to a real [br.com.qualorock.androidApp.ui.screen.FavoritesScreen] route, so
+ * it's enabled here like every other tab.
  */
 enum class BottomNavDestination(@param:StringRes val labelRes: Int, val icon: ImageVector, val enabled: Boolean) {
     Inicio(R.string.nav_inicio, Icons.Outlined.Home, enabled = true),
     Explorar(R.string.nav_explorar, Icons.Outlined.Explore, enabled = true),
-    Favoritos(R.string.nav_favoritos, Icons.Outlined.FavoriteBorder, enabled = false),
+    Favoritos(R.string.nav_favoritos, Icons.Outlined.FavoriteBorder, enabled = true),
     Perfil(R.string.nav_perfil, Icons.Outlined.Person, enabled = true),
 }
 

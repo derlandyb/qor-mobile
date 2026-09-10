@@ -3,6 +3,7 @@ package br.com.qualorock.androidApp.di
 import br.com.qualorock.androidApp.ui.viewmodel.EmailVerificationViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.EventDetailViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.ExploreViewModel
+import br.com.qualorock.androidApp.ui.viewmodel.FavoritesViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.HomeFeedViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.LoginViewModel
 import br.com.qualorock.androidApp.ui.viewmodel.PasswordRecoveryViewModel
@@ -25,4 +26,5 @@ val viewModelModule = module {
     viewModel { ExploreViewModel(get(), get()) }
     viewModel { EventDetailViewModel(get()) }
     viewModel { ProfileViewModel(get(), get()) }
+    viewModel { FavoritesViewModel(get(), get()) }
 }

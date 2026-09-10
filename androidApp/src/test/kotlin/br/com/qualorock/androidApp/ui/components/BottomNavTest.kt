@@ -1,7 +1,7 @@
 package br.com.qualorock.androidApp.ui.components
 
 import android.app.Application
-import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -41,11 +41,11 @@ class BottomNavTest {
     }
 
     @Test
-    fun `GIVEN Favoritos is not yet wired to a real screen THEN its item is disabled`() {
+    fun `GIVEN Favoritos is wired to a real screen THEN its item is enabled`() {
         composeTestRule.setContent {
             BottomNav(current = BottomNavDestination.Inicio, onSelect = {})
         }
 
-        composeTestRule.onNodeWithText("Favoritos").assertIsNotEnabled()
+        composeTestRule.onNodeWithText("Favoritos").assertIsEnabled()
     }
 }

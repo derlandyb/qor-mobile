@@ -34,6 +34,7 @@ import br.com.qualorock.androidApp.ui.components.BottomNavDestination
 import br.com.qualorock.androidApp.ui.screen.EmailVerificationScreen
 import br.com.qualorock.androidApp.ui.screen.EventDetailScreen
 import br.com.qualorock.androidApp.ui.screen.ExploreScreen
+import br.com.qualorock.androidApp.ui.screen.FavoritesScreen
 import br.com.qualorock.androidApp.ui.screen.HomeFeedScreen
 import br.com.qualorock.androidApp.ui.screen.LoginScreen
 import br.com.qualorock.androidApp.ui.screen.PasswordRecoveryScreen
@@ -116,6 +117,7 @@ private object Routes {
     const val PasswordRecovery = "password_recovery"
     const val Home = "home"
     const val Explore = "explore"
+    const val Favoritos = "favoritos"
     const val Profile = "profile"
 
     const val EmailArg = "email"
@@ -199,6 +201,15 @@ private fun NavGraphBuilder.authenticatedGraph(navController: NavHostController)
     composable(Routes.Explore) {
         BottomNavScaffold(current = BottomNavDestination.Explorar, navController = navController) { padding ->
             ExploreScreen(
+                onEventClick = { eventId -> navController.navigate(Routes.eventDetail(eventId)) },
+                modifier = Modifier.padding(padding),
+            )
+        }
+    }
+
+    composable(Routes.Favoritos) {
+        BottomNavScaffold(current = BottomNavDestination.Favoritos, navController = navController) { padding ->
+            FavoritesScreen(
                 onEventClick = { eventId -> navController.navigate(Routes.eventDetail(eventId)) },
                 modifier = Modifier.padding(padding),
             )
@@ -290,12 +301,12 @@ private fun AuthScaffold(content: @Composable (PaddingValues) -> Unit) {
 }
 
 /**
- * Shared `Scaffold` + [BottomNav] chrome for the three tab-root destinations (safe default per
+ * Shared `Scaffold` + [BottomNav] chrome for the four tab-root destinations (safe default per
  * A14's brief: `EventDetail` and every auth screen render full-screen, without the bar).
  * `onSelect` reuses `popUpTo(Routes.Home) { saveState = true }` + `launchSingleTop`/`restoreState`
  * — the standard Navigation-Compose bottom-bar pattern — so switching tabs doesn't pile up
- * duplicate back-stack entries. `Favoritos` never reaches `onSelect` at all: [BottomNav] itself
- * renders it `enabled = false` (Milestone-2 stub, per A3), so no route is registered for it here.
+ * duplicate back-stack entries. `Favoritos` (T31, FAVUI-05) routes to [Routes.Favoritos] the same
+ * way every other tab does now that [BottomNav] renders it `enabled = true`.
  */
 @Composable
 private fun BottomNavScaffold(
@@ -311,10 +322,10 @@ private fun BottomNavScaffold(
                     val route = when (destination) {
                         BottomNavDestination.Inicio -> Routes.Home
                         BottomNavDestination.Explorar -> Routes.Explore
+                        BottomNavDestination.Favoritos -> Routes.Favoritos
                         BottomNavDestination.Perfil -> Routes.Profile
-                        BottomNavDestination.Favoritos -> null
                     }
-                    if (route != null && destination != current) {
+                    if (destination != current) {
                         navController.navigate(route) {
                             popUpTo(Routes.Home) { saveState = true }
                             launchSingleTop = true

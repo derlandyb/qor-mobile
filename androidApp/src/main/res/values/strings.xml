@@ -137,4 +137,11 @@
 
     <!-- Navigation (A14) -->
     <string name="nav_startup_loading">Carregando…</string>
+
+    <!-- FavoritesScreen (T31) -->
+    <string name="favorites_title">Meus Favoritos</string>
+    <string name="favorites_empty_state">Você ainda não favoritou nenhum evento.</string>
+    <string name="favorites_cta_remove">Remover %1$s dos favoritos</string>
+    <string name="favorites_error_message">Não foi possível carregar seus favoritos. Tente novamente.</string>
+    <string name="favorites_cta_tentar_novamente">Tentar novamente</string>
 </resources>
