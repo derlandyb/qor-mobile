@@ -108,6 +108,20 @@ final class HomeFeedViewTests: XCTestCase {
         XCTAssertNotNil(try view.inspect().find(viewWithAccessibilityIdentifier: "home_feed_event_2"))
     }
 
+    func test_GIVEN_eventsLoaded_WHEN_stateBecomesContent_THEN_theSectionHeadingIsShown() async throws {
+        let eventsGateway = FakeHomeFeedEventsGateway()
+        eventsGateway.pagesByCursor[nil] = EventPage(events: [makeEvent(id: "1")], nextCursor: nil)
+        let pollingGateway = FakeHomeFeedPollingGateway()
+        let viewModel = HomeFeedViewModel(eventsGateway: eventsGateway, pollingGateway: pollingGateway)
+
+        await waitUntil { if case .content = viewModel.uiState { return true }; return false }
+
+        let view = HomeFeedView(onEventClick: { _ in }, viewModel: viewModel)
+        let heading = try view.inspect().find(viewWithAccessibilityIdentifier: "home_feed_section_title")
+
+        XCTAssertEqual(try heading.text().string(), String(localized: "home_feed_section_title"))
+    }
+
     func test_GIVEN_eventsLoaded_WHEN_tappingACard_THEN_onEventClickFiresWithThatEventId() async throws {
         let eventsGateway = FakeHomeFeedEventsGateway()
         eventsGateway.pagesByCursor[nil] = EventPage(events: [makeEvent(id: "42")], nextCursor: nil)

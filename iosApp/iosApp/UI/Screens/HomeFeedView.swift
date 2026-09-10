@@ -13,6 +13,12 @@ private let loadMoreThresholdItems = 3
 /// `onMapClick` defaults to a no-op: `EventCard` requires a map-CTA callback (design-system.md
 /// §4.1's "Ver no Mapa"), but building the actual maps deep link from `Event.address` is left to
 /// whoever wires this screen into the nav flow (I14), not this screen's own concern.
+///
+/// nightlife-gv-stitch-refresh T37 (mirrors Android's T27): the Content state gains the
+/// "Eventos em Destaque" section heading from "Mobile App Homepage"
+/// (`921f7cd5342f444ea0f27def28ef6b33`), rendered above the card list — Loading/Empty/Error
+/// states are unchanged. The mock's city-filter chips and Hubs/Mapa/Salvos bottom-nav tabs are
+/// out of scope — they belong to not-yet-built screens (T41–T43), not this refresh task.
 struct HomeFeedView: View {
     let onEventClick: (String) -> Void
     var onMapClick: (Event) -> Void = { _ in }
@@ -77,7 +83,12 @@ struct HomeFeedView: View {
 
     private func eventList(events: [Event], isLoadingMore: Bool) -> some View {
         ScrollView {
-            LazyVStack(spacing: QorSpace.space4) {
+            LazyVStack(alignment: .leading, spacing: QorSpace.space4) {
+                Text(String(localized: "home_feed_section_title"))
+                    .font(.system(size: CGFloat(QualORockThemeTokens.TextEventTitleLg.shared.SizeSp), weight: .bold))
+                    .foregroundStyle(QorColor.textPrimary)
+                    .accessibilityIdentifier("home_feed_section_title")
+
                 ForEach(Array(events.enumerated()), id: \.element.id) { index, event in
                     EventCard(
                         event: event,

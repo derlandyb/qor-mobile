@@ -666,6 +666,17 @@
         }
       }
     },
+    "home_feed_section_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eventos em Destaque"
+          }
+        }
+      }
+    },
     "live_pulse_label": {
       "extractionState": "stale",
       "localizations": {
