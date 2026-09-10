@@ -37,6 +37,7 @@ import br.com.qualorock.androidApp.ui.screen.ExploreScreen
 import br.com.qualorock.androidApp.ui.screen.FavoritesScreen
 import br.com.qualorock.androidApp.ui.screen.HomeFeedScreen
 import br.com.qualorock.androidApp.ui.screen.LoginScreen
+import br.com.qualorock.androidApp.ui.screen.MapScreen
 import br.com.qualorock.androidApp.ui.screen.PasswordRecoveryScreen
 import br.com.qualorock.androidApp.ui.screen.ProfileScreen
 import br.com.qualorock.androidApp.ui.screen.SignupScreen
@@ -83,6 +84,7 @@ fun QorNavGraph(sessionStore: SessionStore, navController: NavHostController = r
             authenticatedGraph(navController)
             emailVerificationDestination(navController)
             eventDetailDestination()
+            mapDestination(navController)
         }
     }
 }
@@ -119,6 +121,7 @@ private object Routes {
     const val Explore = "explore"
     const val Favoritos = "favoritos"
     const val Profile = "profile"
+    const val Map = "map"
 
     const val EmailArg = "email"
     const val ReturnToArg = "returnTo"
@@ -280,6 +283,16 @@ private fun NavGraphBuilder.eventDetailDestination() {
     ) { backStackEntry ->
         val eventId = backStackEntry.arguments?.getString(Routes.EventIdArg).orEmpty()
         EventDetailScreen(eventId = eventId)
+    }
+}
+
+/**
+ * T32 — new nav-graph route for [MapScreen], reached from [HomeFeedScreen]/wherever a map CTA is
+ * added; full-screen, no bottom bar (same rationale as [eventDetailDestination]).
+ */
+private fun NavGraphBuilder.mapDestination(navController: NavHostController) {
+    composable(Routes.Map) {
+        MapScreen(onEventClick = { eventId -> navController.navigate(Routes.eventDetail(eventId)) })
     }
 }
 

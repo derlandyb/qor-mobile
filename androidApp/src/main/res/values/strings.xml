@@ -144,4 +144,10 @@
     <string name="favorites_cta_remove">Remover %1$s dos favoritos</string>
     <string name="favorites_error_message">Não foi possível carregar seus favoritos. Tente novamente.</string>
     <string name="favorites_cta_tentar_novamente">Tentar novamente</string>
+
+    <!-- MapScreen (T32) -->
+    <string name="map_title">Mapa Interativo</string>
+    <string name="map_empty_state">Nenhum evento com localização disponível nesta área.</string>
+    <string name="map_error_message">Não foi possível carregar o mapa. Tente novamente.</string>
+    <string name="map_cta_tentar_novamente">Tentar novamente</string>
 </resources>
